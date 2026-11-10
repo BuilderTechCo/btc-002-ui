@@ -59,5 +59,5 @@ src/
 
 ## Referencias
 
-- `arquitectura/index.md` §1 Principio 1
-- `guias/contributing.md` — Estructura del repo
+- `arquitectura/indice.md` §1 Principio 1
+- `guias/contribuir.md` — Estructura del repo

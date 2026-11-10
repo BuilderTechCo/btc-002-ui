@@ -1,202 +1,202 @@
-# CLAUDE.md - @buildertech/ui
+NO commits, NO push, NO merge nunca.
 
-Guía para Claude Code al trabajar en el monorepo `@buildertech/ui` (Design System propietario de BuilderTech).
+# CLAUDE.md — @buildertech/ui
 
----
-
-## 1. Visión general del proyecto
-
-- **Paquete**: `@buildertech/ui` — Design System versionado independientemente (tokens, componentes, utilidades, validación, docs).
-- **Stack**: React 18 + TypeScript 5.6 + pnpm 9 + Vite 6 + Vitest 2 + Playwright 1.48 + Storybook 8.
-- **Arquitectura**: Monorepo single-package (`packages/ui` fue aplanado a raíz del repo).
-- **Estilo**: Tailwind CSS v4 (CSS-first) + tokens `btc-*` (colores, spacing, radius, shadow, font, duration, easing, z-index, transition).
-- **Calidad**: 11 reglas visuales (`check:design`), guardarraíl anti-lógica-de-negocio (`fetch|supabase|prisma|axios`), contrato de exports (`check:contract`), typecheck estricto, lint, tests unitarios (Vitest), tests visuales (Playwright), Storybook.
+Guía de trabajo para agentes y colaboradores del Design System `@buildertech/ui`.
 
 ---
 
-## 2. Estructura de directorios (post-reorganización)
+## 1. Visión general
+
+- **Paquete**: `@buildertech/ui` — Design System propietario de BuilderTech.
+- **Estructura**: single-package en la raíz del repositorio (`btc-002-ui/`). No hay `packages/ui/`.
+- **Estilo**: Tailwind CSS v4 CSS-first (`@theme inline`) + tokens `btc-*`.
+- **Calidad**: 12 reglas visuales (`check:design`) + guardarraíl anti-lógica-de-negocio, contrato de exports, typecheck estricto, lint, tests unit/integration, Storybook component tests y regresión visual Playwright.
+- **Documentación**: `docs/` es la fuente de verdad. Todo cambio de API o de tokens debe actualizar docs y `CHANGELOG.md`.
+
+### Versiones reales
+
+| Herramienta       | Versión                            |
+| :---------------- | :--------------------------------- |
+| Node              | `>=20` (`.nvmrc` incluido)         |
+| pnpm              | `9.12.0`                           |
+| React / React DOM | `18.3.1`                           |
+| TypeScript        | `5.9.3` (rango `^5.7.2`)           |
+| Vite              | `5.4.21`                           |
+| Vitest            | `2.1.9`                            |
+| Playwright        | `1.65.0` (Chromium 1254 instalado) |
+| Storybook         | `8.6.19`                           |
+| Tailwind CSS      | `4.3.5`                            |
+
+---
+
+## 2. Estructura
 
 ```text
-btc-002-ui/
-├── src/                          # Código fuente
-│   ├── components/               # 22 componentes (Button, Card, Dialog, etc.)
-│   ├── lib/                      # Utilidades (classnames, icon, fonts)
-│   ├── styles/                   # globals.css, tokens.css (Tailwind v4 @theme)
-│   ├── test/                     # Setup Vitest (setup.ts)
-│   └── index.ts                  # Barrel principal
-├── e2e/                          # Tests visuales Playwright
-│   ├── visual/                   # 22 specs *.visual.spec.ts (mobile/tablet/laptop/desktop × light/dark)
-│   │   └── snapshots/            # 3285 PNGs baseline (una carpeta por spec)
-│   └── support/                  # global-setup.ts, global-teardown.ts, utils.ts, test-iframe.ts
-├── scripts/                      # Scripts de validación y build
-│   ├── register.mjs              # Loader tsx para scripts TS
-│   ├── check-design.ts           # Validador 11 reglas visuales + anti-biz-logic
-│   └── check-component-contract.mjs  # Validador exports package.json ↔ src/
-├── .storybook/                   # Config Storybook (main.ts, preview.ts)
-├── dist/                         # Build output (gitignored)
-├── playwright-report/            # Reportes HTML Playwright (gitignored)
-├── test-results/                 # Resultados JSON Playwright (gitignored)
-├── coverage/                     # Cobertura Vitest (gitignored)
-├── storybook-static/             # Build estático Storybook (gitignored)
-├── *.tsbuildinfo                 # Cache TypeScript (gitignored)
-├── tsconfig.base.json            # Base TS config (paths @/* → src/*)
-├── tsconfig.json                 # Typecheck-only (noEmit, incluye src, e2e, scripts, .storybook)
-├── tsconfig.build.json           # Build config (declaration emit → dist/, excluye tests/stories)
-├── tsconfig.eslint.json          # Extiende tsconfig.json para ESLint
-├── vitest.config.ts              # Config Vitest (jsdom, setupFiles: src/test/setup.ts)
-├── playwright.config.ts          # Config Playwright unificada (8 proyectos, 4 viewports × 2 temas)
-├── eslint.config.js              # ESLint flat config (ignores: e2e/, scripts/, dist/, reports)
-├── package.json                  # Scripts, exports, deps
-└── pnpm-workspace.yaml           # Workspace config
+src/
+├── index.ts                  # Barrel público
+├── styles/
+│   ├── tokens.css            # Variables --btc-* + roles light/dark
+│   └── globals.css           # @theme inline → utilidades btc-*
+├── lib/
+│   ├── classnames/           # clsx + tailwind-merge
+│   ├── icon/                 # Wrapper semántico de Lucide
+│   └── fonts/                # Helpers next/font
+├── components/               # 21 directorios / 23 componentes públicos
+│   ├── <componente>/
+│   │   ├── <componente>.tsx
+│   │   ├── <componente>.test.tsx
+│   │   ├── <componente>.stories.tsx
+│   │   └── index.ts
+│   └── ...
+└── test/
+    ├── setup.ts              # Integration (jsdom)
+    └── setup-unit.ts         # Unit (Node)
+
+e2e/
+├── visual/                   # 22 specs + snapshots (3285 PNGs)
+└── support/                  # global setup/teardown y utilidades
+
+.storybook/
+├── main.ts                   # Addons + framework + Tailwind plugin
+├── preview.tsx               # Tema, viewports, backgrounds, decorador global
+├── preview-head.html         # Ancho completo del root
+└── vitest.setup.ts           # Annotations + beforeAll para storybook test
+
+scripts/                      # check-design, contract, files, suppressions, build
+docs/                         # Arquitectura, ADRs, componentes, tokens, guías
 ```
 
----
+### Componentes públicos (23)
 
-## 3. Scripts principales (`package.json`)
+- **Base (16)**: Button, Card, Dialog, Select, Table, NavLink, Badge, TextField, EmptyState, LoadingState, ErrorState, ErrorPage, CopyButton, BackButton, ThemeToggle, Skeleton.
+- **Primitivas (7)**: Toast, ToastProvider, ToastViewport, Label, Separator, Slot, DropdownMenu.
 
-| Script | Descripción |
-|--------|-------------|
-| `build` | `tsc -p tsconfig.build.json` + copia `src/styles`, `src/components`, `src/lib` a `dist/` |
-| `typecheck` | `tsc --noEmit` (usa `tsconfig.json`) |
-| `lint` | `eslint src --ext .ts,.tsx` |
-| `lint:fix` | `eslint src --ext .ts,.tsx --fix` |
-| `test` | `vitest run` (unitarios) |
-| `test:watch` | `vitest` (watch mode) |
-| `test:ui` | `vitest --ui` (UI visual) |
-| `test:coverage` | `vitest run --coverage` |
-| `test:visual` | `playwright test` (8 proyectos: 4 viewports × 2 temas) |
-| `check:design` | Valida 11 reglas visuales + anti-lógica-de-negocio en `src/` |
-| `check:contract` | Valida que `package.json` exports ↔ `src/` ↔ `dist/` son consistentes |
-| `quality:verify` | `typecheck && lint && check:design && test` (gate pre-publish) |
-| `prepublishOnly` | `quality:verify && build` |
-| `storybook` | `storybook dev -p 6006` |
-| `build-storybook` | `storybook build` |
-| `storybook:static` | `storybook build --output-dir storybook-static` |
+`Card`, `Dialog` y `DropdownMenu` son compound: exponen sub-componentes estáticos (`Card.Header`, `Dialog.Footer`, `DropdownMenu.Item`) y también exports nombrados.
 
 ---
 
-## 4. Reglas de desarrollo (NO negociables)
-
-### 4.1 Tokens y estilos
-
-- **Solo tokens `btc-*`**: Colores (`bg-btc-brand`, `text-btc-text-primary`), spacing (`p-btc-4`, `gap-btc-6`), radius (`rounded-btc-md`), shadow (`shadow-btc-2`), font (`font-btc-sans`), duration (`duration-btc-base`), easing (`ease-btc-standard`), z-index (`z-btc-modal`), transition (`transition-btc-colors`).
-- **Escala spacing base 4px**: Valores permitidos `1,2,3,4,6,8,12,16` (equivale a 4,8,12,16,24,32,48,64px).
-- **No Tailwind nativo**: Prohibidos `bg-blue-500`, `p-5`, `rounded-lg`, `shadow-md`, `font-sans`, `duration-200`, `ease-in-out`, `z-50`, `transition-all`, etc.
-- **No `!important`**: Salvo en `globals.css` dentro de `@layer utilities`.
-
-### 4.2 Lógica de negocio (guardarraíl)
-
-- **Prohibido en `src/`**: `fetch`, `supabase`, `prisma`, `axios`. El DS es puramente presentacional.
-- `check:design` falla si detecta estos patrones en `packages/ui/src` (ahora `src/`).
-
-### 4.3 Componentes
-
-- **Props tipadas estrictamente**: Usar `typeof Component` para forwardRef, no el componente como tipo.
-- **Nombres de props canónicos**: `text` (no `textToCopy`), `variant` con valores definidos, `code`/`status` según componente, `tagName` para Label, etc.
-- **No `ref` en props**: Usar `forwardRef` correctamente.
-- **Export barrel**: Cada componente en `src/components/<name>/index.ts` re-exporta todo.
-
-### 4.4 Testing
-
-- **Unitarios (Vitest)**: En `src/**/*.test.tsx`, setup en `src/test/setup.ts`.
-- **Visuales (Playwright)**: En `e2e/visual/*.visual.spec.ts`, snapshots en `e2e/visual/snapshots/*.visual.spec.ts-snapshots/`.
-- **Naming**: `<Component>.visual.spec.ts` (no `.test.ts`).
-- **8 proyectos**: `light-mobile`, `dark-mobile`, `light-tablet`, `dark-tablet`, `light-laptop`, `dark-laptop`, `light-desktop`, `dark-desktop`.
-- **Thresholds**: `maxDiffPixels: 0`, `maxDiffPixelRatio: 0.001`, `threshold: 0.2`.
-
-### 4.5 TypeScript
-
-- **3 tsconfigs**:
-  - `tsconfig.base.json`: Base compartida, `paths: { "@/*": ["src/*"] }`.
-  - `tsconfig.json`: Typecheck-only (`noEmit: true`), incluye `src`, `e2e`, `scripts`, `.storybook`, configs.
-  - `tsconfig.build.json`: Build (`declaration: true`, `outDir: dist`), excluye tests, stories, scripts.
-  - `tsconfig.eslint.json`: Extiende `tsconfig.json` para ESLint.
-- **`typecheck` usa `tsconfig.json`** (no emite, valida todo).
-- **`build` usa `tsconfig.build.json`** (emite a `dist/`).
-
-### 4.6 ESLint
-
-- **Flat config** (`eslint.config.js`).
-- **Ignora**: `e2e/`, `scripts/`, `dist/`, `playwright-report/`, `test-results/`, `coverage/`, `*.tsbuildinfo`.
-- **Test files**: Config separada sin `project` (evita error "file not found in project").
-- **Source files**: Usa `project: ./tsconfig.eslint.json` para type-aware rules.
-
----
-
-## 5. Flujo de trabajo estándar
+## 3. Comandos
 
 ```bash
-# Desarrollo
-pnpm storybook          # Storybook en http://localhost:6006
-pnpm test:watch         # Vitest watch
-pnpm test:visual        # Playwright (requiere Storybook corriendo)
-
-# Validación local (pre-push)
-pnpm run quality:verify # typecheck + lint + check:design + test
-
-# Build y publish
-pnpm run build          # Genera dist/
-pnpm run prepublishOnly # quality:verify + build (automático en publish)
+pnpm storybook                 # http://127.0.0.1:6006 (auto-open)
+pnpm build-storybook           # Build estático
+pnpm test                      # unit + integration
+pnpm test:storybook            # stories en Chromium
+pnpm test:visual               # Playwright (8 proyectos)
+pnpm test:coverage             # cobertura unit + integration
+pnpm test:static               # typecheck + lint + contract + files + suppressions
+pnpm typecheck
+pnpm lint
+pnpm check:design
+pnpm check:contract
+pnpm quality:verify            # typecheck + lint + check:design + test
+pnpm build
 ```
+
+### `check:design`
+
+- Escanea `src/` por defecto.
+- **No** acepta `--scan-dirs`; configura `checkDesign.scanDirs` en `package.json` si hace falta.
+- Implementa **12 reglas visuales + 1 guardarraíl**:
+  `only-btc-color-tokens`, `only-btc-utilities`, `spacing-scale`, `sizing-scale`, `radius-defined`, `font-system`, `duration-standard`, `ease-standard`, `shadow-defined`, `z-index-controlled`, `transition-allowed`, `no-important`, `no-business-logic`.
+- `no-important` se omite en estilos globales; `no-business-logic` prohíbe `fetch|supabase|prisma|axios`.
+
+### Storybook
+
+- El auto-open se verificó interceptando `BROWSER`; abre `http://127.0.0.1:6006/`.
+- Si el puerto está ocupado por una instancia vieja, Storybook falla o sirve la versión anterior. Detén la instancia antes de reiniciar.
+- Cambios en `.storybook/main.ts` requieren reinicio; `preview.tsx` y `preview-head.html` recargan en caliente.
+- **API legacy de Storybook 8.6.19**: `parameters.viewport.viewports` y `parameters.backgrounds.values`. No migrar a `options` sin actualizar Storybook.
+- `preview-head.html` fuerza `#storybook-root { width: 100%; flex: 1 1 auto; }` para evitar el colapso de `layout: centered`.
+- El decorador global aplica `data-theme` en `<html>` y un contenedor de 1024/1280px centrado.
+- Addons: `@storybook/addon-essentials`, `@storybook/addon-links`, `@storybook/addon-a11y`, `@storybook/experimental-addon-test`.
+- Tests de stories: Vitest browser mode con Chromium/Playwright. Requiere `~/.cache/ms-playwright/chromium-1254` (y `chromium_headless_shell-1254`).
+
+### Vitest
+
+`vitest.workspace.ts` define 3 proyectos:
+
+| Proyecto      | Entorno  | Include                                           | Setup                        |
+| :------------ | :------- | :------------------------------------------------ | :--------------------------- |
+| `unit`        | Node     | `src/lib/**/*.{test,spec}.{ts,tsx}`               | `src/test/setup-unit.ts`     |
+| `integration` | jsdom    | `src/components/**/*.{test,spec}.{ts,tsx}`        | `src/test/setup.ts`          |
+| `storybook`   | Chromium | generado por `@storybook/experimental-addon-test` | `.storybook/vitest.setup.ts` |
+
+El proyecto `storybook` **no** extiende `vitest.config.ts` para evitar el warning de `test.include`; el plugin genera el include desde el índice de stories.
+
+### Playwright
+
+- `playwright.config.ts` en la raíz.
+- 8 proyectos: `light-mobile`, `dark-mobile`, `light-tablet`, `dark-tablet`, `light-laptop`, `dark-laptop`, `light-desktop`, `dark-desktop`.
+- Viewports reales: 360×800, 768×1024, 1024×1024, 1440×1024.
+- `webServer` arranca Storybook en local (`reuseExistingServer: true`) y se desactiva en CI.
+- Snapshots en `e2e/visual/snapshots/` (3285 PNGs, gitignored vía `.git/info/exclude`).
 
 ---
 
-## 6. Actualización de snapshots visuales
+## 4. Convenciones de código
+
+- **TypeScript estricto**; sin `any`.
+- **forwardRef + displayName** en componentes base.
+- **Compound components** vía `Object.assign` (Card, Dialog, DropdownMenu).
+- **Props extendidas** de elementos HTML nativos; usa `Omit` cuando se sobrescribe `onChange`, `size`, etc.
+- **Type aliases** para props vacías.
+- **Iconos**: `Icon` con `name`, `category`, `size`, `color`, `aria-label`, `decorative`.
+- **Botones y TextField**: los iconos se pasan por nombre (`leftIcon="plus"`), no como ReactNode.
+- **Clases**: solo utilidades `btc-*`; escala de espaciado `0,1,2,3,4,6,8,12,16`; radios y sombras definidos; sin `!important`; sin `transition-all`.
+- **Tema**: se aplica en `<html data-theme="light|dark">`; los portales a `document.body` (Dialog, Toast, DropdownMenu) dependen de ello.
+- **Portales**: Dialog y Toast usan `document.body` por defecto; `portalId` es opcional.
+
+---
+
+## 5. Testing y validación
+
+Antes de cerrar un cambio:
 
 ```bash
-# Actualizar TODOS los baselines (8 proyectos)
-pnpm test:visual -- --update-snapshots
-
-# Actualizar solo un componente
-pnpm test:visual -- --update-snapshots -g "Button"
-
-# Ver reporte HTML
-npx playwright show-report playwright-report
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm check:design
+pnpm test:storybook
 ```
 
----
-
-## 7. Añadir nuevo componente
-
-1. Crear `src/components/<nombre>/` con `index.ts`, `<Nombre>.tsx`, `<Nombre>.test.tsx`, `<Nombre>.stories.tsx`.
-2. Exportar en `src/components/<nombre>/index.ts`.
-3. Añadir entrada en `package.json` → `exports` (apuntando a `./dist/components/<nombre>/index.*`).
-4. Añadir stories en Storybook.
-5. Añadir test visual en `e2e/visual/<nombre>.visual.spec.ts`.
-6. Ejecutar `pnpm test:visual -- --update-snapshots` para generar baselines.
-7. Verificar `pnpm run quality:verify` pasa.
+- **Estado verificado (2026-11-10)**: 334 tests unit/integration pasaron en dos ejecuciones, 0 violaciones `check:design`. La última cifra documentada para Storybook es 255 tests; no se revalidó en esa fecha.
+- `test:visual` no está en `quality:verify`; requiere Chromium/Storybook y aprobación del DS Owner para actualizar snapshots.
+- `check:contract` compara exports de `package.json` con `src/` y `dist/`; `check:component-files` valida la estructura de cada componente.
+- No hay CI ni Husky configurados; la validación es local antes del PR.
 
 ---
 
-## 8. Troubleshooting común
+## 6. Documentación
 
-| Problema | Solución |
-|----------|----------|
-| `check:design` falla por color/spacing | Reemplazar Tailwind nativo por token `btc-*` equivalente |
-| `check:design` falla por `fetch`/`axios` | Mover lógica de datos fuera del componente (props o context) |
-| `typecheck` error en test file | Usar `typeof Component` para forwardRef, corregir prop names |
-| Playwright no encuentra snapshots | Verificar `snapshotDir: ./e2e/visual/snapshots` en config |
-| `check:contract` falla export missing | Añadir entrada en `package.json` exports para el nuevo componente |
-| Build no genera `.d.ts` | Verificar `tsconfig.build.json` tiene `declaration: true` y `outDir: dist` |
+| Documento                        | Cuándo actualizarlo                               |
+| :------------------------------- | :------------------------------------------------ |
+| `README.md`                      | Comandos, stack, estructura, conteos, instalación |
+| `CHANGELOG.md`                   | Todo cambio visible para consumidores             |
+| `CLASIFICACION.md`               | Cambios en tests/deuda conocida                   |
+| `docs/tokens/especificacion-api.md`        | Cambios de props o exports                        |
+| `docs/componentes/guia.md`      | Ejemplos de uso e instalación                     |
+| `docs/tokens/paleta-visual.md`  | Tokens de color o ratios de contraste             |
+| `docs/tokens/dimensiones-disposicion.md`   | Espaciado, elevación, z-index o reglas            |
+| `docs/gobernanza/cumplimiento.md` | Reglas, excepciones o procesos                    |
+| `docs/arquitectura/indice.md`     | Estructura, principios, testing                   |
+| `docs/adrs/`                     | Decisiones arquitectónicas nuevas                 |
+| `docs/guias/`                    | Flujo de contribución, release y migración        |
 
----
+### Deuda conocida de accesibilidad
 
-## 9. Referencias rápidas
-
-- **Tokens CSS**: `src/styles/tokens.css` (definidos vía `@theme inline` en Tailwind v4)
-- **Globals CSS**: `src/styles/globals.css` (importa tokens, define `@layer`)
-- **Barrel principal**: `src/index.ts`
-- **Config Playwright**: `playwright.config.ts` (8 proyectos, global setup/teardown)
-- **Config Vitest**: `vitest.config.ts` (setupFiles: `./src/test/setup.ts`)
-- **Config ESLint**: `eslint.config.js` (flat config, ignora `e2e/`, `scripts/`)
-- **Validador diseño**: `scripts/check-design.ts` (11 reglas + anti-biz-logic)
-- **Validador contrato**: `scripts/check-component-contract.mjs` (exports ↔ src ↔ dist)
+**Resuelta según la última evidencia documentada**: el botón primario usa `--btc-action-primary: coral-700 (#C93A1E)` con texto blanco: **5.11:1** ✅ WCAG AA. Hover `coral-800` (6.97:1), pressed `coral-900` (10.28:1). Axe no se volvió a ejecutar el 2026-11-10. `coral-600` se conserva como primitiva de marca (`--btc-brand`) para acentos no textuales.
 
 ---
 
-## 10. Notas importantes
+## 7. Reglas para agentes
 
-- **No commitear** `dist/`, `playwright-report/`, `test-results/`, `coverage/`, `storybook-static/`, `*.tsbuildinfo` (ver `.gitignore`).
-- **Node ≥20, pnpm ≥9** (ver `engines` y `packageManager` en `package.json`).
-- **Peer deps**: `next≥14`, `react≥18.3`, `react-dom≥18.3`.
-- **Registro**: GitHub Packages (`npm.pkg.github.com`, access: restricted).
+1. No borres archivos no rastreados ni trabajo del usuario sin confirmación.
+2. No cambies la API pública sin actualizar `src/index.ts`, exports de `package.json`, docs y changelog.
+3. No edites snapshots visuales sin aprobación explícita.
+4. No añadas lógica de negocio (`fetch`, `supabase`, `prisma`, `axios`) a `src/`.
+5. No introduzcas colores, spacing, radios o sombras fuera de los tokens `btc-*`.
+6. No afirmes que una suite pasa sin ejecutarla.
+7. Mantén los conteos de tests y componentes sincronizados con la realidad.

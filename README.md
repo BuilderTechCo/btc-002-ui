@@ -1,67 +1,74 @@
 # @buildertech/ui
 
-> **Design System propietario del monorepo BuilderTech** — Tokens, componentes, utilidades, validación y documentación en un solo paquete versionado independientemente.
+> **Design System propietario de BuilderTech** — Tokens, componentes, utilidades, validación y documentación en un paquete versionado de forma independiente.
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md)
-[![Node](https://img.shields.io/badge/node-24.22.1-green)](https://nodejs.org/)
-[![pnpm](https://img.shields.io/badge/pnpm-12.15.0-orange)](https://pnpm.io/)
-[![React](https://img.shields.io/badge/react-19.3.1-61dafb)](https://react.dev/)
-[![Tailwind](https://img.shields.io/badge/tailwind-4.3.3-38bdf8)](https://tailwindcss.com/)
+[![Node](https://img.shields.io/badge/node-%3E%3D20-green)](https://nodejs.org/)
+[![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/)
+[![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/)
+[![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/)
+[![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
 
-> **Nota**: Estructura reorganizada — ver [ADR-008](docs/adrs/008-reorganizacion-scaffold.md) para detalles de la migración desde `packages/ui/` a single-package root, `tests/visual/` → `e2e/visual/`, `src/scripts/` → `scripts/`, y separación de tsconfigs.
+> **Nota de estructura**: el paquete vive en la raíz del repositorio (single-package root). Ver [ADR-008](docs/adrs/008-reorganizacion-estructura-base.md) y [ADR-009](docs/adrs/009-storybook-validacion-visual.md).
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
 ### Instalación desde GitHub Packages
 
 ```bash
-# Configurar registry para @buildertech scope
+# Configurar registry para el scope @buildertech
 npm config set @buildertech:registry https://npm.pkg.github.com/
 
 # Autenticarse (requiere GITHUB_TOKEN con read:packages)
 npm login --registry=https://npm.pkg.github.com/
-# Username: tu-usuario-github
-# Password: GITHUB_TOKEN (Personal Access Token con read:packages)
 
 # Instalar
 pnpm add @buildertech/ui
 ```
 
-### Instalación desde Monorepo Local (Desarrollo)
+### Instalación en workspace local
 
 ```bash
-# Desde la raíz del monorepo
-pnpm add @buildertech/ui --workspace --filter=apps/web
+# Desde la app consumidora del workspace
+pnpm add @buildertech/ui --workspace
 ```
 
-### Configuración CSS (Una sola línea)
+### Configuración CSS (Tailwind v4, CSS-first)
 
 ```css
-/* apps/web/src/app/styles/globals.css */
+/* app/globals.css */
 @import "tailwindcss";
 @import "@buildertech/ui/styles/globals.css";
 
-/* Solo overrides mínimos si la app lo necesita */
+/* Necesario para que Tailwind detecte las clases usadas por el paquete
+   publicado en node_modules. Ajusta la ruta respecto a este archivo. */
+@source "../node_modules/@buildertech/ui/dist";
 ```
 
-### Uso de Componentes
+No se necesita `tailwind.config.ts` para consumir el DS: los tokens se publican como variables CSS y se mapean a utilidades `btc-*` mediante `@theme inline`.
+
+### Uso de componentes
 
 ```tsx
-import { Button, Card, Dialog, Table } from '@buildertech/ui';
-import { Icon } from '@buildertech/ui/lib/icon';
-import { classnames } from '@buildertech/ui/lib/classnames';
+import { Button, Card, Icon } from "@buildertech/ui";
 
 export function MiComponente() {
   return (
     <Card variant="default" padding="md">
       <Card.Header>
-        <Card.Title>Título</Card.Title>
+        <Card.Title>Usuarios</Card.Title>
+        <Card.Description>Lista de usuarios activos</Card.Description>
       </Card.Header>
       <Card.Content>
-        <Button variant="primary" size="md" iconLeft={<Icon name="plus" category="action" size="sm" />}>
-          Acción principal
+        <Button
+          variant="primary"
+          size="md"
+          leftIcon="plus"
+          leftIconCategory="action"
+        >
+          Nuevo usuario
         </Button>
       </Card.Content>
     </Card>
@@ -69,54 +76,79 @@ export function MiComponente() {
 }
 ```
 
-### Tipografías (en `layout.tsx`)
+`Card`, `Dialog` y `DropdownMenu` exponen sub-componentes estáticos (`Card.Header`, `Dialog.Footer`, `DropdownMenu.Item`). Los mismos sub-componentes también están disponibles como exports nombrados.
+
+### Tipografías (Next.js `layout.tsx`)
 
 ```tsx
-import { getFontSans, getFontMono } from '@buildertech/ui/lib/fonts';
+import { getFontSans, getFontMono } from "@buildertech/ui/lib/fonts";
 
-const interSans = getFontSans();
-const jetbrainsMono = getFontMono();
+const sans = getFontSans();
+const mono = getFontMono();
 
 export default function RootLayout({ children }) {
   return (
-    <html className={`${interSans.variable} ${jetbrainsMono.variable}`}>
+    <html className={`${sans.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   );
 }
 ```
 
+`getFontSans()`, `getFontMono()` y `getFontDisplay()` devuelven `{ variable, className, style }` y requieren `next` (peer dependency `>=14`).
+
+> **Limitación conocida del paquete (2026-11-10):** el build emite imports relativos ESM sin extensión. La prueba de consumo con Node ESM no pudo importar ninguna de las 25 subrutas JavaScript exportadas; el import raíz también falla al cargar CSS directamente en Node. La resolución con bundlers de Next.js/Vite no se verificó en esa prueba. No se debe interpretar el ejemplo como soporte de importación ESM nativa de Node.
+
 ---
 
 ## 📦 Qué Incluye
 
-| Categoría | Detalle |
-|:----------|:--------|
-| **Tokens de diseño** | Variables CSS `btc-*` (colores, espaciado, radios, fuentes, sombras, movimiento) + roles semánticos light/dark |
-| **23 Componentes UI** | 16 base (Button, Card, Dialog, Select, Table, NavLink, Badge, Textfield, EmptyState, LoadingState, ErrorState, ErrorPage, CopyButton, BackButton, ThemeToggle, Skeleton) + 7 primitivas nativas (DropdownMenu, Toast, Label, Separator, Slot) |
-| **Utilidades** | `classnames` (clsx + tailwind-merge), `Icon` (Lucide React wrapper semántico), `fonts` helpers |
-| **Validación** | `check:design` — 11 reglas visuales + grep `fetch\|supabase\|prisma\|axios` como guardarraíl anti-lógica-de-negocio |
-| **Tests visuales** | Playwright: 4 anchos (360, 768, 1024, 1440) × 2 temas (light/dark) = 128 snapshots base |
-| **Documentación** | Guía completa, enforcement, decisiones (ADRs), navegadores soportados, changelog |
+| Categoría                   | Detalle                                                                                                                 |
+| :-------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
+| **Tokens de diseño**        | Variables CSS `--btc-*` (color, espaciado, radios, fuentes, sombras, movimiento, z-index) y roles semánticos light/dark |
+| **23 componentes públicos** | 16 base + 7 primitivas: Toast, ToastProvider, ToastViewport, Label, Separator, Slot, DropdownMenu                       |
+| **Utilidades**              | `clsx` (clsx + tailwind-merge), `Icon` (wrapper semántico de Lucide), helpers de fuentes                                |
+| **Validación**              | `check:design` — 12 reglas visuales + guardarraíl anti-lógica-de-negocio                                                |
+| **Storybook**               | Catálogo de 21 stories, controles, acciones, viewports, backgrounds, tema, accesibilidad y component tests              |
+| **Tests**                   | 334 tests unit/integration + 255 tests de stories (última cifra documentada, no revalidada el 2026-11-10) + 22 specs visuales Playwright |
+| **Documentación**           | Arquitectura, APIs, tokens, gobernanza, ADRs, navegadores y changelog                                                   |
+
+### Componentes
+
+| Grupo              | Componentes                                                                                                                                                    |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Base (16)**      | Button, Card, Dialog, Select, Table, NavLink, Badge, TextField, EmptyState, LoadingState, ErrorState, ErrorPage, CopyButton, BackButton, ThemeToggle, Skeleton |
+| **Primitivas (7)** | Toast, ToastProvider, ToastViewport, Label, Separator, Slot, DropdownMenu                                                                                      |
 
 ---
 
 ## 🛠 Comandos
 
-| Comando | Descripción |
-|:--------|:------------|
-| `pnpm --filter @buildertech/ui check:design` | Valida reglas visuales y ausencia de lógica de negocio |
-| `pnpm --filter @buildertech/ui test` | Unit tests (renderToStaticMarkup, sin DOM) |
-| `pnpm --filter @buildertech/ui test:visual` | Pruebas visuales de regresión (Playwright 4×2) |
-| `pnpm --filter @buildertech/ui typecheck` | TypeScript strict check |
-| `pnpm --filter @buildertech/ui lint` | ESLint v9 flat config + Prettier |
-| `pnpm --filter @buildertech/ui quality:verify` | Pipeline completo: typecheck + lint + check:design + test |
+Todos los comandos se ejecutan desde la raíz del repositorio.
+
+| Comando                | Descripción                                                  |
+| :--------------------- | :----------------------------------------------------------- |
+| `pnpm storybook`       | Storybook en `http://127.0.0.1:6006` (abre el navegador)     |
+| `pnpm build-storybook` | Build estático de Storybook                                  |
+| `pnpm test`            | Tests unit (Node) + integration (jsdom)                      |
+| `pnpm test:storybook`  | Tests de stories en Chromium con Vitest + Playwright         |
+| `pnpm test:visual`     | Regresión visual Playwright (8 proyectos)                    |
+| `pnpm test:coverage`   | Cobertura de unit + integration                              |
+| `pnpm test:static`     | Typecheck + lint + contract + component files + suppressions |
+| `pnpm typecheck`       | TypeScript estricto (`tsc --noEmit`)                         |
+| `pnpm lint`            | ESLint 9 flat config                                         |
+| `pnpm check:design`    | Reglas visuales + guardarraíl de lógica de negocio           |
+| `pnpm check:contract`  | Exports de `package.json` ↔ `src/` ↔ `dist/`                 |
+| `pnpm build`           | Build a `dist/` (JS + `.d.ts` + CSS)                         |
+| `pnpm quality:verify`  | `typecheck` + `lint` + `check:design` + `test`               |
+
+> `quality:verify` no incluye `test:storybook` ni `test:visual` porque requieren Chromium/Storybook. Ejecútalos por separado antes de un release.
 
 ---
 
 ## 🏗 Arquitectura
 
-### Distribución por CSS (Una sola importación)
+### Distribución por CSS
 
 ```mermaid
 flowchart LR
@@ -124,258 +156,241 @@ flowchart LR
         TCSS["tokens.css<br/>(--btc-* primitivas + roles semánticos)"]
         GCSS["globals.css<br/>(@theme inline → utilidades btc-*)"]
     end
-    
+
     TCSS --> GCSS
-    GCSS --> APP["apps/web<br/>@import '@buildertech/ui/styles/globals.css'"]
-    APP --> UTILS["Utilidades Tailwind<br/>bg-btc-app, text-btc-text,<br/>rounded-btc-md, shadow-btc-1, ..."]
+    GCSS --> APP["App consumidora<br/>@import '@buildertech/ui/styles/globals.css'"]
+    APP --> UTILS["Utilidades Tailwind<br/>bg-btc-app, text-btc-text-primary,<br/>rounded-btc-md, shadow-btc-1, ..."]
 ```
 
-### Principios Arquitectónicos
+### Principios arquitectónicos
 
-| Principio | Descripción |
-|:----------|:------------|
-| **Fuente única de verdad** | Tokens, componentes, validación y docs viven en este paquete |
-| **Distribución por CSS** | Consumidor importa **una sola línea**: `@import "@buildertech/ui/styles/globals.css"` |
-| **Cero dependencias de UI externas** | Implementación propia de Dialog, Select, DropdownMenu, Toast, Label, Separator, Slot |
-| **Cero lógica de negocio** | Componentes son **presentacionales únicamente** — reciben props, renderizan UI, emiten eventos |
-| **Versionado independiente** | `0.1.x` para desarrollo, `1.0.0` para congelación |
-| **Publicación workspace** | `private: true`, `workspace:*` — fuente directa, sin build a `dist` |
-| **Tests sin DOM** | `renderToStaticMarkup` + aserciones de string (sin `jsdom`) |
+| Principio                            | Descripción                                                                          |
+| :----------------------------------- | :----------------------------------------------------------------------------------- |
+| **Fuente única de verdad**           | Tokens, componentes, validación y docs viven en este repositorio                     |
+| **Distribución por CSS**             | El consumidor importa una sola línea de `globals.css`                                |
+| **Cero dependencias de UI externas** | Dialog, Select, DropdownMenu, Toast, Label, Separator y Slot son nativos             |
+| **Cero lógica de negocio**           | Componentes presentacionales: reciben props, renderizan UI y emiten eventos          |
+| **Versionado independiente**         | `0.1.x` en desarrollo; `1.0.0` como objetivo de congelación de API                   |
+| **Paquete publicado `dist`-only**    | `files: ["dist"]`; el repositorio sí incluye tests, e2e, Storybook y scripts         |
+| **Testing en capas**                 | Unit (Node), integration (jsdom), stories (Chromium) y regresión visual (Playwright) |
 
-### Estructura del Paquete (Post-Reorganización — ver [ADR-008](docs/adrs/008-reorganizacion-scaffold.md))
+### Estructura del repositorio
 
-```
+```text
 btc-002-ui/
-├── src/                          # Código fuente
-│   ├── index.ts                  # Barrel principal
+├── src/
+│   ├── index.ts                  # Barrel público
 │   ├── styles/
-│   │   ├── tokens.css            # Variables CSS --btc-* (Tailwind v4 @theme)
-│   │   └── globals.css           # @layer + @theme inline → utilidades btc-*
-│   ├── components/               # 23 componentes (cada uno: .tsx, index.ts, .test.tsx, .stories.tsx)
+│   │   ├── tokens.css            # Variables CSS --btc-* y roles light/dark
+│   │   └── globals.css           # @theme inline → utilidades btc-*
+│   ├── components/               # 21 directorios, 23 componentes públicos
 │   │   ├── button/
 │   │   ├── card/
 │   │   ├── dialog/
 │   │   ├── select/
 │   │   ├── table/
-│   │   ├── nav-link/
-│   │   ├── badge/
 │   │   ├── textfield/
-│   │   ├── empty-state/
-│   │   ├── loading-state/
-│   │   ├── error-state/
-│   │   ├── error-page/
-│   │   ├── copy-button/
-│   │   ├── back-button/
-│   │   ├── theme-toggle/
-│   │   ├── skeleton/
-│   │   ├── label/
-│   │   ├── separator/
-│   │   ├── slot/
 │   │   ├── toast/
-│   │   └── dropdown-menu/
+│   │   └── ... (14 directorios más)
 │   ├── lib/
-│   │   ├── classnames.ts         # clsx + tailwind-merge (btc-*)
-│   │   ├── icon.tsx              # Icon wrapper semántico (Lucide)
-│   │   └── fonts.ts              # Helpers getFontSans()/getFontMono()
-│   └── test/                     # Setup Vitest
-│       ├── setup.ts              # Integration (jsdom) setup
-│       └── setup-unit.ts         # Unit (node) setup
-├── e2e/                          # Tests visuales Playwright
-│   ├── visual/
-│   │   ├── *.visual.spec.ts      # 22 specs (4 viewports × 2 temas)
-│   │   └── snapshots/            # 3285 PNGs baseline (gitignored via .git/info/exclude)
-│   └── support/
-│       ├── global-setup.ts
-│       ├── global-teardown.ts
-│       ├── utils.ts
-│       └── test-iframe.ts
-├── scripts/                      # Scripts de validación y build
-│   ├── register.mjs              # Loader tsx (Node --import)
-│   ├── check-design.ts           # 11 reglas visuales + anti-biz-logic
-│   └── check-component-contract.mjs  # Exports ↔ src ↔ dist
-├── .storybook/                   # Storybook 8 config
-├── docs/                         # Documentación
-│   ├── adrs/                     # ADR-001 a ADR-008 + index.md
-│   ├── arquitectura/
-│   ├── componentes/
-│   ├── gobernanza/
-│   ├── guias/
-│   └── tokens/
-├── tsconfig.base.json            # Base + paths @/* → src/*
-├── tsconfig.json                 # Typecheck-only (noEmit)
-├── tsconfig.build.json           # Build → dist/ (declarations)
-├── tsconfig.eslint.json          # Extiende tsconfig.json para ESLint
-├── vitest.config.ts              # 2 projects: unit (node) + integration (jsdom)
-├── playwright.config.ts          # 8 projects: 4 viewports × 2 temas
-├── eslint.config.js              # Flat config (ignora e2e/, scripts/, dist/)
-├── package.json                  # Scripts, 23 exports, deps
-└── pnpm-workspace.yaml
+│   │   ├── classnames/           # clsx + tailwind-merge
+│   │   ├── icon/                 # Wrapper semántico de Lucide
+│   │   └── fonts/                # Helpers next/font
+│   └── test/
+│       ├── setup.ts              # Integration (jsdom)
+│       └── setup-unit.ts         # Unit (Node)
+├── e2e/
+│   ├── visual/                   # 22 specs + 3285 snapshots
+│   └── support/                  # global setup/teardown y utilidades
+├── scripts/
+│   ├── check-design.ts           # 12 reglas + guardarraíl
+│   ├── check-component-contract.ts
+│   ├── check-component-files.mjs
+│   ├── check-suppressions.mjs
+│   └── register.mjs
+├── .storybook/
+│   ├── main.ts                   # Addons y framework
+│   ├── preview.tsx               # Tema, viewports, backgrounds, decorador
+│   ├── preview-head.html         # Layout full-width
+│   └── vitest.setup.ts           # Setup de storybook test
+├── docs/                         # ADRs, arquitectura, componentes, tokens, guías
+├── vitest.config.ts              # Config base
+├── vitest.workspace.ts           # Proyectos unit + integration + storybook
+├── playwright.config.ts          # 8 proyectos visuales
+├── tsconfig*.json
+├── eslint.config.js
+└── package.json
 ```
 
 ---
 
 ## 📚 Documentación
 
-| Documento | Descripción |
-|:----------|:------------|
-| [Arquitectura](docs/arquitectura/index.md) | Visión general, convenciones, estructura, arquitectura de estilos, componentes |
-| [Especificación de API](docs/tokens/api-spec.md) | Props, variantes, tamaños, iconos, accesibilidad de los 23 componentes |
-| [Guía de Migración](docs/guias/migration-guide.md) | Paso a paso para apps consumidoras (6 pasos, checklist, troubleshooting, rollback) |
-| [Paleta Visual](docs/tokens/visual-palette.md) | Colores base, mapeo semántico light/dark, contraste WCAG 2.1 AA, bordes, elevación, botones |
-| [Layout & Sizing](docs/tokens/layout-sizing.md) | Tokens de espaciado (base 4px) y enfoque Tailwind para layout/sizing/flexbox/grid/alignment |
-| [Enforcement](docs/gobernanza/enforcement.md) | Políticas de uso, reglas obligatorias, sanciones por incumplimiento |
-| [Decisiones (ADRs)](docs/adrs/) | ADR-001 a ADR-008 — decisiones arquitectónicas inmutables |
-| [Índice de ADRs](docs/adrs/index.md) | Registro histórico de decisiones |
-| [Navegadores Soportados](docs/componentes/supported-browsers.md) | Matriz de compatibilidad y política de soporte |
-| [Changelog](CHANGELOG.md) | Historial de cambios por versión (Keep a Changelog) |
-| [Cómo Añadir un Componente](docs/componentes/adding.md) | Guía paso a paso para contribuir componentes |
-
-> **Nota**: Ver [ADR-008](docs/adrs/008-reorganizacion-scaffold.md) para contexto de la reorganización de scaffold y hallazgos pendientes (H1-H4).
+| Documento                                                        | Descripción                                                  |
+| :--------------------------------------------------------------- | :----------------------------------------------------------- |
+| [Arquitectura](docs/arquitectura/indice.md)                       | Principios, estructura y convenciones                        |
+| [Especificación de API](docs/tokens/especificacion-api.md)                 | Props, variantes y accesibilidad de los 23 componentes       |
+| [Guía de componentes](docs/componentes/guia.md)                 | Instalación y ejemplos de uso reales                         |
+| [Paleta visual](docs/tokens/paleta-visual.md)                   | Colores, ratios de contraste reales y deuda de accesibilidad |
+| [Layout & Sizing](docs/tokens/dimensiones-disposicion.md)                  | Espaciado, elevación, z-index y delegación a Tailwind        |
+| [Enforcement](docs/gobernanza/cumplimiento.md)                    | Reglas obligatorias, excepciones y sanciones                 |
+| [ADRs](docs/adrs/indice.md)                                       | ADR-001 a ADR-009                                            |
+| [Navegadores soportados](docs/componentes/navegadores-compatibles.md) | Matriz de compatibilidad y alcance de la validación          |
+| [Contribuir](docs/guias/contribuir.md)                         | Flujo de PR, testing y release                               |
+| [Añadir un componente](docs/componentes/agregar-componente.md)               | Proceso paso a paso                                          |
+| [Migración](docs/guias/guia-migracion.md)                       | Guía para apps consumidoras                                  |
+| [Changelog](CHANGELOG.md)                                        | Historial por versión                                        |
+| [Clasificación de tests](CLASIFICACION.md)                       | Estado y decisiones sobre los tests                          |
 
 ---
 
 ## 🧪 Testing
 
-### Unit Tests (Sin DOM)
+### Unit + Integration (Vitest)
 
 ```bash
-pnpm run test
+pnpm test
 ```
 
-- Usan `react-dom/server` → `renderToStaticMarkup`
-- Aserciones de string sobre markup generado
-- Verifican clases `btc-*`, estructura HTML, props de accesibilidad
-- Rápidos, deterministas, sin dependencias de `jsdom`
-- **Ubicación**: `src/lib/**/*.test.tsx` (unit), `src/components/**/*.test.tsx` (integration)
+| Proyecto      | Entorno | Alcance                        | Setup                    |
+| :------------ | :------ | :----------------------------- | :----------------------- |
+| `unit`        | Node    | `src/lib/**/*.test.ts*`        | `src/test/setup-unit.ts` |
+| `integration` | jsdom   | `src/components/**/*.test.tsx` | `src/test/setup.ts`      |
 
-### Visual Regression Tests (Playwright)
+- **24 archivos de test**, **334 tests** (verificados dos veces el 2026-11-10; las 334 pruebas pasaron en ambas ejecuciones).
+- Integration valida comportamiento con Testing Library: eventos, foco, teclado, ARIA y estado.
+- Unit valida utilidades puras (classnames, iconos, tipos).
+
+### Storybook
 
 ```bash
-pnpm run test:visual
+pnpm storybook
 ```
 
-| Configuración | Detalle |
-|:--------------|:--------|
-| **Viewports** | 360px (mobile), 768px (tablet), 1024px (laptop), 1440px (desktop) |
-| **Temas** | Light, Dark |
-| **Proyectos** | 8 (4 × 2) |
-| **Snapshots base** | 3285 (en `e2e/visual/snapshots/`, gitignored via `.git/info/exclude`) |
-| **Umbral** | `maxDiffPixels: 0`, `maxDiffPixelRatio: 0.001`, `threshold: 0.2` |
+Abre automáticamente `http://127.0.0.1:6006`. Si el puerto está ocupado, detén la instancia previa.
 
-> **Nota**: `test:visual` se ejecuta por separado (requiere Storybook local). No está incluido en `quality:verify` para evitar fallos en CI sin Storybook.
-> **Estado actual**: 30 passed / 354 failed — ver [ADR-008 §Hallazgos Pendientes H4](docs/adrs/008-reorganizacion-scaffold.md#hallazgos-pendientes-no-conforme--no-verificable)
+| Herramienta            | Ubicación      | Uso                                                       |
+| :--------------------- | :------------- | :-------------------------------------------------------- |
+| **Controls / Actions** | Panel inferior | Props editables y callbacks registrados                   |
+| **Viewport**           | Toolbar        | Mobile 360px, Tablet 768px, Laptop 1024px, Desktop 1440px |
+| **Backgrounds**        | Toolbar        | `light`, `surface`, `raised`                              |
+| **Theme**              | Toolbar        | Light / Dark (aplica `data-theme` en `<html>`)            |
+| **Measure / Outline**  | Toolbar        | Medición de espaciado y contornos                         |
+| **Accessibility**      | Panel inferior | Auditoría axe por story                                   |
+| **Component tests**    | Panel inferior | Resultados de Vitest por story                            |
+| **Run tests**          | Sidebar        | Ejecuta la suite de stories en el navegador               |
+
+### Storybook component tests (Chromium)
+
+```bash
+pnpm exec playwright install chromium   # primera vez
+pnpm test:storybook
+```
+
+Ejecuta las 21 stories en un navegador real con `@storybook/experimental-addon-test` y Vitest browser mode. La última cifra documentada es **21 archivos / 255 tests**; no se revalidó el 2026-11-10 porque esta verificación no ejecutó Storybook ni navegadores.
+
+### Regresión visual (Playwright)
+
+```bash
+pnpm test:visual
+```
+
+| Configuración      | Detalle                                                          |
+| :----------------- | :--------------------------------------------------------------- |
+| **Viewports**      | 360×800, 768×1024, 1024×1024, 1440×1024                          |
+| **Temas**          | Light, Dark                                                      |
+| **Proyectos**      | 8 (`light-*` / `dark-*`)                                         |
+| **Specs**          | 22                                                               |
+| **Snapshots base** | 3285 PNGs en `e2e/visual/snapshots/`                             |
+| **Umbral**         | `maxDiffPixels: 0`, `maxDiffPixelRatio: 0.001`, `threshold: 0.2` |
+
+El `webServer` de Playwright arranca Storybook automáticamente en local si no está corriendo. En CI requiere Storybook disponible o un servidor equivalente; por eso no forma parte de `quality:verify`.
 
 ---
 
 ## ✅ Validación `check:design`
 
 ```bash
-pnpm --filter @buildertech/ui check:design --scan-dirs=src,apps/web/src
+pnpm check:design
 ```
 
-### 11 Reglas Visuales
+Escanea `src/` por defecto. Para otros directorios, configura `checkDesign.scanDirs` en `package.json`; la CLI no acepta `--scan-dirs`.
 
-1. **Solo tokens `btc-*`** — No colores hardcoded, no `bg-blue-500`, etc.
-2. **Solo utilidades `btc-*`** — No `rounded-md`, `shadow-lg`, usar `rounded-btc-md`, `shadow-btc-1`
-3. **Espaciado base 4px** — Solo `--btc-space-*` (1,2,3,4,6,8,12,16)
-4. **Radios definidos** — Solo `--btc-radius-*` (xs, sm, md, lg, xl, 2xl, full)
-5. **Fuentes del sistema** — Solo `--btc-font-sans` / `--btc-font-mono`
-6. **Duraciones estándar** — Solo `--btc-duration-*` (fast, base, slow)
-7. **Easing estándar** — Solo `--btc-ease-standard`
-8. **Sombras definidas** — Solo `--btc-shadow-*` (1-4)
-9. **Z-index controlado** — Solo valores definidos en tokens
-10. **Transiciones permitidas** — Solo `transition-colors`, `transition-opacity`, `transition-transform`, `transition-shadow`
-11. **No `!important`** — Excepto en `globals.css` `@layer utilities`
+### 12 reglas visuales + 1 guardarraíl
 
-### Guardarraíl Anti-Lógica-de-Negocio
+| ID                      | Regla                                                           |
+| :---------------------- | :-------------------------------------------------------------- |
+| `only-btc-color-tokens` | Solo tokens de color `btc-*`                                    |
+| `only-btc-utilities`    | Solo utilidades `btc-*` para spacing, radius y shadow           |
+| `spacing-scale`         | Escala de espaciado `0,1,2,3,4,6,8,12,16`                       |
+| `sizing-scale`          | Sizing con escala definida o Tailwind estándar                  |
+| `radius-defined`        | Solo radios definidos                                           |
+| `font-system`           | Solo fuentes del sistema (`font-btc-*`)                         |
+| `duration-standard`     | Solo duraciones `btc-*`                                         |
+| `ease-standard`         | Solo `ease-btc-standard`                                        |
+| `shadow-defined`        | Solo `shadow-btc-1..5`                                          |
+| `z-index-controlled`    | Solo `z-btc-*`                                                  |
+| `transition-allowed`    | Solo `transition-btc-*`                                         |
+| `no-important`          | Sin `!important` (salvo utilities globales)                     |
+| `no-business-logic`     | **Guardarraíl**: prohíbe `fetch`, `supabase`, `prisma`, `axios` |
 
-```bash
-# Grep prohibido en src/
-fetch|supabase|prisma|axios
-```
+### Accesibilidad
 
-> **Regla de Oro**: Si el código importa `next/navigation`, `next-themes` provider, define rutas, hace `fetch`, accede a DB, o maneja estado de sesión → **NO va en `@buildertech/ui`**.
+El addon de a11y ejecuta axe en cada story. La última evidencia documentada indica que se resolvieron las violaciones `color-contrast` conocidas (botón primario, badge, card, copybutton, dropdownmenu, emptystate, errorstate, label, loadingstate, navlink, select, separator, skeleton). **Axe no se ejecutó el 2026-11-10**, así que este resultado no es una certificación actual. Los ratios calculados están en [Paleta visual §5–6](docs/tokens/paleta-visual.md#5-contraste-textofondo).
 
 ---
 
-## 📦 Publicación (GitHub Packages)
+## 📦 Publicación
 
-### Flujo de Release
+El paquete se publica en GitHub Packages con `publishConfig.access: restricted`.
 
 ```bash
-# 1. Cambios en main → Changeset automático
-# 2. GitHub Action valida: typecheck + lint + check:design + tests + build
-# 3. Changeset versiona y publica a GitHub Packages
+# 1. Validación completa
+pnpm quality:verify
+pnpm test:storybook
 
-# Release manual (workflow_dispatch):
-# GitHub Actions → Publish @buildertech/ui → Run workflow
-# Opciones: patch | minor | major | versión exacta (ej: 1.2.3)
+# 2. Build
+pnpm build
+
+# 3. Publicar (prepublishOnly repite quality:verify + build)
+pnpm publish --registry=https://npm.pkg.github.com
 ```
 
-### Configuración Requerida
-
-| Secreto | Descripción |
-|:--------|:------------|
-| `GITHUB_TOKEN` | Auto-proporcionado por GitHub Actions (write:packages) |
-| `NPM_TOKEN` | Para `npm publish` si se usa registry público |
-
-### Versionado
-
-- **0.1.x** — Desarrollo inicial (breaking changes permitidos)
-- **1.0.0** — Freeze API pública, semver estricto
-- **Changesets** — Gestiona versionado y changelog automático
-
-### Ver Paquetes Publicados
-
-```text
-https://github.com/buildertech/ui-package/packages
-```
+> **Estado actual**: no hay workflows de CI en `.github/workflows/` ni Changesets instalado. El versionado es manual: actualiza `package.json`, `CHANGELOG.md` y crea el tag correspondiente antes de publicar.
 
 ---
 
 ## 🤝 Contribuyendo
 
-Ver [CONTRIBUTING.md](CONTRIBUTING.md) para:
+Ver [docs/guias/contribuir.md](docs/guias/contribuir.md) para el flujo completo:
 
-- Estándares de código (comillas simples, imports, compound components)
-- Proceso de PR (issue → documentación → implementación → validación → review)
-- Cómo añadir un componente nuevo
-- Cómo proponer cambios a tokens/componentes
-- Gobernanza (DS Owner aprueba cambios)
+- Issue → rama → implementación → docs → validación → PR.
+- Commits con Conventional Commits.
+- Aprobación del DS Owner.
+- Checklist de tests y accesibilidad.
 
-### Flujo Rápido
+### Flujo rápido
 
 ```bash
-# 1. Crear issue con propuesta
-# 2. Implementar en rama
-# 3. Validar localmente
-pnpm --filter @buildertech/ui quality:verify
-# 4. PR → Review → Merge (DS Owner aprueba)
+pnpm quality:verify
+pnpm test:storybook
+pnpm build
 ```
 
 ---
 
 ## 📋 Gobernanza
 
-| Aspecto | Decisión |
-|:--------|:---------|
-| **Owner** | Design System Owner (aprueba cambios, igual que `decisions.md`) |
-| **Proceso** | Issue → Documentación (`decisions.md`) → Implementación → `check:design` verde + Playwright pass → PR → Merge |
-| **Guardarraíles** | `check:design` (paquete) + `enforcement.md` (regla no lógica de negocio en UI) |
-| **Fuente de verdad** | `docs/` — estructura por categorías |
-| **Changelog** | `CHANGELOG.md` raíz |
+| Aspecto              | Decisión                                                         |
+| :------------------- | :--------------------------------------------------------------- |
+| **Owner**            | Design System Owner                                              |
+| **Proceso**          | Issue → documentación → implementación → validación → PR → merge |
+| **Guardarraíles**    | `check:design`, `check:contract`, `check:suppressions`           |
+| **Fuente de verdad** | `docs/`                                                          |
+| **Changelog**        | `CHANGELOG.md` en la raíz                                        |
 
 ---
 
 ## 📄 Licencia
 
-Privado — Uso exclusivo dentro del monorepo BuilderTech (`workspace:*`).
-
----
-
-## 🔗 Enlaces Rápidos
-
-- [Monorepo Root](../../README.md)
-- [Apps Consumidoras](../../apps/)
-- [Shared Package](../../packages/shared/)
-- [Issue Tracker](../../../issues)
+Privado — uso exclusivo dentro de BuilderTech. Publicación restringida en GitHub Packages.

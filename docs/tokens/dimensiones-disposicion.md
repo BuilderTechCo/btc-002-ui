@@ -1,21 +1,21 @@
 # Layout, Sizing, Flexbox, Grid, Box Alignment & Spacing — @buildertech/ui
 
-> **Versión**: 0.1.0 | **Fecha**: 2026-11-07 | **Estado**: Validado contra implementación real
+> **Versión**: 0.1.0 | **Fecha**: 2026-11-09 | **Estado**: Validado contra `tokens.css`, `globals.css` y `scripts/check-design.ts`
 
 ---
 
 ## 🎯 Resumen de Enfoque
 
-| Tema | Proveído por DS | Proveído por Tailwind | Documentación |
-|------|-----------------|----------------------|---------------|
-| **Spacing** | ✅ Tokens `--btc-space-*` (base 4px) | Utilidades `p-btc-*`, `m-btc-*`, `gap-btc-*`, `space-btc-*` | Esta doc + `gobernanza/enforcement.md` R2 |
-| **Sizing** | ❌ | Utilidades `w-*`, `h-*`, `min-w-*`, `max-w-*`, `size-*` | [Tailwind Sizing](https://tailwindcss.com/docs/width) |
-| **Flexbox** | ❌ | Utilidades `flex`, `flex-row`, `flex-col`, `items-*`, `justify-*`, `gap-*` | [Tailwind Flexbox](https://tailwindcss.com/docs/flex) |
-| **Grid** | ❌ | Utilidades `grid`, `grid-cols-*`, `grid-rows-*`, `col-span-*`, `row-span-*` | [Tailwind Grid](https://tailwindcss.com/docs/grid-template-columns) |
-| **Box Alignment** | ❌ | Utilidades `items-*`, `justify-*`, `self-*`, `place-*`, `content-*` | [Tailwind Box Alignment](https://tailwindcss.com/docs/align-items) |
-| **Layout** | ❌ | Utilidades `container`, `container-*`, `overflow-*`, `position-*`, `inset-*` | [Tailwind Layout](https://tailwindcss.com/docs/container) |
-| **Elevation (Sombras)** | ✅ Tokens `--btc-elevation-1` a `5` | Utilidades `shadow-btc-1` a `5` | Esta doc + `gobernanza/enforcement.md` R6 |
-| **Z-Index** | ✅ Tokens `--btc-z-*` | Utilidades `z-btc-*` | `gobernanza/enforcement.md` R7 |
+| Tema                    | Proveído por DS                      | Proveído por Tailwind                                                        | Documentación                                                       |
+| ----------------------- | ------------------------------------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| **Spacing**             | ✅ Tokens `--btc-space-*` (base 4px) | Utilidades `p-btc-*`, `m-btc-*`, `gap-btc-*`, `space-btc-*`                  | Esta doc + `gobernanza/cumplimiento.md` `spacing-scale`              |
+| **Sizing**              | ❌                                   | Utilidades `w-*`, `h-*`, `min-w-*`, `max-w-*`, `size-*`                      | [Tailwind Sizing](https://tailwindcss.com/docs/width)               |
+| **Flexbox**             | ❌                                   | Utilidades `flex`, `flex-row`, `flex-col`, `items-*`, `justify-*`, `gap-*`   | [Tailwind Flexbox](https://tailwindcss.com/docs/flex)               |
+| **Grid**                | ❌                                   | Utilidades `grid`, `grid-cols-*`, `grid-rows-*`, `col-span-*`, `row-span-*`  | [Tailwind Grid](https://tailwindcss.com/docs/grid-template-columns) |
+| **Box Alignment**       | ❌                                   | Utilidades `items-*`, `justify-*`, `self-*`, `place-*`, `content-*`          | [Tailwind Box Alignment](https://tailwindcss.com/docs/align-items)  |
+| **Layout**              | ❌                                   | Utilidades `container`, `container-*`, `overflow-*`, `position-*`, `inset-*` | [Tailwind Layout](https://tailwindcss.com/docs/container)           |
+| **Elevation (Sombras)** | ✅ Tokens `--btc-elevation-1` a `5`  | Utilidades `shadow-btc-1` a `5`                                              | Esta doc + `gobernanza/cumplimiento.md` `shadow-defined`             |
+| **Z-Index**             | ✅ Tokens `--btc-z-*`                | Utilidades `z-btc-*`                                                         | `gobernanza/cumplimiento.md` `z-index-controlled`                    |
 
 > **Regla de Oro**: **No definir tokens personalizados** para sizing, flexbox, grid, box alignment, o layout. Usar utilidades Tailwind directamente. Solo el **espaciado** (`--btc-space-*`), **elevación** (`--btc-elevation-*`), y **z-index** (`--btc-z-*`) tienen tokens propios.
 
@@ -27,13 +27,14 @@
 
 ```css
 :root {
-  /* Escala base 4px — 8 pasos */
-  --btc-space-1: 4px;   /* 1 × 4px  */
-  --btc-space-2: 8px;   /* 2 × 4px  */
-  --btc-space-3: 12px;  /* 3 × 4px  */
-  --btc-space-4: 16px;  /* 4 × 4px  */
-  --btc-space-6: 24px;  /* 6 × 4px  */
-  --btc-space-8: 32px;  /* 8 × 4px  */
+  /* Escala base 4px — 9 pasos */
+  --btc-space-0: 0px; /* 0 */
+  --btc-space-1: 4px; /* 1 × 4px  */
+  --btc-space-2: 8px; /* 2 × 4px  */
+  --btc-space-3: 12px; /* 3 × 4px  */
+  --btc-space-4: 16px; /* 4 × 4px  */
+  --btc-space-6: 24px; /* 6 × 4px  */
+  --btc-space-8: 32px; /* 8 × 4px  */
   --btc-space-12: 48px; /* 12 × 4px */
   --btc-space-16: 64px; /* 16 × 4px */
 }
@@ -44,6 +45,7 @@
 ```css
 @theme inline {
   /* Espaciado → utilidades p-btc-*, m-btc-*, gap-btc-*, space-btc-* */
+  --spacing-btc-0: var(--btc-space-0);
   --spacing-btc-1: var(--btc-space-1);
   --spacing-btc-2: var(--btc-space-2);
   --spacing-btc-3: var(--btc-space-3);
@@ -57,17 +59,17 @@
 
 ### 1.3 Clases Disponibles
 
-| Tipo | Clases | Valores |
-|------|--------|---------|
-| **Padding** | `p-btc-{1,2,3,4,6,8,12,16}` | 4px → 64px |
-| **Padding X/Y** | `px-btc-*`, `py-btc-*` | Eje horizontal/vertical |
-| **Padding Direccional** | `pt-btc-*`, `pr-btc-*`, `pb-btc-*`, `pl-btc-*` | Cada lado |
-| **Margin** | `m-btc-{1,2,3,4,6,8,12,16}` | 4px → 64px |
-| **Margin X/Y** | `mx-btc-*`, `my-btc-*` | Eje horizontal/vertical |
-| **Margin Direccional** | `mt-btc-*`, `mr-btc-*`, `mb-btc-*`, `ml-btc-*` | Cada lado |
-| **Gap (Flex/Grid)** | `gap-btc-{1,2,3,4,6,8,12,16}` | 4px → 64px |
-| **Gap X/Y** | `gap-x-btc-*`, `gap-y-btc-*` | Eje horizontal/vertical |
-| **Space (Between Children)** | `space-x-btc-*`, `space-y-btc-*` | Solo hijos directos |
+| Tipo                         | Clases                                         | Valores                 |
+| ---------------------------- | ---------------------------------------------- | ----------------------- |
+| **Padding**                  | `p-btc-{1,2,3,4,6,8,12,16}`                    | 4px → 64px              |
+| **Padding X/Y**              | `px-btc-*`, `py-btc-*`                         | Eje horizontal/vertical |
+| **Padding Direccional**      | `pt-btc-*`, `pr-btc-*`, `pb-btc-*`, `pl-btc-*` | Cada lado               |
+| **Margin**                   | `m-btc-{1,2,3,4,6,8,12,16}`                    | 4px → 64px              |
+| **Margin X/Y**               | `mx-btc-*`, `my-btc-*`                         | Eje horizontal/vertical |
+| **Margin Direccional**       | `mt-btc-*`, `mr-btc-*`, `mb-btc-*`, `ml-btc-*` | Cada lado               |
+| **Gap (Flex/Grid)**          | `gap-btc-{1,2,3,4,6,8,12,16}`                  | 4px → 64px              |
+| **Gap X/Y**                  | `gap-x-btc-*`, `gap-y-btc-*`                   | Eje horizontal/vertical |
+| **Space (Between Children)** | `space-x-btc-*`, `space-y-btc-*`               | Solo hijos directos     |
 
 ### 1.4 Ejemplos de Uso
 
@@ -91,9 +93,9 @@
 
 ### 1.5 Validación (`check:design`)
 
-- **Regla `spacing-scale`**: Solo permite valores de la escala `1,2,3,4,6,8,12,16`
+- **Regla `spacing-scale`**: solo permite valores de la escala `0,1,2,3,4,6,8,12,16`
 - **Regla `only-btc-utilities`**: Requiere prefijo `btc-` en todas las utilidades de espaciado
-- Ver: `gobernanza/enforcement.md` → **R2: Espaciado Solo Escala Base 4px**
+- Ver: `gobernanza/cumplimiento.md` → `spacing-scale`: escala `0,1,2,3,4,6,8,12,16`
 
 ---
 
@@ -318,17 +320,17 @@ El DS **no define tokens** para box alignment. Las utilidades Tailwind cubren to
 
 ### 5.2 Mapeo CSS → Tailwind
 
-| Propiedad CSS | Utilidad Tailwind |
-|---------------|-------------------|
-| `align-items` | `items-*` |
-| `justify-items` | `justify-items-*` |
-| `align-content` | `content-*` |
-| `justify-content` | `justify-*` |
-| `align-self` | `self-*` |
-| `justify-self` | `justify-self-*` |
-| `place-items` | `place-items-*` |
-| `place-content` | `place-content-*` |
-| `place-self` | `place-self-*` |
+| Propiedad CSS     | Utilidad Tailwind |
+| ----------------- | ----------------- |
+| `align-items`     | `items-*`         |
+| `justify-items`   | `justify-items-*` |
+| `align-content`   | `content-*`       |
+| `justify-content` | `justify-*`       |
+| `align-self`      | `self-*`          |
+| `justify-self`    | `justify-self-*`  |
+| `place-items`     | `place-items-*`   |
+| `place-content`   | `place-content-*` |
+| `place-self`      | `place-self-*`    |
 
 ### 5.3 Referencias Tailwind
 
@@ -350,7 +352,7 @@ El DS **no define tokens** para box alignment. Las utilidades Tailwind cubren to
 
 El DS **no define tokens** para layout general (position, overflow, inset, display, visibility, etc.).
 
-> *Nota: **z-index** sí tiene tokens controlados (`--btc-z-*`) — ver `gobernanza/enforcement.md` R7.
+> *Nota: **z-index** sí tiene tokens controlados (`--btc-z-*`) — ver `gobernanza/cumplimiento.md` `z-index-controlled`.
 
 ```tsx
 // Display
@@ -365,7 +367,7 @@ El DS **no define tokens** para layout general (position, overflow, inset, displ
 
 // Z-Index (usa tokens DS --btc-z-*)
 <div className="z-btc-base z-btc-dropdown z-btc-sticky z-btc-modal z-btc-popover z-btc-tooltip z-btc-toast z-auto" />
-<!-- Ver gobernanza/enforcement.md R7: solo valores definidos en tokens.css -->
+<!-- Ver gobernanza/cumplimiento.md `z-index-controlled`: solo valores definidos en tokens.css -->
 
 // Overflow
 <div className="overflow-auto overflow-hidden overflow-clip overflow-visible overflow-scroll" />
@@ -429,7 +431,7 @@ xl: 1280px
   --btc-elevation-5: 0 28px 64px rgba(var(--forest-950-rgb), 0.2);
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   /* Dark mode — usa rgba(0,0,0,X) */
   --btc-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.15);
   --btc-elevation-2: 0 4px 12px rgba(0, 0, 0, 0.25);
@@ -454,28 +456,31 @@ xl: 1280px
 
 ### 7.3 Clases Disponibles
 
-| Clase | Token | Uso Típico |
-|-------|-------|------------|
-| `shadow-btc-1` | `--btc-elevation-1` | Cards, Inputs |
-| `shadow-btc-2` | `--btc-elevation-2` | Dropdowns, Tooltips |
+| Clase          | Token               | Uso Típico           |
+| -------------- | ------------------- | -------------------- |
+| `shadow-btc-1` | `--btc-elevation-1` | Cards, Inputs        |
+| `shadow-btc-2` | `--btc-elevation-2` | Dropdowns, Tooltips  |
 | `shadow-btc-3` | `--btc-elevation-3` | **Dialogs, Modales** |
-| `shadow-btc-4` | `--btc-elevation-4` | Toasts, Overlays |
-| `shadow-btc-5` | `--btc-elevation-5` | Reservado |
+| `shadow-btc-4` | `--btc-elevation-4` | Toasts, Overlays     |
+| `shadow-btc-5` | `--btc-elevation-5` | Reservado            |
 
 ### 7.4 Uso por Componente (Validado)
 
-| Componente | Elevation Token | Variante |
-|------------|----------------|----------|
-| `Card` (default) | `--btc-elevation-1` → `shadow-btc-1` | Sutil |
-| `Card` (hover) | `--btc-elevation-2` → `shadow-btc-2` | Elevado |
-| `Input` (focus) | `--btc-elevation-1` → `shadow-btc-1` | Sutil |
-| `DropdownMenu` | `--btc-elevation-2` → `shadow-btc-2` | Estándar |
-| `Dialog` / `Modal` | `--btc-elevation-3` → `shadow-btc-3` | **Principal** |
-| `Toast` | `--btc-elevation-4` → `shadow-btc-4` | Prominente |
+| Componente          | Elevation Token                      | Uso real                 |
+| ------------------- | ------------------------------------ | ------------------------ |
+| `Card` (elevated)   | `--btc-elevation-2` → `shadow-btc-2` | Variante `elevated`      |
+| `DropdownMenu`      | `--btc-elevation-2` → `shadow-btc-2` | Contenido del menú       |
+| `Select` (dropdown) | `--btc-elevation-3` → `shadow-btc-3` | Listbox del combobox     |
+| `ErrorState`        | `--btc-elevation-3` → `shadow-btc-3` | Variantes con superficie |
+| `LoadingState`      | `--btc-elevation-3` → `shadow-btc-3` | Contenedor de carga      |
+| `Toast`             | `--btc-elevation-4` → `shadow-btc-4` | Notificación             |
+| `Dialog`            | `--btc-elevation-5` → `shadow-btc-5` | Modal principal          |
+
+> `Card` en variante `default` y `outlined` usa borde, no sombra. `Dialog` usa la elevación máxima del sistema.
 
 ### 7.5 Validación (`check:design`)
 
-- **Regla R6**: Solo `shadow-btc-1` a `shadow-btc-5` permitidos
+- **Regla `shadow-defined`**: solo `shadow-btc-1` a `shadow-btc-5`
 - **Prohibido**: `shadow`, `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`, `shadow-2xl`
 
 ---
@@ -512,50 +517,55 @@ xl: 1280px
 
 ### 8.3 Capas Definidas
 
-| Capa | Token | Utilidad | Uso |
-|------|-------|----------|-----|
-| Base | `--btc-z-base` (0) | `z-btc-base` | Contenido normal |
-| Dropdown | `--btc-z-dropdown` (100) | `z-btc-dropdown` | DropdownMenu, Select |
-| Sticky | `--btc-z-sticky` (200) | `z-btc-sticky` | Sticky headers, nav |
-| Modal | `--btc-z-modal` (300) | `z-btc-modal` | Dialog, Modal |
-| Popover | `--btc-z-popover` (400) | `z-btc-popover` | Popover, Tooltip trigger |
-| Tooltip | `--btc-z-tooltip` (500) | `z-btc-tooltip` | Tooltip content |
-| Toast | `--btc-z-toast` (600) | `z-btc-toast` | Toast notifications |
+| Capa     | Token                    | Utilidad         | Uso                      |
+| -------- | ------------------------ | ---------------- | ------------------------ |
+| Base     | `--btc-z-base` (0)       | `z-btc-base`     | Contenido normal         |
+| Dropdown | `--btc-z-dropdown` (100) | `z-btc-dropdown` | DropdownMenu, Select     |
+| Sticky   | `--btc-z-sticky` (200)   | `z-btc-sticky`   | Sticky headers, nav      |
+| Modal    | `--btc-z-modal` (300)    | `z-btc-modal`    | Dialog, Modal            |
+| Popover  | `--btc-z-popover` (400)  | `z-btc-popover`  | Popover, Tooltip trigger |
+| Tooltip  | `--btc-z-tooltip` (500)  | `z-btc-tooltip`  | Tooltip content          |
+| Toast    | `--btc-z-toast` (600)    | `z-btc-toast`    | Toast notifications      |
 
 ### 8.4 Validación (`check:design`)
 
-- **Regla R7**: Solo valores `z-btc-*` definidos permitidos
+- **Regla `z-index-controlled`**: solo valores `z-btc-*` definidos
 - **Prohibido**: `z-10`, `z-50`, `z-[9999]`, valores arbitrarios
 
 ---
 
 ## 📋 Matriz de Validación (`check:design`)
 
-| Tema | Regla | Qué Valida |
-|------|-------|------------|
-| **Spacing** | `spacing-scale` | Solo valores `1,2,3,4,6,8,12,16` |
-| **Spacing** | `only-btc-utilities` | Prefijo `btc-` obligatorio |
-| **Sizing** | `only-btc-utilities` | ❌ No aplica (usa Tailwind default) |
-| **Flexbox** | `only-btc-utilities` | ❌ No aplica (usa Tailwind default) |
-| **Grid** | `only-btc-utilities` | ❌ No aplica (usa Tailwind default) |
-| **Box Alignment** | `only-btc-utilities` | ❌ No aplica (usa Tailwind default) |
-| **Layout** | `only-btc-utilities` | ❌ No aplica (usa Tailwind default) |
-| **Elevation** | `only-btc-utilities` + R6 | Solo `shadow-btc-1` a `5` |
-| **Z-Index** | `z-index-controlled` | Solo valores `z-btc-*` definidos |
+| Tema              | Regla                                                      | Qué valida                                                              |
+| ----------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **Spacing**       | `spacing-scale`                                            | Solo valores `0,1,2,3,4,6,8,12,16`                                      |
+| **Spacing**       | `only-btc-utilities`                                       | Prefijo `btc-` obligatorio en padding/margin/gap/space                  |
+| **Sizing**        | `sizing-scale`                                             | `w/h/min/max/size-btc-*` solo en la escala; Tailwind estándar permitido |
+| **Flexbox**       | —                                                          | Sin validación: utilidades Tailwind estándar                            |
+| **Grid**          | —                                                          | Sin validación: utilidades Tailwind estándar                            |
+| **Box Alignment** | —                                                          | Sin validación: utilidades Tailwind estándar                            |
+| **Layout**        | `z-index-controlled`                                       | Solo `z-btc-*`; el resto del layout usa Tailwind estándar               |
+| **Elevation**     | `shadow-defined` + `only-btc-utilities`                    | Solo `shadow-btc-1` a `5`                                               |
+| **Radius**        | `radius-defined`                                           | Solo `rounded-btc-*` definidos                                          |
+| **Colores**       | `only-btc-color-tokens`                                    | Solo tokens de color `btc-*`                                            |
+| **Tipografía**    | `font-system`                                              | Solo `font-btc-sans` / `font-btc-mono`                                  |
+| **Movimiento**    | `duration-standard`, `ease-standard`, `transition-allowed` | Solo duraciones, easing y transiciones `btc-*`                          |
+| **Z-Index**       | `z-index-controlled`                                       | Solo capas `z-btc-*`                                                    |
+| **Negocio**       | `no-business-logic`                                        | Prohibido `fetch`, `supabase`, `prisma`, `axios`                        |
 
-> **Importante**: Para Sizing, Flexbox, Grid, Box Alignment, Layout — **no hay validación `check:design`** porque usan utilidades Tailwind estándar. La validación solo aplica a **Spacing** (escala `btc-*`), **Elevation** (`shadow-btc-*`), y **Z-Index** (`z-btc-*`).
+> **Importante**: Sizing, Flexbox, Grid, Box Alignment y Layout usan utilidades Tailwind estándar. `check:design` solo interviene cuando aparecen valores `btc-*` (por ejemplo `w-btc-5`) o cuando se usan colores, spacing, radios, sombras, z-index o transiciones. La matriz completa de reglas está en [`cumplimiento.md`](../gobernanza/cumplimiento.md).
 
 ---
 
 ## 🔗 Referencias Cruzadas
 
-| Documento | Sección Relevante |
-|-----------|-------------------|
-| `arquitectura/index.md` | §1 Principios → "Layout vía Tailwind CSS" |
-| `gobernanza/enforcement.md` | R2 Espaciado, R6 Elevation, R7 Z-Index |
-| `tokens/api-spec.md` | Props `padding`, `size`, `variant` en componentes |
-| `tokens/visual-palette.md` | Sección 5.5 Guía de Uso por Componente (borders/elevation) |
-| `componentes/guide.md` | Tokens de Diseño → Utilidades Tailwind Generadas |
+| Documento                   | Sección Relevante                                          |
+| --------------------------- | ---------------------------------------------------------- |
+| `arquitectura/indice.md`     | §1 Principios → "Layout vía Tailwind CSS"                  |
+| `gobernanza/cumplimiento.md` | `spacing-scale`, `shadow-defined`, `z-index-controlled` |
+| `tokens/especificacion-api.md`        | Props `padding`, `size`, `variant` en componentes          |
+| `tokens/paleta-visual.md`  | Sección 5.5 Guía de Uso por Componente (borders/elevation) |
+| `componentes/guia.md`      | Tokens de Diseño → Utilidades Tailwind Generadas           |
 
 ---
 
@@ -567,9 +577,9 @@ xl: 1280px
 - [x] **Grid**: Documentado como delegado a Tailwind, sin tokens propios, ejemplo dashboard
 - [x] **Box Alignment**: Documentado como delegado a Tailwind, mapeo CSS→Tailwind
 - [x] **Layout**: Documentado como delegado a Tailwind, container, position, overflow, z-index (parcial)
-- [x] **Elevation**: Tokens `--btc-elevation-*` definidos, utilidades `shadow-btc-*` generadas, validación R6
-- [x] **Z-Index**: Tokens `--btc-z-*` definidos, utilidades `z-btc-*` generadas, validación R7
+- [x] **Elevation**: Tokens `--btc-elevation-*` definidos, utilidades `shadow-btc-*` generadas, validación `shadow-defined`
+- [x] **Z-Index**: Tokens `--btc-z-*` definidos, utilidades `z-btc-*` generadas, validación `z-index-controlled`
 
 ---
 
-## ✅ Última actualización: 2026-11-07 — Documentación validada para v0.1.0
+## ✅ Última actualización: 2026-11-09 — Documentación validada para v0.1.0
