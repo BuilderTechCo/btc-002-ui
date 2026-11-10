@@ -1,0 +1,418 @@
+/* @buildertech/ui - Global Styles
+ * @theme inline → mapea --btc-* a utilidades Tailwind btc-*
+ * Versión: 0.1.0
+ */
+
+@import "./tokens.css";
+@import "tailwindcss";
+
+@theme inline {
+  /* ============================================
+   * COLORES SEMÁNTICOS → utilidades bg-btc-*, text-btc-*, border-btc-*
+   * ============================================ */
+
+  /* Fondos */
+  --color-btc-app: var(--btc-bg-app);
+  --color-btc-surface: var(--btc-bg-surface);
+  --color-btc-raised: var(--btc-bg-raised);
+  --color-btc-brand: var(--btc-bg-brand);
+
+  /* Textos */
+  --color-btc-text: var(--btc-text-primary);
+  --color-btc-text-primary: var(--btc-text-primary);
+  --color-btc-text-secondary: var(--btc-text-secondary);
+  --color-btc-text-muted: var(--btc-text-muted);
+  --color-btc-text-brand: var(--btc-text-brand);
+  --color-btc-text-on-brand: var(--btc-text-on-brand);
+
+  /* Bordes */
+  --color-btc-border: var(--btc-border-default);
+  --color-btc-border-subtle: var(--btc-border-subtle);
+  --color-btc-border-default: var(--btc-border-default);
+  --color-btc-border-strong: var(--btc-border-strong);
+  --color-btc-border-focus: var(--btc-border-focus);
+
+  /* Acciones */
+  --color-btc-action-primary: var(--btc-action-primary);
+  --color-btc-action-hover: var(--btc-action-hover);
+  --color-btc-action-pressed: var(--btc-action-pressed);
+
+  /* Estados */
+  --color-btc-success: var(--btc-success);
+  --color-btc-success-bg: var(--btc-success-bg);
+  --color-btc-warning: var(--btc-warning);
+  --color-btc-warning-bg: var(--btc-warning-bg);
+  --color-btc-error: var(--btc-error);
+  --color-btc-error-bg: var(--btc-error-bg);
+  --color-btc-info: var(--btc-info);
+  --color-btc-info-bg: var(--btc-info-bg);
+
+  /* Outline/Ghost Variants */
+  --color-btc-action-primary-outline-bg: var(--btc-action-primary-outline-bg);
+  --color-btc-action-primary-outline-border: var(
+    --btc-action-primary-outline-border
+  );
+  --color-btc-action-primary-outline-text: var(
+    --btc-action-primary-outline-text
+  );
+  --color-btc-action-primary-outline-hover-bg: var(
+    --btc-action-primary-outline-hover-bg
+  );
+
+  --color-btc-action-info-outline-bg: var(--btc-action-info-outline-bg);
+  --color-btc-action-info-outline-border: var(--btc-action-info-outline-border);
+  --color-btc-action-info-outline-text: var(--btc-action-info-outline-text);
+  --color-btc-action-info-outline-hover-bg: var(
+    --btc-action-info-outline-hover-bg
+  );
+
+  --color-btc-action-danger-outline-bg: var(--btc-action-danger-outline-bg);
+  --color-btc-action-danger-outline-border: var(
+    --btc-action-danger-outline-border
+  );
+  --color-btc-action-danger-outline-text: var(--btc-action-danger-outline-text);
+  --color-btc-action-danger-outline-hover-bg: var(
+    --btc-action-danger-outline-hover-bg
+  );
+
+  --color-btc-action-ghost-bg: var(--btc-action-ghost-bg);
+  --color-btc-action-ghost-text: var(--btc-action-ghost-text);
+  --color-btc-action-ghost-hover-bg: var(--btc-action-ghost-hover-bg);
+  --color-btc-action-ghost-hover-text: var(--btc-action-ghost-hover-text);
+
+  /* ============================================
+   * RADIOS → rounded-btc-*
+   * ============================================ */
+
+  --radius-btc-xs: var(--btc-radius-xs);
+  --radius-btc-sm: var(--btc-radius-sm);
+  --radius-btc-md: var(--btc-radius-md);
+  --radius-btc-lg: var(--btc-radius-lg);
+  --radius-btc-xl: var(--btc-radius-xl);
+  --radius-btc-2xl: var(--btc-radius-2xl);
+  --radius-btc-full: var(--btc-radius-full);
+
+  /* ============================================
+   * SOMBRAS (Elevation) → shadow-btc-*
+   * ============================================ */
+
+  --shadow-btc-1: var(--btc-elevation-1);
+  --shadow-btc-2: var(--btc-elevation-2);
+  --shadow-btc-3: var(--btc-elevation-3);
+  --shadow-btc-4: var(--btc-elevation-4);
+  --shadow-btc-5: var(--btc-elevation-5);
+
+  /* ============================================
+   * ESPACIADO → p-btc-*, m-btc-*, gap-btc-*, space-btc-*
+   * ============================================ */
+
+  --spacing-btc-0: var(--btc-space-0);
+  --spacing-btc-1: var(--btc-space-1);
+  --spacing-btc-2: var(--btc-space-2);
+  --spacing-btc-3: var(--btc-space-3);
+  --spacing-btc-4: var(--btc-space-4);
+  --spacing-btc-6: var(--btc-space-6);
+  --spacing-btc-8: var(--btc-space-8);
+  --spacing-btc-12: var(--btc-space-12);
+  --spacing-btc-16: var(--btc-space-16);
+
+  /* ============================================
+   * TIPOGRAFÍA → text-btc-*, font-btc-*
+   * ============================================ */
+
+  --font-btc-sans: var(--btc-font-sans);
+  --font-btc-mono: var(--btc-font-mono);
+
+  --text-btc-display: 2.25rem; /* 36px */
+  --text-btc-display--line-height: 2.5rem;
+
+  --text-btc-h1: 1.875rem; /* 30px */
+  --text-btc-h1--line-height: 2.25rem;
+
+  --text-btc-h2: 1.5rem; /* 24px */
+  --text-btc-h2--line-height: 2rem;
+
+  --text-btc-h3: 1.25rem; /* 20px */
+  --text-btc-h3--line-height: 1.75rem;
+
+  --text-btc-h4: 1.125rem; /* 18px */
+  --text-btc-h4--line-height: 1.5rem;
+
+  --text-btc-body: 1rem; /* 16px */
+  --text-btc-body--line-height: 1.5rem;
+
+  --text-btc-body-s: 0.875rem; /* 14px */
+  --text-btc-body-s--line-height: 1.25rem;
+
+  --text-btc-control: 0.875rem; /* 14px */
+  --text-btc-control--line-height: 1.25rem;
+
+  --text-btc-caption: 0.75rem; /* 12px */
+  --text-btc-caption--line-height: 1rem;
+
+  --text-btc-mono: 0.75rem; /* 12px */
+  --text-btc-mono--line-height: 1rem;
+
+  /* ============================================
+   * BUTTON SIZES → h-btc-btn-*, px-btc-btn-*
+   * ============================================ */
+
+  --height-btc-btn-sm: var(--btc-btn-height-sm);
+  --height-btc-btn-md: var(--btc-btn-height-md);
+  --height-btc-btn-lg: var(--btc-btn-height-lg);
+
+  --spacing-btc-btn-px-sm: var(--btc-btn-px-sm);
+  --spacing-btc-btn-px-md: var(--btc-btn-px-md);
+  --spacing-btc-btn-px-lg: var(--btc-btn-px-lg);
+
+  /* ============================================
+   * DURACIONES Y EASING → duration-btc-*, ease-btc-*
+   * ============================================ */
+
+  --duration-btc-fast: var(--btc-duration-fast);
+  --duration-btc-base: var(--btc-duration-base);
+  --duration-btc-slow: var(--btc-duration-slow);
+  --ease-btc-standard: var(--btc-ease-standard);
+
+  /* ============================================
+   * Z-INDEX → z-btc-*
+   * ============================================ */
+
+  --z-btc-base: var(--btc-z-base);
+  --z-btc-dropdown: var(--btc-z-dropdown);
+  --z-btc-sticky: var(--btc-z-sticky);
+  --z-btc-modal: var(--btc-z-modal);
+  --z-btc-popover: var(--btc-z-popover);
+  --z-btc-tooltip: var(--btc-z-tooltip);
+  --z-btc-toast: var(--btc-z-toast);
+
+  /* ============================================
+   * TRANSICIONES → transition-btc-*
+   * ============================================ */
+
+  --transition-property-btc-colors: var(--btc-transition-colors);
+  --transition-property-btc-opacity: var(--btc-transition-opacity);
+  --transition-property-btc-transform: var(--btc-transition-transform);
+  --transition-property-btc-shadow: var(--btc-transition-shadow);
+
+  --transition-duration-btc-base: var(--btc-duration-base);
+  --transition-timing-function-btc-standard: var(--btc-ease-standard);
+}
+
+@layer base {
+  /* Reset global */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border-color: var(--color-btc-border-default);
+  }
+
+  html {
+    scroll-padding-top: 4rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-btc-sans);
+    font-size: var(--text-btc-body);
+    line-height: var(--text-btc-body--line-height);
+    background-color: var(--color-btc-app);
+    color: var(--color-btc-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus visible global */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-btc-border-focus);
+    border-radius: var(--radius-btc-sm);
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: color-mix(
+      in srgb,
+      var(--color-btc-brand) 20%,
+      transparent
+    );
+    color: var(--color-btc-text-primary);
+  }
+
+  /* Scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-btc-border-default) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--color-btc-border-default);
+    border-radius: var(--radius-btc-full);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-btc-border-strong);
+  }
+
+  /* Imágenes y media */
+  img,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Formularios base */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  a {
+    color: var(--color-btc-text-brand);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+@layer utilities {
+  /* Utilidades de propósito único permitidas */
+  .text-balance {
+    text-wrap: balance !important;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none !important;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Animaciones base */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes skeleton {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-skeleton {
+    animation: skeleton 1.5s var(--btc-ease-standard) infinite;
+    background: linear-gradient(
+      90deg,
+      var(--color-btc-border-subtle) 25%,
+      var(--color-btc-border-default) 50%,
+      var(--color-btc-border-subtle) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  @keyframes btc-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes btc-zoom-in {
+    from {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes btc-slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: btc-fade-in var(--btc-duration-base) var(--btc-ease-standard)
+      both;
+  }
+
+  .animate-zoom-in {
+    animation: btc-zoom-in var(--btc-duration-base) var(--btc-ease-standard)
+      both;
+  }
+
+  .animate-slide-in-right {
+    animation: btc-slide-in-right var(--btc-duration-base)
+      var(--btc-ease-standard) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-spin,
+    .animate-pulse,
+    .animate-skeleton,
+    .animate-fade-in,
+    .animate-zoom-in,
+    .animate-slide-in-right {
+      animation: none !important;
+    }
+  }
+}
