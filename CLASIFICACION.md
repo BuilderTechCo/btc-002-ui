@@ -3,7 +3,7 @@
 **Fecha**: 2026-11-10
 **Suite**: Vitest `unit` + `integration`
 **Resultado**: **334 pruebas aprobadas, 0 fallidas** (24 archivos)
-**Storybook**: última cifra documentada: **255 pruebas** (21 archivos, Chromium); no revalidada el 2026-11-10
+**Storybook**: **255 pruebas aprobadas** (21 archivos, Chromium) en la validación del 2026-11-10
 **Alcance**: Pruebas y comportamiento de componentes; sin cambios de lógica de negocio
 
 ---
@@ -22,14 +22,14 @@
 
 ## Suite actual
 
-| Proyecto                     | Entorno  | Archivos |  Tests  | Comando               |
-| :--------------------------- | :------- | :------: | :-----: | :-------------------- |
-| `unit`                       | Node     |    3     |    —    | `pnpm test`           |
-| `integration`                | jsdom    |    21    |    —    | `pnpm test`           |
-| **Total unit + integration** | —        |  **24**  | **334** | `pnpm test`           |
-| `storybook`                  | Chromium |    21    | 255 documentadas; sin revalidar | `pnpm test:storybook` |
+| Proyecto                     | Entorno  | Archivos |       Tests       | Comando               |
+| :--------------------------- | :------- | :------: | :---------------: | :-------------------- |
+| `unit`                       | Node     |    3     |         —         | `pnpm test`           |
+| `integration`                | jsdom    |    21    |         —         | `pnpm test`           |
+| **Total unit + integration** | —        |  **24**  |      **334**      | `pnpm test`           |
+| `storybook`                  | Chromium |    21    | **255 aprobadas** | `pnpm test:storybook` |
 
-> Las 334 pruebas unit/integration se verificaron contra Vitest en dos ejecuciones. Las 255 de Storybook son la última cifra documentada y no se revalidaron en esta revisión. Si añades tests, actualiza esta tabla y `README.md`.
+> Las 334 pruebas unit/integration se verificaron contra Vitest en dos ejecuciones; las 255 de Storybook pasaron en 21 archivos. Si añades tests, actualiza esta tabla y `README.md`.
 
 ---
 
@@ -97,12 +97,12 @@
 
 ## Deuda conocida fuera de tests
 
-| Tema                                    | Estado         | Referencia                          |
-| :-------------------------------------- | :------------- | :---------------------------------- |
-| **Contraste del botón primario**        | **Tokens corregidos; axe pendiente de revalidación** | `docs/tokens/paleta-visual.md` §6.1 |
-| `ErrorPage.action.href` sin implementar | Aceptado/documentado | Este documento, C2                  |
-| `test:visual` fuera de `quality:verify` | Aceptado       | Requiere Storybook/Chromium         |
-| Sin CI ni Husky                         | Aceptado       | Validación local antes del PR       |
+| Tema                                    | Estado                                                                                                           | Referencia                                            |
+| :-------------------------------------- | :--------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------- |
+| **Contraste del botón primario**        | **Tokens corregidos; axe pendiente de revalidación**                                                             | `docs/tokens/paleta-visual.md` §6.1                   |
+| `ErrorPage.action.href` sin implementar | Aceptado/documentado                                                                                             | Este documento, C2                                    |
+| **Playwright `test:visual`**            | **Deuda abierta**: no ejecutada el 2026-11-10; los baselines no están versionados y faltan en un checkout limpio | Requiere Storybook/Chromium y baselines reproducibles |
+| Sin CI ni Husky                         | Aceptado                                                                                                         | Validación local antes del PR                         |
 
 ---
 
@@ -114,4 +114,4 @@ pnpm test:storybook
 pnpm check:design
 ```
 
-Verificación registrada el 2026-11-10: `pnpm test` pasó dos veces con **334 pruebas unit/integration**, y `pnpm check:design` terminó con **0 violaciones**. Storybook no se ejecutó; su última cifra documentada es **255 pruebas**, pendiente de revalidación.
+Verificación registrada el 2026-11-10: `pnpm test` pasó dos veces con **334 pruebas unit/integration**; `pnpm test:storybook` pasó **255 pruebas en 21 archivos**; `pnpm check:design` terminó con **0 violaciones**. `pnpm test:visual` no se ejecutó y permanece como deuda técnica hasta disponer de baselines reproducibles.

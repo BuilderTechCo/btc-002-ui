@@ -10,23 +10,24 @@ El proyecto usaba 7 dependencias `@librerias-ui-externas/*` para componentes UI 
 
 ## Decisión
 
-**Eliminar todas las dependencias externas UI** y reemplazar con implementaciones nativas en `@buildertech/ui`:
+**Eliminar todas las dependencias externas UI** y reemplazar con implementaciones nativas en `@buildertechco/ui`:
 
-| Librería Externa | Reemplazo Nativo | Implementación |
-|------------------|------------------|----------------|
-| `@librerias-ui-externas/react-dialog` | `Dialog` | `<dialog>` HTML + portal + focus trap |
-| `@librerias-ui-externas/react-select` | `Select` | `<select>` nativo + portal + search/filter |
-| `@librerias-ui-externas/react-dropdown-menu` | `DropdownMenu` | Compound components (estilo Radix) |
-| `@librerias-ui-externas/react-toast` | `Toast` | ARIA live region + portal |
-| `@librerias-ui-externas/react-label` | `Label` | `<label>` nativo + estilos btc-* |
-| `@librerias-ui-externas/react-separator` | `Separator` | `<hr>` nativo + variantes |
-| `@librerias-ui-externas/react-slot` | `Slot` | Polimorfismo `asChild` pattern |
+| Librería Externa                             | Reemplazo Nativo | Implementación                             |
+| -------------------------------------------- | ---------------- | ------------------------------------------ |
+| `@librerias-ui-externas/react-dialog`        | `Dialog`         | `<dialog>` HTML + portal + focus trap      |
+| `@librerias-ui-externas/react-select`        | `Select`         | `<select>` nativo + portal + search/filter |
+| `@librerias-ui-externas/react-dropdown-menu` | `DropdownMenu`   | Compound components (estilo Radix)         |
+| `@librerias-ui-externas/react-toast`         | `Toast`          | ARIA live region + portal                  |
+| `@librerias-ui-externas/react-label`         | `Label`          | `<label>` nativo + estilos btc-*           |
+| `@librerias-ui-externas/react-separator`     | `Separator`      | `<hr>` nativo + variantes                  |
+| `@librerias-ui-externas/react-slot`          | `Slot`           | Polimorfismo `asChild` pattern             |
 
 **También eliminado**: `class-variance-authority` (CVA) → reemplazado por `clsx` + `tailwind-merge` en `lib/classnames.ts`
 
 ## Consecuencias
 
 ### Positivas
+
 - **Bundle size**: -45KB gzipped (sin deps UI externas)
 - **Zero runtime deps** para componentes UI
 - **Control total** de API, estilos, accesibilidad
@@ -34,6 +35,7 @@ El proyecto usaba 7 dependencias `@librerias-ui-externas/*` para componentes UI 
 - **Consistencia visual**: todos usan tokens `btc-*` y `check:design`
 
 ### Negativas
+
 - **Esfuerzo de migración** en apps consumidoras (Dialog, Select, Table APIs cambiaron)
 - **Mantenimiento** de componentes complejos (Dialog focus trap, Select search, DropdownMenu keyboard nav)
 - **Testing** visual regression obligatorio para garantizar paridad
@@ -41,6 +43,7 @@ El proyecto usaba 7 dependencias `@librerias-ui-externas/*` para componentes UI 
 ## Migración (apps/web)
 
 Ver `guias/guia-migracion.md` — Paso 4: APIs cambiadas críticamente:
+
 - **Dialog**: compound → props-based controlado (`open`/`onClose`)
 - **Select**: compound Radix → single component con `options[]`
 - **Table**: compound → data-driven `columns[]` + `data[]`

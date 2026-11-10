@@ -1,4 +1,4 @@
-# Layout, Sizing, Flexbox, Grid, Box Alignment & Spacing — @buildertech/ui
+# Layout, Sizing, Flexbox, Grid, Box Alignment & Spacing — @buildertechco/ui
 
 > **Versión**: 0.1.0 | **Fecha**: 2026-11-09 | **Estado**: Validado contra `tokens.css`, `globals.css` y `scripts/check-design.ts`
 
@@ -8,14 +8,14 @@
 
 | Tema                    | Proveído por DS                      | Proveído por Tailwind                                                        | Documentación                                                       |
 | ----------------------- | ------------------------------------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| **Spacing**             | ✅ Tokens `--btc-space-*` (base 4px) | Utilidades `p-btc-*`, `m-btc-*`, `gap-btc-*`, `space-btc-*`                  | Esta doc + `gobernanza/cumplimiento.md` `spacing-scale`              |
+| **Spacing**             | ✅ Tokens `--btc-space-*` (base 4px) | Utilidades `p-btc-*`, `m-btc-*`, `gap-btc-*`, `space-btc-*`                  | Esta doc + `gobernanza/cumplimiento.md` `spacing-scale`             |
 | **Sizing**              | ❌                                   | Utilidades `w-*`, `h-*`, `min-w-*`, `max-w-*`, `size-*`                      | [Tailwind Sizing](https://tailwindcss.com/docs/width)               |
 | **Flexbox**             | ❌                                   | Utilidades `flex`, `flex-row`, `flex-col`, `items-*`, `justify-*`, `gap-*`   | [Tailwind Flexbox](https://tailwindcss.com/docs/flex)               |
 | **Grid**                | ❌                                   | Utilidades `grid`, `grid-cols-*`, `grid-rows-*`, `col-span-*`, `row-span-*`  | [Tailwind Grid](https://tailwindcss.com/docs/grid-template-columns) |
 | **Box Alignment**       | ❌                                   | Utilidades `items-*`, `justify-*`, `self-*`, `place-*`, `content-*`          | [Tailwind Box Alignment](https://tailwindcss.com/docs/align-items)  |
 | **Layout**              | ❌                                   | Utilidades `container`, `container-*`, `overflow-*`, `position-*`, `inset-*` | [Tailwind Layout](https://tailwindcss.com/docs/container)           |
-| **Elevation (Sombras)** | ✅ Tokens `--btc-elevation-1` a `5`  | Utilidades `shadow-btc-1` a `5`                                              | Esta doc + `gobernanza/cumplimiento.md` `shadow-defined`             |
-| **Z-Index**             | ✅ Tokens `--btc-z-*`                | Utilidades `z-btc-*`                                                         | `gobernanza/cumplimiento.md` `z-index-controlled`                    |
+| **Elevation (Sombras)** | ✅ Tokens `--btc-elevation-1` a `5`  | Utilidades `shadow-btc-1` a `5`                                              | Esta doc + `gobernanza/cumplimiento.md` `shadow-defined`            |
+| **Z-Index**             | ✅ Tokens `--btc-z-*`                | Utilidades `z-btc-*`                                                         | `gobernanza/cumplimiento.md` `z-index-controlled`                   |
 
 > **Regla de Oro**: **No definir tokens personalizados** para sizing, flexbox, grid, box alignment, o layout. Usar utilidades Tailwind directamente. Solo el **espaciado** (`--btc-space-*`), **elevación** (`--btc-elevation-*`), y **z-index** (`--btc-z-*`) tienen tokens propios.
 
@@ -559,13 +559,13 @@ xl: 1280px
 
 ## 🔗 Referencias Cruzadas
 
-| Documento                   | Sección Relevante                                          |
-| --------------------------- | ---------------------------------------------------------- |
-| `arquitectura/indice.md`     | §1 Principios → "Layout vía Tailwind CSS"                  |
-| `gobernanza/cumplimiento.md` | `spacing-scale`, `shadow-defined`, `z-index-controlled` |
-| `tokens/especificacion-api.md`        | Props `padding`, `size`, `variant` en componentes          |
-| `tokens/paleta-visual.md`  | Sección 5.5 Guía de Uso por Componente (borders/elevation) |
-| `componentes/guia.md`      | Tokens de Diseño → Utilidades Tailwind Generadas           |
+| Documento                      | Sección Relevante                                          |
+| ------------------------------ | ---------------------------------------------------------- |
+| `arquitectura/indice.md`       | §1 Principios → "Layout vía Tailwind CSS"                  |
+| `gobernanza/cumplimiento.md`   | `spacing-scale`, `shadow-defined`, `z-index-controlled`    |
+| `tokens/especificacion-api.md` | Props `padding`, `size`, `variant` en componentes          |
+| `tokens/paleta-visual.md`      | Sección 5.5 Guía de Uso por Componente (borders/elevation) |
+| `componentes/guia.md`          | Tokens de Diseño → Utilidades Tailwind Generadas           |
 
 ---
 

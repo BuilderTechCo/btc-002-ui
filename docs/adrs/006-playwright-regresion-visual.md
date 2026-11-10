@@ -1,6 +1,6 @@
 # ADR-006: Playwright Visual Regression 4×2
 
-**Estado**: Aceptado | **Fecha**: 2026-11-03 | **Actualizado**: 2026-11-09
+**Estado**: Aceptado | **Fecha**: 2026-11-03 | **Actualizado**: 2026-11-10
 
 ---
 
@@ -26,7 +26,7 @@ Los tests de contrato y de integración validan clases, comportamiento y accesib
 
 **Proyectos**: `light-mobile`, `dark-mobile`, `light-tablet`, `dark-tablet`, `light-laptop`, `dark-laptop`, `light-desktop`, `dark-desktop`.
 
-**Baselines**: 22 specs y **3285 PNGs** en `e2e/visual/snapshots/`, excluidos vía `.git/info/exclude`.
+**Baselines locales**: existen **3285 PNGs** en `e2e/visual/snapshots/` en el entorno de trabajo auditado. No están versionados; `.git/info/exclude` los excluye solo en ese clon. Un checkout limpio no contiene estos baselines y no puede ejecutar la regresión visual de forma reproducible.
 
 **Umbral** (`playwright.config.ts`):
 
@@ -70,7 +70,7 @@ pnpm test:visual --update-snapshots
 - Specs en `e2e/visual/*.visual.spec.ts` (22).
 - Config en `playwright.config.ts` (raíz).
 - `test:visual` ejecuta `playwright test`.
-- Estado actual: los snapshots existen (3285); la suite visual no forma parte del pipeline base y debe ejecutarse antes de un release.
+- **Deuda técnica abierta:** `test:visual` no se ejecutó en la validación del 2026-11-10. Los 3285 snapshots registrados son locales, no están versionados y faltan en un checkout limpio; la ejecución reproducible queda pendiente hasta acordar una fuente de baselines disponible para el equipo y validar la suite en un checkout limpio. La suite sigue fuera de `quality:verify`.
 
 ---
 

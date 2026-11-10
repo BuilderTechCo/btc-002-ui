@@ -1,14 +1,14 @@
 NO commits, NO push, NO merge nunca.
 
-# CLAUDE.md — @buildertech/ui
+# CLAUDE.md — @buildertechco/ui
 
-Guía de trabajo para agentes y colaboradores del Design System `@buildertech/ui`.
+Guía de trabajo para agentes y colaboradores del Design System `@buildertechco/ui`.
 
 ---
 
 ## 1. Visión general
 
-- **Paquete**: `@buildertech/ui` — Design System propietario de BuilderTech.
+- **Paquete**: `@buildertechco/ui` — Design System propietario de BuilderTech.
 - **Estructura**: single-package en la raíz del repositorio (`btc-002-ui/`). No hay `packages/ui/`.
 - **Estilo**: Tailwind CSS v4 CSS-first (`@theme inline`) + tokens `btc-*`.
 - **Calidad**: 12 reglas visuales (`check:design`) + guardarraíl anti-lógica-de-negocio, contrato de exports, typecheck estricto, lint, tests unit/integration, Storybook component tests y regresión visual Playwright.
@@ -79,19 +79,25 @@ docs/                         # Arquitectura, ADRs, componentes, tokens, guías
 ## 3. Comandos
 
 ```bash
+pnpm build
+pnpm build-storybook
+pnpm check:component-files
+pnpm check:contract
+pnpm check:design
+pnpm check:suppressions
+pnpm format                    # Prettier en todo el repositorio
+pnpm format:check              # verificar todo el repositorio sin modificar
+pnpm lint
+pnpm quality:verify            # typecheck + lint + check:design + test
 pnpm storybook                 # http://127.0.0.1:6006 (auto-open)
-pnpm build-storybook           # Build estático
 pnpm test                      # unit + integration
+pnpm test:consumer             # Vite/Tailwind package-consumer smoke test
+pnpm test:coverage             # cobertura unit + integration
+pnpm test:docs-contract        # consistencia de docs, registry y checklist del PR
+pnpm test:static               # typecheck + lint + component/export/docs contracts
 pnpm test:storybook            # stories en Chromium
 pnpm test:visual               # Playwright (8 proyectos)
-pnpm test:coverage             # cobertura unit + integration
-pnpm test:static               # typecheck + lint + contract + files + suppressions
 pnpm typecheck
-pnpm lint
-pnpm check:design
-pnpm check:contract
-pnpm quality:verify            # typecheck + lint + check:design + test
-pnpm build
 ```
 
 ### `check:design`
@@ -162,8 +168,8 @@ pnpm check:design
 pnpm test:storybook
 ```
 
-- **Estado verificado (2026-11-10)**: 334 tests unit/integration pasaron en dos ejecuciones, 0 violaciones `check:design`. La última cifra documentada para Storybook es 255 tests; no se revalidó en esa fecha.
-- `test:visual` no está en `quality:verify`; requiere Chromium/Storybook y aprobación del DS Owner para actualizar snapshots.
+- **Estado verificado (2026-11-10)**: 334 tests unit/integration pasaron en dos ejecuciones, 255 tests de Storybook en 21 archivos, 0 violaciones `check:design`; `test:static`, `format:check`, build, `build-storybook`, `test:consumer` y `npm pack --dry-run` también pasaron.
+- **Deuda Playwright**: `test:visual` no se ejecutó y no está en `quality:verify`; los snapshots no están versionados y faltan en un checkout limpio. Mantener esta limitación explícita hasta que haya baselines reproducibles. Requiere Chromium/Storybook y aprobación del DS Owner para actualizar snapshots.
 - `check:contract` compara exports de `package.json` con `src/` y `dist/`; `check:component-files` valida la estructura de cada componente.
 - No hay CI ni Husky configurados; la validación es local antes del PR.
 
@@ -171,19 +177,19 @@ pnpm test:storybook
 
 ## 6. Documentación
 
-| Documento                        | Cuándo actualizarlo                               |
-| :------------------------------- | :------------------------------------------------ |
-| `README.md`                      | Comandos, stack, estructura, conteos, instalación |
-| `CHANGELOG.md`                   | Todo cambio visible para consumidores             |
-| `CLASIFICACION.md`               | Cambios en tests/deuda conocida                   |
-| `docs/tokens/especificacion-api.md`        | Cambios de props o exports                        |
-| `docs/componentes/guia.md`      | Ejemplos de uso e instalación                     |
-| `docs/tokens/paleta-visual.md`  | Tokens de color o ratios de contraste             |
-| `docs/tokens/dimensiones-disposicion.md`   | Espaciado, elevación, z-index o reglas            |
-| `docs/gobernanza/cumplimiento.md` | Reglas, excepciones o procesos                    |
-| `docs/arquitectura/indice.md`     | Estructura, principios, testing                   |
-| `docs/adrs/`                     | Decisiones arquitectónicas nuevas                 |
-| `docs/guias/`                    | Flujo de contribución, release y migración        |
+| Documento                                | Cuándo actualizarlo                               |
+| :--------------------------------------- | :------------------------------------------------ |
+| `README.md`                              | Comandos, stack, estructura, conteos, instalación |
+| `CHANGELOG.md`                           | Todo cambio visible para consumidores             |
+| `CLASIFICACION.md`                       | Cambios en tests/deuda conocida                   |
+| `docs/tokens/especificacion-api.md`      | Cambios de props o exports                        |
+| `docs/componentes/guia.md`               | Ejemplos de uso e instalación                     |
+| `docs/tokens/paleta-visual.md`           | Tokens de color o ratios de contraste             |
+| `docs/tokens/dimensiones-disposicion.md` | Espaciado, elevación, z-index o reglas            |
+| `docs/gobernanza/cumplimiento.md`        | Reglas, excepciones o procesos                    |
+| `docs/arquitectura/indice.md`            | Estructura, principios, testing                   |
+| `docs/adrs/`                             | Decisiones arquitectónicas nuevas                 |
+| `docs/guias/`                            | Flujo de contribución, release y migración        |
 
 ### Deuda conocida de accesibilidad
 

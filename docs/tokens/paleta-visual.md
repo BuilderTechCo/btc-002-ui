@@ -197,6 +197,7 @@ Estos pares son los que usan `Badge` y los mensajes de estado. Todos pasan AA pa
 | `coral-800` / `white`      |  6.97:1 |       ✅        |       ✅        |
 | `coral-900` / `white`      | 10.28:1 |       ✅        |       ✅        |
 | `coral-600` / `forest-950` |  4.61:1 |       ✅        |       ✅        |
+
 ---
 
 ## 6. Estado WCAG y deuda conocida
@@ -212,6 +213,7 @@ El botón primario ahora usa `bg-btc-action-primary` (`coral-700` `#C93A1E`) con
 - La documentación registra una ejecución histórica de axe sin `color-contrast` en el botón primario. Axe no se volvió a ejecutar en la revisión del 2026-11-10; el resultado queda pendiente de revalidación.
 
 > **Nota**: `coral-600` se conserva como primitiva de marca para acentos no textuales (Badges, enlaces de marca, bordes focus). El token semántico `--btc-brand` (alias de `coral-600`) sigue disponible para usos decorativos.
+
 ### 6.3 Texto atenuado y secundario
 
 | Caso                                  |  Ratio | Lectura                                       |
@@ -330,10 +332,10 @@ Transiciones permitidas por `transition-allowed`: `colors`, `opacity`, `transfor
 
 | Documento                                 | Sección                                                                               |
 | :---------------------------------------- | :------------------------------------------------------------------------------------ |
-| `tokens/dimensiones-disposicion.md`                 | Spacing, elevation, z-index                                                           |
-| `gobernanza/cumplimiento.md`               | `only-btc-color-tokens`, `shadow-defined`, `z-index-controlled`, `transition-allowed` |
-| `tokens/especificacion-api.md`                      | Props de componentes y deuda a11y                                                     |
-| `componentes/guia.md`                    | Uso de tokens en componentes                                                          |
+| `tokens/dimensiones-disposicion.md`       | Spacing, elevation, z-index                                                           |
+| `gobernanza/cumplimiento.md`              | `only-btc-color-tokens`, `shadow-defined`, `z-index-controlled`, `transition-allowed` |
+| `tokens/especificacion-api.md`            | Props de componentes y deuda a11y                                                     |
+| `componentes/guia.md`                     | Uso de tokens en componentes                                                          |
 | `adrs/009-storybook-validacion-visual.md` | Violación axe y contexto de la suite                                                  |
 
 ---

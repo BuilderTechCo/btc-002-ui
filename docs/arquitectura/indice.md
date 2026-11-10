@@ -1,4 +1,4 @@
-# Arquitectura — @buildertech/ui
+# Arquitectura — @buildertechco/ui
 
 > **Versión**: 0.1.0 | **Fecha**: 2026-11-10 | **Estado**: Revisado contra el repositorio
 
@@ -60,7 +60,7 @@ src/
 
 ```text
 src/test/                    # Setup de unit (Node) e integration (jsdom)
-e2e/visual/                  # 22 specs + 3285 snapshots
+e2e/visual/                  # 22 specs; 3285 snapshots locales no versionados
 e2e/support/                 # global setup/teardown y utilidades
 .storybook/                  # main.ts, preview.tsx, preview-head.html, vitest.setup.ts
 scripts/                     # check-design, contract, component-files, suppressions
@@ -112,35 +112,38 @@ playwright.config.ts         # 8 proyectos visuales
 
 ## 4. Qué sí / qué no está en el paquete
 
-| ✅ Sí (en `@buildertech/ui`)       | ❌ No (en apps consumidoras)                               |
-| :--------------------------------- | :--------------------------------------------------------- |
-| 23 componentes públicos            | AppShell, Topbar, Sidebar, layouts                         |
-| Tokens CSS (`--btc-*`)             | Overrides de tokens (salvo W1 justificado)                 |
-| Utilidades `btc-*` generadas       | Lógica de negocio (`fetch`, `supabase`, `prisma`, `axios`) |
-| `Icon`, `clsx`, helpers de fuentes | Wrappers de componentes (`CustomCard`, etc.)               |
-| `check:design`, `check:contract`   | Tests E2E o configs de apps                                |
-| ADRs, arquitectura, gobernanza     | Código específico de dominio                               |
+| ✅ Sí (en `@buildertechco/ui`)   | ❌ No (en apps consumidoras)                               |
+| :------------------------------- | :--------------------------------------------------------- |
+| 23 componentes públicos          | AppShell, Topbar, Sidebar, layouts                         |
+| Tokens CSS (`--btc-*`)           | Overrides de tokens (salvo W1 justificado)                 |
+| Utilidades `btc-*` generadas     | Lógica de negocio (`fetch`, `supabase`, `prisma`, `axios`) |
+| `Icon`, `clsx`                   | Wrappers de componentes (`CustomCard`, etc.)               |
+| `check:design`, `check:contract` | Tests E2E o configs de apps                                |
+| ADRs, arquitectura, gobernanza   | Código específico de dominio                               |
 
 ---
 
 ## 5. Capas de testing
 
-| Capa            | Herramienta                           | Qué valida                                   |
-| :-------------- | :------------------------------------ | :------------------------------------------- |
-| **Unit**        | Vitest + Node                         | Utilidades puras, classnames, iconos, tipos  |
-| **Integration** | Vitest + jsdom + Testing Library      | Comportamiento, eventos, foco, teclado, ARIA |
-| **Stories**     | Storybook + Vitest browser + Chromium | Render de cada story y assertions de `play`  |
-| **Visual**      | Playwright                            | 4 viewports × 2 temas, 3285 snapshots        |
-| **A11y**        | `@storybook/addon-a11y` (axe)         | Violaciones por story                        |
+| Capa            | Herramienta                           | Qué valida                                                   |
+| :-------------- | :------------------------------------ | :----------------------------------------------------------- |
+| **Unit**        | Vitest + Node                         | Utilidades puras, classnames, iconos, tipos                  |
+| **Integration** | Vitest + jsdom + Testing Library      | Comportamiento, eventos, foco, teclado, ARIA                 |
+| **Stories**     | Storybook + Vitest browser + Chromium | Render de cada story y assertions de `play`                  |
+| **Visual**      | Playwright                            | 4 viewports × 2 temas; 3285 snapshots locales no versionados |
+| **A11y**        | `@storybook/addon-a11y` (axe)         | Violaciones por story                                        |
 
 Comandos: `pnpm test`, `pnpm test:storybook`, `pnpm test:visual`, `pnpm storybook`.
 
 ### Estado verificado (2026-11-10)
 
 - Unit + integration: **334 tests**, todos pasaron en dos ejecuciones consecutivas; no hubo suites fallidas ni diferencias de nombre/estado.
+- Storybook: **255/255 tests aprobados en 21 archivos** con `pnpm test:storybook`.
 - `check:design`: **0 violaciones**.
-- Storybook: hay **21 archivos de stories**. La última cifra documentada es 255 tests, pero no se ejecutó en esta verificación y queda pendiente de confirmar.
-- Paquete ESM: el build produjo imports relativos sin extensión. La prueba de consumo con Node ESM no logró importar las 25 subrutas JavaScript exportadas; el soporte con bundlers no se verificó. No declarar compatibilidad nativa con Node ESM hasta corregir y repetir la prueba.
+- Calidad y distribución: pasaron `pnpm test:static`, `pnpm format:check`, `pnpm quality:verify`, `pnpm build`, `pnpm build-storybook`, `pnpm test:consumer`, `npm pack --dry-run` y `pnpm install --frozen-lockfile --offline`.
+- Consumo: `pnpm test:consumer` valida con Vite/Tailwind v4 el barrel raíz, 23 subrutas JavaScript no específicas de Next y las dos subrutas CSS. No valida Next.js ni el subpath de fuentes.
+- Node ESM nativo sigue sin soporte por imports relativos sin extensión y CSS.
+- Deuda Playwright: `pnpm test:visual` no se ejecutó; los 3285 snapshots visuales registrados solo existen localmente y no están versionados, por lo que faltan en un checkout limpio y no permiten una ejecución reproducible.
 
 ---
 

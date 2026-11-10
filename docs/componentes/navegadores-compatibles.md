@@ -1,4 +1,4 @@
-# Navegadores soportados — @buildertech/ui
+# Navegadores soportados — @buildertechco/ui
 
 > **Versión**: 0.1.0 | **Fecha**: 2026-11-10
 
@@ -47,7 +47,7 @@ pnpm test:storybook
 ```
 
 - Ejecuta las **21 stories** en **Chromium** con Vitest browser mode y Playwright.
-- La última cifra documentada es **255 tests** (2026-11-10: no revalidada en esta revisión; la cifra anterior de 251 quedó obsoleta en documentación).
+- **255 tests en 21 archivos** pasaron en Chromium con `pnpm test:storybook` el 2026-11-10.
 - Requiere Chromium de Playwright instalado (`pnpm exec playwright install chromium`).
 - Solo cubre Chromium; Firefox y WebKit **no** se ejecutan en esta suite.
 
@@ -65,10 +65,11 @@ pnpm test:visual
 | `desktop` | 1440px | 1024px |
 
 - **8 proyectos**: 4 viewports × 2 temas (`light-*`, `dark-*`).
-- **22 specs** y **3285 snapshots**.
+- **22 specs** y **3285 snapshots** locales no versionados; no disponibles en un checkout limpio.
 - Configuración: `maxDiffPixels: 0`, `maxDiffPixelRatio: 0.001`, `threshold: 0.2`.
 - `webServer` arranca Storybook en `http://localhost:6006` en local; en CI se desactiva.
 - Todos los proyectos usan `devices["Desktop Chrome"]` con viewport propio: **la suite no valida Firefox, Safari ni dispositivos reales**.
+- **Deuda técnica:** la regresión visual no se ejecutó el 2026-11-10. Los baselines no están versionados y no existen en un checkout limpio; se necesita una fuente reproducible antes de considerar validada esta cobertura.
 
 ### 3.3 Lo que no se valida automáticamente
 
@@ -84,21 +85,23 @@ pnpm test:visual
 
 ## 4. Requisitos de la app consumidora
 
-| Requisito                    | Detalle                                                                                             |
-| :--------------------------- | :-------------------------------------------------------------------------------------------------- |
-| **Tailwind CSS v4**          | Necesario para `@theme inline`; no se soporta Tailwind v3                                           |
-| **PostCSS / Vite / Next.js** | Cualquier pipeline que procese Tailwind v4                                                          |
-| **`@source`**                | Debe apuntar a `node_modules/@buildertech/ui/dist` para que Tailwind detecte las clases del paquete |
-| **`data-theme` en `<html>`** | Necesario para portales y tokens light/dark                                                         |
-| **React 18.3+**              | Peer dependency                                                                                     |
-| **Next.js 14+**              | Solo si usas los helpers `next/font`                                                                |
-| **Node 20+**                 | Solo para el repositorio del DS; no es requisito de runtime                                         |
+| Requisito                    | Detalle                                                                                               |
+| :--------------------------- | :---------------------------------------------------------------------------------------------------- |
+| **Tailwind CSS v4**          | Necesario para `@theme inline`; no se soporta Tailwind v3                                             |
+| **PostCSS / Vite / Next.js** | Opciones para procesar Tailwind v4; `pnpm test:consumer` valida Vite, no una app Next.js              |
+| **`@source`**                | Debe apuntar a `node_modules/@buildertechco/ui/dist` para que Tailwind detecte las clases del paquete |
+| **`data-theme` en `<html>`** | Necesario para portales y tokens light/dark                                                           |
+| **React 18.3+**              | Peer dependency                                                                                       |
+| **Next.js 14+**              | Solo para `@buildertechco/ui/lib/fonts`; `next` es un peer opcional                                   |
+| **Node 20+**                 | Solo para el repositorio del DS; no es requisito de runtime                                           |
+
+El barrel raíz se puede consumir con Vite/Tailwind v4. Los helpers de fuente son específicos de Next y se importan únicamente desde `@buildertechco/ui/lib/fonts`. La importación ESM nativa de Node no está soportada.
 
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "@buildertech/ui/styles/globals.css";
-@source "../node_modules/@buildertech/ui/dist";
+@import "@buildertechco/ui/styles/globals.css";
+@source "../node_modules/@buildertechco/ui/dist";
 ```
 
 ---

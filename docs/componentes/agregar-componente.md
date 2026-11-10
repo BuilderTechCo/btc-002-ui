@@ -1,4 +1,4 @@
-# Añadir un componente — @buildertech/ui
+# Añadir un componente — @buildertechco/ui
 
 > **Proceso obligatorio** para contribuir un componente nuevo al paquete.
 > **Versión**: 0.1.0 | **Fecha**: 2026-11-09
@@ -279,14 +279,14 @@ pnpm check:contract
 
 ## 8. Documentación obligatoria
 
-| Archivo                      | Qué actualizar                      |
-| :--------------------------- | :---------------------------------- |
-| `docs/tokens/especificacion-api.md`    | Props, tipos, comportamiento y a11y |
-| `docs/componentes/guia.md`  | Ejemplo de uso real                 |
-| `README.md`                  | Conteo de componentes, si cambia    |
-| `CHANGELOG.md`               | Entrada en `[Unreleased]`           |
-| `docs/arquitectura/indice.md` | Estructura, si añade carpeta        |
-| `CLASIFICACION.md`           | Solo si cambia la suite de tests    |
+| Archivo                             | Qué actualizar                      |
+| :---------------------------------- | :---------------------------------- |
+| `docs/tokens/especificacion-api.md` | Props, tipos, comportamiento y a11y |
+| `docs/componentes/guia.md`          | Ejemplo de uso real                 |
+| `README.md`                         | Conteo de componentes, si cambia    |
+| `CHANGELOG.md`                      | Entrada en `[Unreleased]`           |
+| `docs/arquitectura/indice.md`       | Estructura, si añade carpeta        |
+| `CLASIFICACION.md`                  | Solo si cambia la suite de tests    |
 
 ---
 

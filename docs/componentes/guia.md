@@ -1,4 +1,4 @@
-# Guía de Componentes — @buildertech/ui
+# Guía de Componentes — @buildertechco/ui
 
 > **Versión**: 0.1.0 | **Fecha**: 2026-11-10 | **Estado**: Revisado contra el código real
 
@@ -24,21 +24,17 @@ Guía práctica para instalar y consumir el Design System. Para la referencia ex
 ### Desde GitHub Packages
 
 ```bash
-npm config set @buildertech:registry https://npm.pkg.github.com/
-npm login --registry=https://npm.pkg.github.com/
-pnpm add @buildertech/ui
+# Configura NODE_AUTH_TOKEN con un PAT que tenga read:packages.
+npm config set @buildertechco:registry https://npm.pkg.github.com/
+npm config set --location=user //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
+pnpm add @buildertechco/ui@0.1.0
 ```
 
-### En un workspace local
+El paquete vive en un repositorio independiente; no se consume con `workspace:*`. En GitHub Actions, usa `GITHUB_TOKEN` con permiso `packages: read` y proporciona el token al registry sin guardarlo en el repositorio. La versión indicada debe estar publicada antes de instalar.
 
-```bash
-# Desde la raíz del monorepo
-pnpm add @buildertech/ui --workspace
-```
+El paquete publicado solo contiene `dist/` (`files: ["dist"]`). Los estilos se publican como CSS y los tipos como `.d.ts`. Los helpers `next/font` solo están disponibles en `@buildertechco/ui/lib/fonts`; no forman parte del barrel raíz y `next` es un peer opcional.
 
-El paquete publicado solo contiene `dist/` (`files: ["dist"]`). Los estilos se publican como CSS y los tipos como `.d.ts`.
-
-> **Limitación conocida (2026-11-10):** la prueba del paquete compilado con Node ESM falla: hay imports relativos sin extensión y las 25 subrutas JavaScript no se pudieron importar; el import raíz también requiere que un bundler procese sus CSS. La compatibilidad con Next.js/Vite no se volvió a probar en esta auditoría. No se afirma soporte para imports ESM nativos de Node hasta corregir y verificar la distribución.
+> **Consumo del paquete:** `pnpm test:consumer` valida con Vite/Tailwind v4 el barrel raíz, las 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS. No valida una app Next.js ni `@buildertechco/ui/lib/fonts`. Node ESM nativo no está soportado porque los imports relativos compilados carecen de extensión y Node no procesa CSS.
 
 ---
 
@@ -51,16 +47,15 @@ No se usa `tailwind.config.ts`. La configuración vive en CSS:
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "@buildertech/ui/styles/globals.css";
+@import "@buildertechco/ui/styles/globals.css";
 
 /* Necesario para que Tailwind detecte las clases usadas por el paquete
    publicado en node_modules. Ajusta la ruta respecto a este archivo. */
-@source "../node_modules/@buildertech/ui/dist";
+@source "../node_modules/@buildertechco/ui/dist";
 ```
 
 - `globals.css` importa `tokens.css` y define `@theme inline`, que mapea `--btc-*` a utilidades `btc-*`.
 - No añadas un `content` array: Tailwind v4 detecta fuentes automáticamente y `@source` cubre el paquete.
-- Si usas el paquete desde el workspace (sin `dist`), apunta `@source` a `../../btc-002-ui/src` o a la ruta correspondiente.
 
 ### 3.2 Tema
 
@@ -87,7 +82,7 @@ export default function RootLayout({
 
 ```tsx
 // app/layout.tsx
-import { getFontSans, getFontMono } from "@buildertech/ui/lib/fonts";
+import { getFontSans, getFontMono } from "@buildertechco/ui/lib/fonts";
 
 const sans = getFontSans();
 const mono = getFontMono();
@@ -117,7 +112,7 @@ export default function RootLayout({
 // app/providers.tsx
 "use client";
 
-import { ToastProvider } from "@buildertech/ui";
+import { ToastProvider } from "@buildertechco/ui";
 
 export function UIProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -154,7 +149,7 @@ export default function RootLayout({
 ### 4.1 Button
 
 ```tsx
-import { Button } from "@buildertech/ui";
+import { Button } from "@buildertechco/ui";
 
 <Button variant="primary" size="md" leftIcon="plus" leftIconCategory="action">
   Nuevo usuario
@@ -174,7 +169,7 @@ import { Button } from "@buildertech/ui";
 ### 4.2 Card
 
 ```tsx
-import { Button, Card } from "@buildertech/ui";
+import { Button, Card } from "@buildertechco/ui";
 
 <Card variant="elevated" padding="lg">
   <Card.Header>
@@ -191,7 +186,9 @@ import { Button, Card } from "@buildertech/ui";
 </Card>;
 
 <Card variant="elevated-bordered" padding="md">
-  <Card.Header leftIcon={<Icon name="user" category="nav" size="md" aria-hidden="true" />}>
+  <Card.Header
+    leftIcon={<Icon name="user" category="nav" size="md" aria-hidden="true" />}
+  >
     <Card.Title>Perfil</Card.Title>
     <Card.Description>Configuración de cuenta</Card.Description>
   </Card.Header>
@@ -208,7 +205,7 @@ import { Button, Card } from "@buildertech/ui";
 ```tsx
 "use client";
 
-import { Button, Dialog } from "@buildertech/ui";
+import { Button, Dialog } from "@buildertechco/ui";
 
 const [open, setOpen] = useState(false);
 
@@ -244,7 +241,7 @@ const [open, setOpen] = useState(false);
 Single:
 
 ```tsx
-import { Select } from "@buildertech/ui";
+import { Select } from "@buildertechco/ui";
 
 <Select
   label="Rol"
@@ -282,7 +279,7 @@ Multiple:
 ### 4.5 Table
 
 ```tsx
-import { Table } from "@buildertech/ui";
+import { Table } from "@buildertechco/ui";
 
 <Table
   columns={[
@@ -314,7 +311,7 @@ import { Table } from "@buildertech/ui";
 ### 4.6 TextField
 
 ```tsx
-import { TextField } from "@buildertech/ui";
+import { TextField } from "@buildertechco/ui";
 
 <TextField
   label="Correo"
@@ -344,7 +341,7 @@ import { TextField } from "@buildertech/ui";
 ### 4.7 NavLink
 
 ```tsx
-import { NavLink } from "@buildertech/ui";
+import { NavLink } from "@buildertechco/ui";
 
 <NavLink
   href="/dashboard"
@@ -366,7 +363,7 @@ import { NavLink } from "@buildertech/ui";
 ### 4.8 Badge
 
 ```tsx
-import { Badge } from "@buildertech/ui";
+import { Badge } from "@buildertechco/ui";
 
 <Badge variant="success" icon="check" iconCategory="action">Activo</Badge>
 <Badge variant="warning" icon="alertTriangle" iconCategory="status">Pendiente</Badge>
@@ -384,7 +381,7 @@ import {
   ErrorState,
   LoadingState,
   Skeleton,
-} from "@buildertech/ui";
+} from "@buildertechco/ui";
 
 <LoadingState variant="skeleton" skeletonLines={4} label="Cargando usuarios" />
 
@@ -417,7 +414,7 @@ import {
 ### 4.10 CopyButton y BackButton
 
 ```tsx
-import { BackButton, CopyButton } from "@buildertech/ui";
+import { BackButton, CopyButton } from "@buildertechco/ui";
 
 <CopyButton text={apiKey} defaultText="Copiar API key" onCopy={(ok) => !ok && notifyError()} />
 
@@ -431,7 +428,7 @@ import { BackButton, CopyButton } from "@buildertech/ui";
 ### 4.11 ThemeToggle
 
 ```tsx
-import { ThemeToggle } from "@buildertech/ui";
+import { ThemeToggle } from "@buildertechco/ui";
 
 <ThemeToggle variant="dropdown" size="md" showLabels />
 <ThemeToggle variant="button" />
@@ -446,7 +443,7 @@ import { ThemeToggle } from "@buildertech/ui";
 ```tsx
 "use client";
 
-import { Button, useToast } from "@buildertech/ui";
+import { Button, useToast } from "@buildertechco/ui";
 
 export function SaveButton() {
   const { addToast } = useToast();
@@ -476,7 +473,7 @@ export function SaveButton() {
 ### 4.13 DropdownMenu
 
 ```tsx
-import { DropdownMenu } from "@buildertech/ui";
+import { DropdownMenu } from "@buildertechco/ui";
 
 <DropdownMenu>
   <DropdownMenu.Trigger>Acciones</DropdownMenu.Trigger>

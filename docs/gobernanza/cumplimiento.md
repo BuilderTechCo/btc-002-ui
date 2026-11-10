@@ -1,6 +1,6 @@
 # Enforcement — Políticas de uso del Design System
 
-> **Reglas obligatorias, excepciones y procesos** para `@buildertech/ui`.
+> **Reglas obligatorias, excepciones y procesos** para `@buildertechco/ui`.
 > **Versión**: 0.1.0 | **Fecha**: 2026-11-09 | **Estado**: Validado contra `scripts/check-design.ts`
 
 ---
@@ -24,10 +24,16 @@ El paquete es presentacional: recibe props, renderiza UI y emite eventos. No con
 | `pnpm typecheck`             | TypeScript estricto                                                         |
 | `pnpm lint`                  | ESLint 9 flat config                                                        |
 | `pnpm test`                  | Unit (Node) + integration (jsdom)                                           |
+| `pnpm test:consumer`         | Build de consumo con Vite/Tailwind para el barrel, subrutas JS y CSS        |
+| `pnpm test:docs-contract`    | Scope/registry, instalación y comandos existentes en el template de PR      |
 | `pnpm test:storybook`        | Stories en Chromium                                                         |
 | `pnpm test:visual`           | Regresión visual Playwright                                                 |
 
 `quality:verify` ejecuta `typecheck`, `lint`, `check:design` y `test`. **No incluye** `test:storybook` ni `test:visual` porque requieren Chromium/Storybook.
+
+`test:static` incluye la prueba del contrato documental. `prepublishOnly` ejecuta los checks de calidad y de contratos (exports y documentación), `build` y `test:consumer`; no ejecuta tests de navegador.
+
+**Deuda técnica Playwright:** `test:visual` no se ejecutó en la validación del 2026-11-10. Sus baselines no están versionados y faltan en un checkout limpio, por lo que la suite no es reproducible para todo el equipo. Mantener esta limitación visible hasta definir baselines accesibles y validar la ejecución en un checkout limpio; no afirmar cobertura visual verificada mientras tanto.
 
 ---
 
@@ -410,7 +416,7 @@ Estas prácticas **no las valida automáticamente** `check:design`; requieren ju
 
 ```css
 /* app/globals.css */
-@import "@buildertech/ui/styles/globals.css";
+@import "@buildertechco/ui/styles/globals.css";
 
 :root {
   --btc-bg-app: #fafafa; /* Solo si la app necesita un fondo distinto */
@@ -423,7 +429,7 @@ Debe documentarse el motivo, el alcance y el plan de migración.
 
 ```tsx
 // app/src/components/ui/CustomCard.tsx
-import { Card } from "@buildertech/ui";
+import { Card } from "@buildertechco/ui";
 
 export function CustomCard(props: React.ComponentProps<typeof Card>) {
   return <Card variant="elevated" padding="lg" {...props} />;

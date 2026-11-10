@@ -6,7 +6,7 @@
 
 ## Contexto
 
-El paquete `@buildertech/ui` evolucionó desde una estructura monorepo multi-package (`packages/ui/`) hacia un single-package aplanado a la raíz del repositorio. La reorganización alinea la estructura física con ADR-001 y elimina directorios legacy.
+El paquete `@buildertechco/ui` evolucionó desde una estructura monorepo multi-package (`packages/ui/`) hacia un single-package aplanado a la raíz del repositorio. La reorganización alinea la estructura física con ADR-001 y elimina directorios legacy.
 
 ## Decisión
 
@@ -21,7 +21,7 @@ btc-002-ui/
 │   ├── test/                     # setup.ts, setup-unit.ts
 │   └── index.ts                  # Barrel principal
 ├── e2e/
-│   ├── visual/                   # 22 specs + snapshots (3285 PNGs)
+│   ├── visual/                   # 22 specs; snapshots locales no versionados
 │   └── support/                  # global-setup, global-teardown, utils, test-iframe
 ├── scripts/
 │   ├── register.mjs
@@ -89,7 +89,7 @@ btc-002-ui/
 
 ## Validación histórica de la reorganización (2026-11-09)
 
-Los conteos siguientes son el resultado registrado al completar la reorganización y no deben tomarse como medición actual. Para el estado actual de unit/integration y `check:design`, consulta [`docs/arquitectura/indice.md`](../arquitectura/indice.md). Storybook no se revalidó el 2026-11-10.
+Los conteos siguientes son el resultado registrado al completar la reorganización y no deben tomarse como medición actual. Para el estado actual de unit/integration, Storybook y `check:design`, consulta [`docs/arquitectura/indice.md`](../arquitectura/indice.md).
 
 | Gate                  | Resultado                                               |
 | :-------------------- | :------------------------------------------------------ |
@@ -100,7 +100,15 @@ Los conteos siguientes son el resultado registrado al completar la reorganizaci�
 | `pnpm test:storybook` | ✅ 21 archivos / 251 tests                              |
 | `pnpm test:visual`    | ⏸️ Fuera del pipeline base; requiere Storybook/Chromium |
 
-> La validación visual es una suite separada y no se ejecutó para cerrar esta reorganización. Los snapshots base (3285 PNGs) existen y deben revisarse antes de un release.
+> La validación visual es una suite separada y no se ejecutó para cerrar esta reorganización. Hay 3285 PNGs locales, pero no están versionados; un checkout limpio no dispone de ellos. El requisito de una regresión reproducible antes del release sigue pendiente.
+
+## Estado y límites de evidencia (2026-11-10)
+
+- `pnpm test:consumer` construye con Vite/Tailwind v4 el barrel raíz, 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS. El helper `@buildertechco/ui/lib/fonts` es Next-only y queda fuera de esa prueba.
+- Node ESM nativo no está soportado: los imports relativos emitidos por TypeScript carecen de extensión y el consumo de CSS requiere un bundler.
+- Los baselines visuales se excluyen mediante una regla local de `.git/info/exclude`; no forman parte del historial ni de un checkout limpio.
+- El historial disponible empieza con un commit que solo contiene `LICENSE`; el commit de reorganización ya contiene la estructura nueva. No hay un snapshot versionado del scaffold anterior con el que comparar exports o demostrar equivalencia funcional. Esos dos criterios no se consideran verificados.
+- La verificación actual excluye deliberadamente Storybook/Chromium y Playwright; los resultados históricos de la tabla anterior no sustituyen una ejecución actual.
 
 ---
 

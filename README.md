@@ -1,4 +1,4 @@
-# @buildertech/ui
+# @buildertechco/ui
 
 > **Design System propietario de BuilderTech** — Tokens, componentes, utilidades, validación y documentación en un paquete versionado de forma independiente.
 
@@ -17,34 +17,29 @@
 
 ### Instalación desde GitHub Packages
 
-```bash
-# Configurar registry para el scope @buildertech
-npm config set @buildertech:registry https://npm.pkg.github.com/
-
-# Autenticarse (requiere GITHUB_TOKEN con read:packages)
-npm login --registry=https://npm.pkg.github.com/
-
-# Instalar
-pnpm add @buildertech/ui
-```
-
-### Instalación en workspace local
+El paquete se publica en el scope que corresponde al owner del repositorio (`BuilderTechCo`):
 
 ```bash
-# Desde la app consumidora del workspace
-pnpm add @buildertech/ui --workspace
+# Configurar credenciales del usuario (no guardar el token en el repositorio).
+# NODE_AUTH_TOKEN debe contener un PAT con read:packages.
+npm config set --location=user //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
+
+# Instalar desde la raíz del monorepo.
+pnpm --filter @buildertech/web add @buildertechco/ui@0.1.0
 ```
+
+La raíz del monorepo configura `@buildertechco:registry=https://npm.pkg.github.com` en `.npmrc`; las credenciales se configuran a nivel de usuario porque pnpm 12 no expande variables de entorno para tokens en un `.npmrc` versionado. En GitHub Actions, configura `GITHUB_TOKEN` con permiso `packages: read` y proporciona el token al registry mediante un `.npmrc` temporal de usuario. El repositorio del paquete y el monorepo son repositorios Git separados; no se instala con `workspace:*`. Antes de instalar, confirma que la versión solicitada está publicada en GitHub Packages.
 
 ### Configuración CSS (Tailwind v4, CSS-first)
 
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "@buildertech/ui/styles/globals.css";
+@import "@buildertechco/ui/styles/globals.css";
 
 /* Necesario para que Tailwind detecte las clases usadas por el paquete
    publicado en node_modules. Ajusta la ruta respecto a este archivo. */
-@source "../node_modules/@buildertech/ui/dist";
+@source "../node_modules/@buildertechco/ui/dist";
 ```
 
 No se necesita `tailwind.config.ts` para consumir el DS: los tokens se publican como variables CSS y se mapean a utilidades `btc-*` mediante `@theme inline`.
@@ -52,7 +47,7 @@ No se necesita `tailwind.config.ts` para consumir el DS: los tokens se publican 
 ### Uso de componentes
 
 ```tsx
-import { Button, Card, Icon } from "@buildertech/ui";
+import { Button, Card, Icon } from "@buildertechco/ui";
 
 export function MiComponente() {
   return (
@@ -81,7 +76,7 @@ export function MiComponente() {
 ### Tipografías (Next.js `layout.tsx`)
 
 ```tsx
-import { getFontSans, getFontMono } from "@buildertech/ui/lib/fonts";
+import { getFontSans, getFontMono } from "@buildertechco/ui/lib/fonts";
 
 const sans = getFontSans();
 const mono = getFontMono();
@@ -95,23 +90,23 @@ export default function RootLayout({ children }) {
 }
 ```
 
-`getFontSans()`, `getFontMono()` y `getFontDisplay()` devuelven `{ variable, className, style }` y requieren `next` (peer dependency `>=14`).
+`getFontSans()`, `getFontMono()` y `getFontDisplay()` devuelven `{ variable, className, style }`. Este subpath solo se usa en apps Next.js (`next >=14`); `next` es un peer opcional. Los helpers de fuente no se exportan desde el barrel raíz.
 
-> **Limitación conocida del paquete (2026-11-10):** el build emite imports relativos ESM sin extensión. La prueba de consumo con Node ESM no pudo importar ninguna de las 25 subrutas JavaScript exportadas; el import raíz también falla al cargar CSS directamente en Node. La resolución con bundlers de Next.js/Vite no se verificó en esa prueba. No se debe interpretar el ejemplo como soporte de importación ESM nativa de Node.
+> **Consumo del paquete:** `pnpm test:consumer` construye con Vite/Tailwind v4 el barrel raíz, las 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS. La importación ESM nativa de Node no está soportada: los imports relativos emitidos por TypeScript no llevan extensión y Node tampoco procesa CSS. La prueba Vite no valida una app Next.js ni el subpath específico `@buildertechco/ui/lib/fonts`.
 
 ---
 
 ## 📦 Qué Incluye
 
-| Categoría                   | Detalle                                                                                                                 |
-| :-------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
-| **Tokens de diseño**        | Variables CSS `--btc-*` (color, espaciado, radios, fuentes, sombras, movimiento, z-index) y roles semánticos light/dark |
-| **23 componentes públicos** | 16 base + 7 primitivas: Toast, ToastProvider, ToastViewport, Label, Separator, Slot, DropdownMenu                       |
-| **Utilidades**              | `clsx` (clsx + tailwind-merge), `Icon` (wrapper semántico de Lucide), helpers de fuentes                                |
-| **Validación**              | `check:design` — 12 reglas visuales + guardarraíl anti-lógica-de-negocio                                                |
-| **Storybook**               | Catálogo de 21 stories, controles, acciones, viewports, backgrounds, tema, accesibilidad y component tests              |
-| **Tests**                   | 334 tests unit/integration + 255 tests de stories (última cifra documentada, no revalidada el 2026-11-10) + 22 specs visuales Playwright |
-| **Documentación**           | Arquitectura, APIs, tokens, gobernanza, ADRs, navegadores y changelog                                                   |
+| Categoría                   | Detalle                                                                                                                                     |
+| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Tokens de diseño**        | Variables CSS `--btc-*` (color, espaciado, radios, fuentes, sombras, movimiento, z-index) y roles semánticos light/dark                     |
+| **23 componentes públicos** | 16 base + 7 primitivas: Toast, ToastProvider, ToastViewport, Label, Separator, Slot, DropdownMenu                                           |
+| **Utilidades**              | `clsx` (clsx + tailwind-merge), `Icon` (wrapper semántico de Lucide), helpers de fuentes Next.js en subpath separado                        |
+| **Validación**              | `check:design` — 12 reglas visuales + guardarraíl anti-lógica-de-negocio                                                                    |
+| **Storybook**               | Catálogo de 21 stories, controles, acciones, viewports, backgrounds, tema, accesibilidad y component tests                                  |
+| **Tests**                   | 334 tests unit/integration + 255 tests de stories (verificados el 2026-11-10) + 22 specs visuales Playwright, pendientes como deuda técnica |
+| **Documentación**           | Arquitectura, APIs, tokens, gobernanza, ADRs, navegadores y changelog                                                                       |
 
 ### Componentes
 
@@ -126,23 +121,33 @@ export default function RootLayout({ children }) {
 
 Todos los comandos se ejecutan desde la raíz del repositorio.
 
-| Comando                | Descripción                                                  |
-| :--------------------- | :----------------------------------------------------------- |
-| `pnpm storybook`       | Storybook en `http://127.0.0.1:6006` (abre el navegador)     |
-| `pnpm build-storybook` | Build estático de Storybook                                  |
-| `pnpm test`            | Tests unit (Node) + integration (jsdom)                      |
-| `pnpm test:storybook`  | Tests de stories en Chromium con Vitest + Playwright         |
-| `pnpm test:visual`     | Regresión visual Playwright (8 proyectos)                    |
-| `pnpm test:coverage`   | Cobertura de unit + integration                              |
-| `pnpm test:static`     | Typecheck + lint + contract + component files + suppressions |
-| `pnpm typecheck`       | TypeScript estricto (`tsc --noEmit`)                         |
-| `pnpm lint`            | ESLint 9 flat config                                         |
-| `pnpm check:design`    | Reglas visuales + guardarraíl de lógica de negocio           |
-| `pnpm check:contract`  | Exports de `package.json` ↔ `src/` ↔ `dist/`                 |
-| `pnpm build`           | Build a `dist/` (JS + `.d.ts` + CSS)                         |
-| `pnpm quality:verify`  | `typecheck` + `lint` + `check:design` + `test`               |
+| Comando                      | Descripción                                                       |
+| :--------------------------- | :---------------------------------------------------------------- |
+| `pnpm build`                 | Build a `dist/` (JS + `.d.ts` + CSS)                              |
+| `pnpm build-storybook`       | Build estático de Storybook                                       |
+| `pnpm check:component-files` | Verifica la estructura de archivos de componentes                 |
+| `pnpm check:contract`        | Exports de `package.json` ↔ `src/` y todos los targets de `dist/` |
+| `pnpm check:design`          | Reglas visuales + guardarraíl de lógica de negocio                |
+| `pnpm check:suppressions`    | Comprueba supresiones de lint y TypeScript                        |
+| `pnpm format`                | Aplica Prettier a los archivos del repositorio                    |
+| `pnpm format:check`          | Comprueba el formato del repositorio sin modificar archivos       |
+| `pnpm lint`                  | ESLint 9 flat config                                              |
+| `pnpm quality:verify`        | `typecheck` + `lint` + `check:design` + `test`                    |
+| `pnpm storybook`             | Storybook en `http://127.0.0.1:6006` (abre el navegador)          |
+| `pnpm test`                  | Tests unit (Node) + integration (jsdom)                           |
+| `pnpm test:consumer`         | Build temporal con Vite/Tailwind de exports JS y CSS              |
+| `pnpm test:coverage`         | Cobertura de unit + integration                                   |
+| `pnpm test:docs-contract`    | Verifica identidad, instalación y comandos del PR                 |
+| `pnpm test:static`           | Typecheck + lint + contratos de exports/docs + component files    |
+| `pnpm test:storybook`        | Tests de stories en Chromium con Vitest + Playwright              |
+| `pnpm test:visual`           | Regresión visual Playwright (8 proyectos)                         |
+| `pnpm typecheck`             | TypeScript estricto (`tsc --noEmit`)                              |
 
 > `quality:verify` no incluye `test:storybook` ni `test:visual` porque requieren Chromium/Storybook. Ejecútalos por separado antes de un release.
+>
+> `prepublishOnly` incluye los checks de calidad, contratos de exports/docs, `build` y `test:consumer`; Storybook y Playwright permanecen fuera de ese gate.
+
+Para aplicar Prettier solo a archivos concretos, usa `pnpm exec prettier --write <archivos>`.
 
 ---
 
@@ -152,13 +157,13 @@ Todos los comandos se ejecutan desde la raíz del repositorio.
 
 ```mermaid
 flowchart LR
-    subgraph PKG["@buildertech/ui"]
+    subgraph PKG["@buildertechco/ui"]
         TCSS["tokens.css<br/>(--btc-* primitivas + roles semánticos)"]
         GCSS["globals.css<br/>(@theme inline → utilidades btc-*)"]
     end
 
     TCSS --> GCSS
-    GCSS --> APP["App consumidora<br/>@import '@buildertech/ui/styles/globals.css'"]
+    GCSS --> APP["App consumidora<br/>@import '@buildertechco/ui/styles/globals.css'"]
     APP --> UTILS["Utilidades Tailwind<br/>bg-btc-app, text-btc-text-primary,<br/>rounded-btc-md, shadow-btc-1, ..."]
 ```
 
@@ -200,7 +205,7 @@ btc-002-ui/
 │       ├── setup.ts              # Integration (jsdom)
 │       └── setup-unit.ts         # Unit (Node)
 ├── e2e/
-│   ├── visual/                   # 22 specs + 3285 snapshots
+│   ├── visual/                   # 22 specs; los 3285 snapshots locales no están versionados
 │   └── support/                  # global setup/teardown y utilidades
 ├── scripts/
 │   ├── check-design.ts           # 12 reglas + guardarraíl
@@ -226,21 +231,21 @@ btc-002-ui/
 
 ## 📚 Documentación
 
-| Documento                                                        | Descripción                                                  |
-| :--------------------------------------------------------------- | :----------------------------------------------------------- |
-| [Arquitectura](docs/arquitectura/indice.md)                       | Principios, estructura y convenciones                        |
-| [Especificación de API](docs/tokens/especificacion-api.md)                 | Props, variantes y accesibilidad de los 23 componentes       |
-| [Guía de componentes](docs/componentes/guia.md)                 | Instalación y ejemplos de uso reales                         |
-| [Paleta visual](docs/tokens/paleta-visual.md)                   | Colores, ratios de contraste reales y deuda de accesibilidad |
-| [Layout & Sizing](docs/tokens/dimensiones-disposicion.md)                  | Espaciado, elevación, z-index y delegación a Tailwind        |
-| [Enforcement](docs/gobernanza/cumplimiento.md)                    | Reglas obligatorias, excepciones y sanciones                 |
-| [ADRs](docs/adrs/indice.md)                                       | ADR-001 a ADR-009                                            |
+| Documento                                                             | Descripción                                                  |
+| :-------------------------------------------------------------------- | :----------------------------------------------------------- |
+| [Arquitectura](docs/arquitectura/indice.md)                           | Principios, estructura y convenciones                        |
+| [Especificación de API](docs/tokens/especificacion-api.md)            | Props, variantes y accesibilidad de los 23 componentes       |
+| [Guía de componentes](docs/componentes/guia.md)                       | Instalación y ejemplos de uso reales                         |
+| [Paleta visual](docs/tokens/paleta-visual.md)                         | Colores, ratios de contraste reales y deuda de accesibilidad |
+| [Layout & Sizing](docs/tokens/dimensiones-disposicion.md)             | Espaciado, elevación, z-index y delegación a Tailwind        |
+| [Enforcement](docs/gobernanza/cumplimiento.md)                        | Reglas obligatorias, excepciones y sanciones                 |
+| [ADRs](docs/adrs/indice.md)                                           | ADR-001 a ADR-009                                            |
 | [Navegadores soportados](docs/componentes/navegadores-compatibles.md) | Matriz de compatibilidad y alcance de la validación          |
-| [Contribuir](docs/guias/contribuir.md)                         | Flujo de PR, testing y release                               |
-| [Añadir un componente](docs/componentes/agregar-componente.md)               | Proceso paso a paso                                          |
-| [Migración](docs/guias/guia-migracion.md)                       | Guía para apps consumidoras                                  |
-| [Changelog](CHANGELOG.md)                                        | Historial por versión                                        |
-| [Clasificación de tests](CLASIFICACION.md)                       | Estado y decisiones sobre los tests                          |
+| [Contribuir](docs/guias/contribuir.md)                                | Flujo de PR, testing y release                               |
+| [Añadir un componente](docs/componentes/agregar-componente.md)        | Proceso paso a paso                                          |
+| [Migración](docs/guias/guia-migracion.md)                             | Guía para apps consumidoras                                  |
+| [Changelog](CHANGELOG.md)                                             | Historial por versión                                        |
+| [Clasificación de tests](CLASIFICACION.md)                            | Estado y decisiones sobre los tests                          |
 
 ---
 
@@ -287,7 +292,7 @@ pnpm exec playwright install chromium   # primera vez
 pnpm test:storybook
 ```
 
-Ejecuta las 21 stories en un navegador real con `@storybook/experimental-addon-test` y Vitest browser mode. La última cifra documentada es **21 archivos / 255 tests**; no se revalidó el 2026-11-10 porque esta verificación no ejecutó Storybook ni navegadores.
+Ejecuta las 21 stories en un navegador real con `@storybook/experimental-addon-test` y Vitest browser mode. En la validación del **2026-11-10** pasaron **255 tests en 21 archivos**.
 
 ### Regresión visual (Playwright)
 
@@ -295,16 +300,18 @@ Ejecuta las 21 stories en un navegador real con `@storybook/experimental-addon-t
 pnpm test:visual
 ```
 
-| Configuración      | Detalle                                                          |
-| :----------------- | :--------------------------------------------------------------- |
-| **Viewports**      | 360×800, 768×1024, 1024×1024, 1440×1024                          |
-| **Temas**          | Light, Dark                                                      |
-| **Proyectos**      | 8 (`light-*` / `dark-*`)                                         |
-| **Specs**          | 22                                                               |
-| **Snapshots base** | 3285 PNGs en `e2e/visual/snapshots/`                             |
-| **Umbral**         | `maxDiffPixels: 0`, `maxDiffPixelRatio: 0.001`, `threshold: 0.2` |
+| Configuración      | Detalle                                                              |
+| :----------------- | :------------------------------------------------------------------- |
+| **Viewports**      | 360×800, 768×1024, 1024×1024, 1440×1024                              |
+| **Temas**          | Light, Dark                                                          |
+| **Proyectos**      | 8 (`light-*` / `dark-*`)                                             |
+| **Specs**          | 22                                                                   |
+| **Snapshots base** | 3285 PNGs locales; excluidos de Git y ausentes en un checkout limpio |
+| **Umbral**         | `maxDiffPixels: 0`, `maxDiffPixelRatio: 0.001`, `threshold: 0.2`     |
 
 El `webServer` de Playwright arranca Storybook automáticamente en local si no está corriendo. En CI requiere Storybook disponible o un servidor equivalente; por eso no forma parte de `quality:verify`.
+
+**Deuda técnica abierta:** `pnpm test:visual` no se ejecutó en la validación del 2026-11-10. Los 3285 snapshots registrados existen solo localmente, no están versionados y no están disponibles en un checkout limpio; por ello la ejecución no es reproducible para todo el equipo. La deuda se considera resuelta cuando exista una fuente reproducible de baselines y la suite se valide en un checkout limpio.
 
 ---
 

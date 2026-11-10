@@ -16,7 +16,7 @@ Con la evolución del DS aparecieron necesidades que el render estático no cubr
 
 ```tsx
 import { renderToStaticMarkup } from "react-dom/server";
-import { Button } from "@buildertech/ui";
+import { Button } from "@buildertechco/ui";
 
 test("Button primary render", () => {
   const html = renderToStaticMarkup(<Button variant="primary">Click</Button>);

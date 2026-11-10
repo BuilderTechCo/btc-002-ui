@@ -1,4 +1,4 @@
-# Guía de migración — app consumidora → @buildertech/ui
+# Guía de migración — app consumidora → @buildertechco/ui
 
 > **Versión**: 0.1.0 | **Fecha**: 2026-11-09 | **Estado**: Validado contra la API real
 
@@ -6,7 +6,7 @@
 
 ## 1. Objetivo
 
-Migrar una app de componentes UI locales y dependencias externas a **`@buildertech/ui`**, con Tailwind CSS v4 y tokens `btc-*`.
+Migrar una app de componentes UI locales y dependencias externas a **`@buildertechco/ui`**, con Tailwind CSS v4 y tokens `btc-*`.
 
 ---
 
@@ -60,13 +60,13 @@ app/src/components/ui/
 
 ```text
 app/src/lib/
-├── cn.ts           # → clsx de @buildertech/ui
-├── icons.tsx       # → Icon de @buildertech/ui
-└── fonts.ts        # → helpers de @buildertech/ui/lib/fonts
+├── cn.ts           # → clsx de @buildertechco/ui
+├── icons.tsx       # → Icon de @buildertechco/ui
+└── fonts.ts        # → helpers de @buildertechco/ui/lib/fonts
 
 app/src/app/styles/
-├── btc-tokens.css  # → @buildertech/ui/styles/tokens.css
-└── globals.css     # → @buildertech/ui/styles/globals.css
+├── btc-tokens.css  # → @buildertechco/ui/styles/tokens.css
+└── globals.css     # → @buildertechco/ui/styles/globals.css
 
 app/scripts/
 └── check-design.ts # → check:design del paquete
@@ -79,19 +79,20 @@ app/scripts/
 ### Paso 1 — Instalar el paquete
 
 ```bash
-# Desde el directorio de la app
-pnpm add @buildertech/ui --workspace
+# Desde la raíz del monorepo, después de que la versión esté publicada
+pnpm --filter @buildertech/web add @buildertechco/ui@0.1.0
 
 # Verificar
-pnpm list @buildertech/ui
+pnpm --filter @buildertech/web list @buildertechco/ui
 ```
 
-Si la app consume desde GitHub Packages:
+El `.npmrc` versionado de la raíz del monorepo configura solo el registry:
 
-```bash
-npm config set @buildertech:registry https://npm.pkg.github.com/
-pnpm add @buildertech/ui
+```ini
+@buildertechco:registry=https://npm.pkg.github.com
 ```
+
+En desarrollo local, configura el token en el `.npmrc` de usuario con un PAT `read:packages` (por ejemplo, `npm config set --location=user //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"`). En GitHub Actions, concede `packages: read` a `GITHUB_TOKEN` y proporciona el token al registry mediante un `.npmrc` temporal de usuario. pnpm 12 no expande credenciales de variables de entorno declaradas en el `.npmrc` versionado. La publicación del paquete es requisito previo; no se usa `workspace:*` porque el paquete vive en otro repositorio.
 
 ### Paso 2 — Configurar Tailwind v4 (CSS-first)
 
@@ -100,15 +101,14 @@ Elimina `tailwind.config.ts` si solo existía para el DS. La configuración pasa
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "@buildertech/ui/styles/globals.css";
+@import "@buildertechco/ui/styles/globals.css";
 
 /* El paquete publicado vive en node_modules; Tailwind debe escanearlo. */
-@source "../node_modules/@buildertech/ui/dist";
+@source "../node_modules/@buildertechco/ui/dist";
 ```
 
 - `globals.css` del DS importa `tokens.css` y define `@theme inline`.
 - No copies tokens ni `@theme` en la app.
-- Si usas el paquete desde el workspace sin build, apunta `@source` al `src/` del paquete.
 - Asegúrate de que el pipeline de la app procesa Tailwind v4 (`@tailwindcss/vite`, `@tailwindcss/postcss` o el pipeline de Next.js compatible).
 
 ### Paso 3 — Aplicar el tema en `<html>`
@@ -142,7 +142,7 @@ import { cn } from "@/lib/cn";
 import { Icon } from "@/lib/icons";
 
 // Después
-import { Button, Card, Icon, clsx } from "@buildertech/ui";
+import { Button, Card, Icon, clsx } from "@buildertechco/ui";
 ```
 
 #### Tabla de cambios de API
@@ -314,7 +314,7 @@ const [permissions, setPermissions] = useState<string[]>([]);
 // app/providers.tsx
 "use client";
 
-import { ToastProvider } from "@buildertech/ui";
+import { ToastProvider } from "@buildertechco/ui";
 
 export function UIProviders({ children }: { children: React.ReactNode }) {
   return <ToastProvider position="top-right">{children}</ToastProvider>;
@@ -431,7 +431,7 @@ pnpm test:storybook
 - [ ] No quedan imports de `@librerias-ui-externas/*`.
 - [ ] No queda `class-variance-authority` en `package.json`.
 - [ ] No quedan `tailwind.config.ts` con configuración del DS.
-- [ ] `globals.css` importa `tailwindcss` y `@buildertech/ui/styles/globals.css`.
+- [ ] `globals.css` importa `tailwindcss` y `@buildertechco/ui/styles/globals.css`.
 - [ ] `@source` apunta al paquete publicado o a su `src/`.
 - [ ] `data-theme` está en `<html>`.
 - [ ] `ToastProvider` envuelve la app.

@@ -44,14 +44,16 @@ Cierra #
 
 <!-- Comprobaciones reales que has ejecutado, no la lista completa de CI si el revisor ya ve la insignia -->
 
-- [ ] `pnpm lint` y `pnpm typecheck` pasan sin errores
+- [ ] `pnpm build` pasa sin errores
+- [ ] `pnpm check:component-files`, `pnpm check:contract`, `pnpm check:design` y `pnpm check:suppressions` pasan sin errores
 - [ ] `pnpm format:check` pasa sin errores
-- [ ] `pnpm --filter @buildertech/web check:design` pasa sin violaciones
-- [ ] `pnpm quality:verify` pasa; código nuevo con complejidad cognitiva ≤15, sin aumentar deuda histórica
+- [ ] `pnpm lint` y `pnpm quality:verify` pasan sin errores
+- [ ] `pnpm test` y `pnpm test:consumer` pasan cuando aplique
+- [ ] `pnpm test:docs-contract` pasa sin errores
+- [ ] `pnpm test:storybook` pasa para cambios de componentes; indicar omisiones si no aplica o no se ejecutó
+- [ ] `pnpm typecheck` pasa sin errores
 - [ ] Excepciones/baseline/skills: sin cambios, o aprobación explícita enlazada con motivo y alcance
-- [ ] Regresiones aplicables ejecutadas; indicar comandos, resultados y omisiones (no marcar si no se ejecutaron)
 - [ ] La documentación relacionada está actualizada
-- [ ] Variables de entorno: sin cambios, o recorrido configuración → Compose → Dockerfile/imagen → consumidor verificado según `AGENTS.md`; ejemplos y documentación actualizados, con evidencia y límites indicados
 - [ ] El diff no contiene credenciales ni archivos sensibles
 
 <!-- Detalles completos de los mensajes de error, ejemplos de código y lista de commits: no los repitas aquí, ya están en el diff, en el CHANGELOG y en la pestaña «Commits» de GitHub. -->

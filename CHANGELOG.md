@@ -1,4 +1,4 @@
-# Changelog — @buildertech/ui
+# Changelog — @buildertechco/ui
 
 Todos los cambios notables de este paquete se documentan aquí.
 
@@ -11,6 +11,10 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ### Agregado
 
+- **Prueba de consumo del paquete**: `pnpm test:consumer` valida con Vite/Tailwind el barrel, las subrutas JavaScript no específicas de Next y ambos exports CSS; se ejecuta en `prepublishOnly`.
+- **Contrato de documentación**: `pnpm test:docs-contract` detecta scope/registry obsoletos, instrucciones de workspace inválidas y comandos inexistentes en el template de PR; forma parte de `test:static` y `prepublishOnly`.
+- **Formato reproducible**: `pnpm format` aplica Prettier al repositorio y `pnpm format:check` verifica sin modificar, excluyendo salidas generadas y el lockfile.
+- **Guías de publicación y consumo**: alineadas con `@buildertechco/ui`, GitHub Packages y la publicación manual; se eliminaron pasos de workspace entre repositorios.
 - **Card variant `elevated-bordered`**: sombra `shadow-btc-2` + borde `border-btc-default`.
 - **Card.Header**: nuevo slot `leftIcon` (altura = título + subtitle, centrado vertical) y props `onClose` / `closeAriaLabel` para botón de cerrar opcional.
 - **Card.Description**: ahora usa `text-btc-caption text-btc-text-primary` (mejor contraste).
@@ -23,6 +27,7 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ### Cambiado
 
+- **Exports raíz**: CSS y helpers `next/font` dejan de exportarse desde el barrel raíz. Los estilos siguen disponibles como imports CSS y los helpers de Next en `@buildertechco/ui/lib/fonts`; `next` queda como peer opcional.
 - **Action tokens**: `--btc-action-primary` `coral-700`, `--btc-action-hover` `coral-800`, `--btc-action-pressed` `coral-900` (todos AA con blanco).
 - **Border subtle**: `--btc-border-subtle` → `neutral-200` (light) / `forest-700` (dark) para divisores visibles.
 - **Ghost text**: `--btc-action-ghost-text` → `text-primary` (17.2:1 AA).
@@ -48,7 +53,8 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 - No hay workflows de CI en `.github/workflows/` ni Changesets instalado; el release es manual.
 - `test:visual` fuera de `quality:verify` (requiere Storybook/Chromium).
-- La prueba de consumo con Node ESM del build detectó imports relativos sin extensión: fallan las 25 subrutas JavaScript exportadas. El import raíz también requiere procesar CSS; el consumo con bundlers no se revalidó.
+- Node ESM nativo no está soportado por los imports relativos sin extensión y los estilos CSS. Vite/Tailwind sí se valida con `pnpm test:consumer`; esa prueba no cubre Next.js ni `@buildertechco/ui/lib/fonts`.
+- Los 3285 baselines visuales existen solo en el entorno local y no están versionados; la suite visual no puede reproducirse desde un checkout limpio.
 - El estado de error visible de `CopyButton` sigue pendiente de implementación; actualmente, si copiar falla, solo emite `onCopy(false)`.
 
 ---
@@ -83,7 +89,7 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ### Agregado
 
-- **Scaffold inicial** del paquete `@buildertech/ui`.
+- **Scaffold inicial** del paquete `@buildertechco/ui`.
 - **Tokens de diseño** (`src/styles/tokens.css`):
   - Forest (marca), Coral (acción), Blue (info), Red (error), Neutral Warm.
   - Espaciado base 4px, radios, fuentes, movimiento y z-index.

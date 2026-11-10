@@ -95,7 +95,7 @@ Tailwind v4 introduce `@theme inline` para definir tokens CSS que se convierten 
 
 ### Positivas
 
-- Zero-config para apps consumidoras: solo `@import "@buildertech/ui/styles/globals.css"`
+- Zero-config para apps consumidoras: solo `@import "@buildertechco/ui/styles/globals.css"`
 - Tree-shaking automático: solo utilidades usadas se incluyen en build
 - Tipos TypeScript generados automáticamente por Tailwind v4
 - Single source of truth: tokens en `tokens.css`, mapeo en `globals.css`
@@ -103,7 +103,7 @@ Tailwind v4 introduce `@theme inline` para definir tokens CSS que se convierten 
 ### Negativas
 
 - Requiere Tailwind v4+ en apps consumidoras
-- En Tailwind v4, la app debe añadir `@source "../node_modules/@buildertech/ui/dist";` para que detecte las clases del paquete
+- En Tailwind v4, la app debe añadir `@source "../node_modules/@buildertechco/ui/dist";` para que detecte las clases del paquete
 
 ---
 

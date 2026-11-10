@@ -1,4 +1,4 @@
-# Especificación de API — Componentes `@buildertech/ui`
+# Especificación de API — Componentes `@buildertechco/ui`
 
 > **Versión**: 0.1.0 | **Fecha**: 2026-11-10 | **Estado**: Revisado contra `src/` y el barrel público
 
@@ -153,14 +153,14 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 
 Sub-componentes (todos `HTMLAttributes`):
 
-| Sub-componente     | Elemento | Notas                                              |
-| :----------------- | :------- | :------------------------------------------------- |
+| Sub-componente     | Elemento | Notas                                                                                                                                |
+| :----------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------- |
 | `Card.Header`      | `div`    | Aplica sangrado negativo según el padding del Card. Props: `leftIcon?: ReactNode`, `onClose?: () => void`, `closeAriaLabel?: string` |
-| `Card.Title`       | `h3`     | Tipografía de título                               |
-| `Card.Description` | `p`      | Texto secundario (`text-btc-caption`, `text-btc-text-primary`) |
-| `Card.Content`     | `div`    | Contenido principal (`py-btc-3` para separación)   |
-| `Card.Footer`      | `div`    | Divisor superior y sangrado                        |
-| `Card.Actions`     | `div`    | Fila de acciones alineada a la derecha (sin borde propio) |
+| `Card.Title`       | `h3`     | Tipografía de título                                                                                                                 |
+| `Card.Description` | `p`      | Texto secundario (`text-btc-caption`, `text-btc-text-primary`)                                                                       |
+| `Card.Content`     | `div`    | Contenido principal (`py-btc-3` para separación)                                                                                     |
+| `Card.Footer`      | `div`    | Divisor superior y sangrado                                                                                                          |
+| `Card.Actions`     | `div`    | Fila de acciones alineada a la derecha (sin borde propio)                                                                            |
 
 ```tsx
 <Card variant="elevated" padding="lg">
@@ -709,7 +709,11 @@ interface CopyButtonProps extends Omit<
 - **Pendiente de producto:** el requisito es mostrar un estado de error cuando falla la copia. La implementación actual solo llama a `onCopy(false)` y no presenta feedback de error; no asumir que esta UX ya está disponible.
 
 ```tsx
-<CopyButton text={apiKey} defaultText="Copiar API key" onCopy={(ok) => !ok && notifyError()} />
+<CopyButton
+  text={apiKey}
+  defaultText="Copiar API key"
+  onCopy={(ok) => !ok && notifyError()}
+/>
 ```
 
 ### 2.14 BackButton
@@ -765,7 +769,7 @@ interface ThemeToggleProps extends Omit<
 - En `variant="dropdown"` usa `DropdownMenu`.
 - Antes de montar renderiza un botón deshabilitado para evitar mismatch de hidratación.
 
-> El tipo `Theme` no se exporta desde el barrel principal; si lo necesitas, usa `ThemeToggleProps["value"]` o impórtalo desde `@buildertech/ui/components/theme-toggle` si tu configuración lo permite.
+> El tipo `Theme` no se exporta desde el barrel principal; si lo necesitas, usa `ThemeToggleProps["value"]` o impórtalo desde `@buildertechco/ui/components/theme-toggle` si tu configuración lo permite.
 
 ### 2.16 Skeleton
 
@@ -873,7 +877,7 @@ clearToasts();
 ```tsx
 "use client";
 
-import { ToastProvider, useToast } from "@buildertech/ui";
+import { ToastProvider, useToast } from "@buildertechco/ui";
 
 function SaveButton() {
   const { addToast } = useToast();
@@ -1032,12 +1036,12 @@ Comportamiento:
 
 ### 4.1 Utilidades
 
-| Export                                         | Tipo       | Descripción                                        |
-| :--------------------------------------------- | :--------- | :------------------------------------------------- |
-| `clsx`                                         | función    | `clsx` + `tailwind-merge` configurado para `btc-*` |
-| `Icon`                                         | componente | Wrapper semántico de Lucide                        |
-| `getFontSans`, `getFontMono`, `getFontDisplay` | funciones  | Helpers `next/font`                                |
-| `globalsCss`, `tokensCss`                      | CSS        | Re-exports de los archivos de estilos              |
+| Export | Tipo       | Descripción                                        |
+| :----- | :--------- | :------------------------------------------------- |
+| `clsx` | función    | `clsx` + `tailwind-merge` configurado para `btc-*` |
+| `Icon` | componente | Wrapper semántico de Lucide                        |
+
+Los estilos se importan desde CSS usando `@buildertechco/ui/styles/globals.css` o `@buildertechco/ui/styles/tokens.css`; no son exports JavaScript del barrel. Los helpers `getFontSans`, `getFontMono`, `getFontDisplay` y el tipo `FontHelpers` se exportan solo desde `@buildertechco/ui/lib/fonts`, subpath exclusivo para Next.js.
 
 ### 4.2 Componentes y tipos
 
@@ -1066,9 +1070,9 @@ Comportamiento:
 | `DropdownMenu`                                        | `DropdownMenuProps`, `DropdownMenuTriggerProps`, `DropdownMenuContentProps`, `DropdownMenuItemProps`, `DropdownMenuCheckboxItemProps`, `DropdownMenuRadioItemProps`, `DropdownMenuSeparatorProps`, `DropdownMenuLabelProps` |
 | `Icon`                                                | `IconProps`, `IconName`, `IconCategory`, `IconSize`                                                                                                                                                                         |
 | `clsx`                                                | `ClassValue`                                                                                                                                                                                                                |
-| fuentes                                               | `FontHelpers`                                                                                                                                                                                                               |
+| fuentes (solo `@buildertechco/ui/lib/fonts`)          | `FontHelpers`                                                                                                                                                                                                               |
 
-> `Theme` y `ToastStyle` no están en el barrel principal. `DropdownMenuCompound` existe como alias interno, pero el export público recomendado es `DropdownMenu`.
+> `Theme`, `ToastStyle`, los helpers de fuentes y los estilos CSS no están en el barrel principal. `DropdownMenuCompound` existe como alias interno, pero el export público recomendado es `DropdownMenu`.
 
 ---
 
@@ -1093,5 +1097,5 @@ Comportamiento:
 - **Contraste del botón primario**: resuelto en la paleta actual con `coral-700` y blanco (5.11:1, WCAG AA, según los ratios documentados). Axe no se ejecutó en la revisión del 2026-11-10.
 - **ErrorPage**: pendiente de producto. Las props `action.href` y `secondaryAction.href` existen en el tipo, pero no se implementan; ambas acciones se renderizan como botones y requieren `onClick`.
 - **CopyButton**: el estado de error visible solicitado está pendiente. Actualmente solo emite `onCopy(false)` ante un fallo de portapapeles.
-- **Distribución ESM (verificación 2026-11-10):** el build genera imports relativos sin extensión; la prueba con Node ESM falló para las 25 subrutas JavaScript exportadas. La compatibilidad con resolución de bundlers no se verificó. No se declara soporte nativo de Node ESM hasta corregir y volver a probar el paquete.
+- **Distribución ESM:** `pnpm test:consumer` valida el barrel raíz y las subrutas JavaScript no específicas de Next con Vite/Tailwind v4. Node ESM nativo no está soportado porque TypeScript emite imports relativos sin extensión y el barrel requiere procesamiento CSS. La app Next.js y el subpath `@buildertechco/ui/lib/fonts` no forman parte de esa prueba.
 - **DropdownMenu `modal`**: aceptado en tipos, no consumido.
