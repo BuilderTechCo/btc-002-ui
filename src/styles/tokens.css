@@ -1,0 +1,347 @@
+/* @buildertech/ui - Design Tokens
+ * Variables CSS primitivas + roles semánticos (light/dark)
+ * Versión: 0.1.0
+ */
+
+@layer base {
+  /* ============================================
+   * PRIMITIVAS (independientes del tema)
+   * ============================================ */
+
+  :root {
+    /* ---- Forest (Verdes Oscuros — Marca) ---- */
+    --forest-50: #f5faf7;
+    --forest-100: #eaf5f0;
+    --forest-200: #d4eadf;
+    --forest-300: #a8d5c1;
+    --forest-400: #6bb094;
+    --forest-500: #4a7c6e;
+    --forest-600: #365a4e;
+    --forest-700: #2a4a3e;
+    --forest-800: #1d3931;
+    --forest-900: #11241f;
+    --forest-950: #0d1b17;
+
+    /* ---- Coral (Naranjas/Rojos — Acción) ---- */
+    --coral-50: #fff1ed;
+    --coral-100: #ffe5dc;
+    --coral-200: #ffc9bb;
+    --coral-300: #ff9d85;
+    --coral-400: #ff7a5a;
+    --coral-500: #ff5c35;
+    --coral-600: #e84b29;
+    --coral-700: #c93a1e;
+    --coral-800: #a62d1a;
+    --coral-900: #7a2012;
+    --coral-950: #4a1008;
+
+    /* ---- Blue (Azul — Informativo) ---- */
+    --blue-50: #eff6ff;
+    --blue-100: #dbeafe;
+    --blue-200: #bfdbfe;
+    --blue-300: #93c5fd;
+    --blue-400: #60a5fa;
+    --blue-500: #3b82f6;
+    --blue-600: #2e68a8;
+    --blue-700: #25508a;
+    --blue-800: #1a3e6e;
+    --blue-900: #112d4e;
+    --blue-950: #0b1d3a;
+
+    /* ---- Red (Rojo — Error/Destructivo) ---- */
+    --red-50: #fef2f2;
+    --red-100: #fee2e2;
+    --red-200: #fecaca;
+    --red-300: #fca5a5;
+    --red-400: #f87171;
+    --red-500: #ef4444;
+    --red-600: #dc2626;
+    --red-700: #b91c1c;
+    --red-800: #991b1b;
+    --red-900: #7f1d1d;
+    --red-950: #450a0a;
+
+    /* ---- Neutral Warm (Escala Técnica — Puentes Light/Dark) ---- */
+    --neutral-50: #fbfcfa;
+    --neutral-100: #f2f3ed;
+    --neutral-200: #e3e6de;
+    --neutral-300: #d1d6ce;
+    --neutral-400: #a8aeaa;
+    --neutral-500: #828a86;
+    --neutral-600: #66736c;
+    --neutral-700: #4d5c55;
+    --neutral-800: #35443e;
+    --neutral-900: #1f2a25;
+    --neutral-950: #0d1511;
+
+    /* ---- Espaciado (base 4px) ---- */
+    --btc-space-0: 0px;
+    --btc-space-1: 4px;
+    --btc-space-2: 8px;
+    --btc-space-3: 12px;
+    --btc-space-4: 16px;
+    --btc-space-6: 24px;
+    --btc-space-8: 32px;
+    --btc-space-12: 48px;
+    --btc-space-16: 64px;
+
+    /* ---- Radios ---- */
+    --btc-radius-xs: 2px;
+    --btc-radius-sm: 4px;
+    --btc-radius-md: 8px;
+    --btc-radius-lg: 12px;
+    --btc-radius-xl: 16px;
+    --btc-radius-2xl: 24px;
+    --btc-radius-full: 999px;
+
+    /* ---- Fuentes ---- */
+    --btc-font-sans:
+      "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
+    --btc-font-mono:
+      "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    /* ---- Movimiento ---- */
+    --btc-duration-fast: 120ms;
+    --btc-duration-base: 160ms;
+    --btc-duration-slow: 240ms;
+    --btc-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+    /* ---- Z-Index Controlado ---- */
+    --btc-z-base: 0;
+    --btc-z-dropdown: 100;
+    --btc-z-sticky: 200;
+    --btc-z-modal: 300;
+    --btc-z-popover: 400;
+    --btc-z-tooltip: 500;
+    --btc-z-toast: 600;
+
+    /* ---- Transiciones Permitidas ---- */
+    --btc-transition-colors:
+      color, background-color, border-color, text-decoration-color, fill, stroke;
+    --btc-transition-opacity: opacity;
+    --btc-transition-transform: transform;
+    --btc-transition-shadow: box-shadow;
+
+    /* ---- RGB values for rgba() usage ---- */
+    --forest-950-rgb: 13, 27, 23;
+  }
+
+  /* ============================================
+   * ROLES SEMÁNTICOS — TEMA CLARO (Light)
+   * ============================================ */
+
+  :root {
+    /* Controles nativos (checkbox, select, date) en modo claro */
+    color-scheme: light;
+
+    /* Fondos */
+    --btc-bg-app: var(--neutral-50); /* #FBFCFA */
+    --btc-bg-surface: var(--neutral-100); /* #F2F3ED */
+    --btc-bg-raised: var(--neutral-200); /* #E3E6DE */
+    --btc-bg-brand: var(--coral-600); /* #E84B29 */
+
+    /* Textos */
+    --btc-text-primary: var(--forest-950); /* #0D1B17 */
+    --btc-text-secondary: var(--neutral-600); /* #66736C */
+    --btc-text-muted: var(--neutral-500); /* #828A86 */
+    --btc-text-brand: var(--coral-600); /* #E84B29 */
+    --btc-text-on-brand: #ffffff; /* white */
+
+    /* Bordes */
+    --btc-border-subtle: var(--neutral-200); /* #E3E6DE */
+    --btc-border-default: var(--neutral-200); /* #E3E6DE */
+    --btc-border-strong: var(--neutral-400); /* #D1D6CE */
+    --btc-border-focus: var(--coral-600); /* #E84B29 */
+
+    /* Acciones */
+    --btc-action-primary: var(--coral-700); /* #C93A1E — 5.11:1 con white */
+    --btc-action-hover: var(--coral-800); /* #A62D1A — 6.97:1 con white */
+    --btc-action-pressed: var(--coral-900); /* #7A2012 — 10.28:1 con white */
+
+    /* Estados */
+    --btc-success: #166b3f;
+    --btc-success-bg: var(--forest-100); /* #EAF5F0 */
+    --btc-warning: #a15c00;
+    --btc-warning-bg: var(--coral-50); /* #FFF1ED */
+    --btc-error: #c62828;
+    --btc-error-bg: var(--coral-100); /* #FFE5DC */
+    --btc-info: var(--blue-700); /* #25508A — 7.9:1 sobre bg-app */
+    --btc-info-bg: var(--blue-100); /* #DBEAFE */
+
+    /* Sombras (Elevation Scale) */
+    --btc-elevation-1: 0 1px 2px rgba(var(--forest-950-rgb), 0.06);
+    --btc-elevation-2: 0 4px 12px rgba(var(--forest-950-rgb), 0.08);
+    --btc-elevation-3: 0 12px 32px rgba(var(--forest-950-rgb), 0.12);
+    --btc-elevation-4: 0 20px 48px rgba(var(--forest-950-rgb), 0.16);
+    --btc-elevation-5: 0 28px 64px rgba(var(--forest-950-rgb), 0.2);
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+  }
+
+  /* ============================================
+   * ROLES SEMÁNTICOS — TEMA OSCURO (Dark)
+   * ============================================ */
+
+  [data-theme="dark"] {
+    /* Controles nativos (checkbox, select, date) en modo oscuro */
+    color-scheme: dark;
+
+    /* Fondos */
+    --btc-bg-app: var(--forest-950); /* #0D1B17 */
+    --btc-bg-surface: var(--forest-800); /* #1D3931 */
+    --btc-bg-raised: var(--forest-700); /* #2A4A3E */
+    --btc-bg-brand: var(--coral-600); /* #E84B29 */
+
+    /* Textos */
+    --btc-text-primary: var(--neutral-50); /* #FBFCFA */
+    --btc-text-secondary: var(--neutral-400); /* #A8AEAA */
+    --btc-text-muted: var(--neutral-500); /* #828A86 */
+    --btc-text-brand: var(--coral-400); /* #FF7A5A */
+    --btc-text-on-brand: #ffffff; /* white */
+
+    /* Bordes */
+    --btc-border-subtle: var(--forest-700); /* #2A4A3E */
+    --btc-border-default: var(--forest-600); /* #365A4E */
+    --btc-border-strong: var(--neutral-700); /* #4D5C55 */
+    --btc-border-focus: var(--coral-400); /* #FF7A5A */
+
+    /* Acciones */
+    --btc-action-primary: var(--coral-700); /* #C93A1E — 5.11:1 con white */
+    --btc-action-hover: var(--coral-800); /* #A62D1A — 6.97:1 con white */
+    --btc-action-pressed: var(--coral-900); /* #7A2012 — 10.28:1 con white */
+
+    /* Estados */
+    --btc-success: #3dd68c;
+    --btc-success-bg: var(--forest-900); /* #11241F */
+    --btc-warning: #f5b544;
+    --btc-warning-bg: #33270f;
+    --btc-error: #ff6b6b;
+    --btc-error-bg: #3a1717;
+    --btc-info: var(--blue-400); /* #60A5FA — 7.0:1 sobre bg-app */
+    --btc-info-bg: var(--blue-900); /* #112D4E */
+
+    /* Sombras (Elevation Scale - Dark) */
+    --btc-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.15);
+    --btc-elevation-2: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --btc-elevation-3: 0 12px 32px rgba(0, 0, 0, 0.35);
+    --btc-elevation-4: 0 20px 48px rgba(0, 0, 0, 0.4);
+    --btc-elevation-5: 0 28px 64px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ============================================
+   * OUTLINE / GHOST VARIANTS (Botones)
+   * ============================================ */
+
+  :root {
+    /* Primary Outline */
+    --btc-action-primary-outline-bg: transparent;
+    --btc-action-primary-outline-border: var(--btc-action-primary);
+    --btc-action-primary-outline-text: var(--btc-action-primary);
+    --btc-action-primary-outline-hover-bg: color-mix(
+      in srgb,
+      var(--btc-action-primary) 10%,
+      transparent
+    );
+
+    /* Info Outline */
+    --btc-action-info-outline-bg: transparent;
+    --btc-action-info-outline-border: var(--btc-info);
+    --btc-action-info-outline-text: var(--btc-info);
+    --btc-action-info-outline-hover-bg: color-mix(
+      in srgb,
+      var(--btc-info) 10%,
+      transparent
+    );
+
+    /* Danger Outline */
+    --btc-action-danger-outline-bg: transparent;
+    --btc-action-danger-outline-border: var(--btc-error);
+    --btc-action-danger-outline-text: var(--btc-error);
+    --btc-action-danger-outline-hover-bg: color-mix(
+      in srgb,
+      var(--btc-error) 10%,
+      transparent
+    );
+
+    /* Ghost */
+    --btc-action-ghost-bg: transparent;
+    --btc-action-ghost-text: var(--btc-text-primary);
+    --btc-action-ghost-hover-bg: var(--btc-bg-raised);
+    --btc-action-ghost-hover-text: var(--btc-text-primary);
+  }
+
+  [data-theme="dark"] {
+    /* Primary Outline */
+    --btc-action-primary-outline-border: var(--btc-action-primary);
+    --btc-action-primary-outline-text: var(--coral-400);
+    --btc-action-primary-outline-hover-bg: color-mix(
+      in srgb,
+      var(--btc-action-primary) 15%,
+      transparent
+    );
+
+    /* Info Outline */
+    --btc-action-info-outline-border: var(--btc-info);
+    --btc-action-info-outline-text: var(--btc-info);
+    --btc-action-info-outline-hover-bg: color-mix(
+      in srgb,
+      var(--btc-info) 15%,
+      transparent
+    );
+
+    /* Danger Outline */
+    --btc-action-danger-outline-border: var(--btc-error);
+    --btc-action-danger-outline-text: var(--btc-error);
+    --btc-action-danger-outline-hover-bg: color-mix(
+      in srgb,
+      var(--btc-error) 15%,
+      transparent
+    );
+
+    /* Ghost */
+    --btc-action-ghost-text: var(--btc-text-secondary);
+    --btc-action-ghost-hover-bg: var(--btc-bg-raised);
+    --btc-action-ghost-hover-text: var(--btc-text-primary);
+  }
+
+  /* ============================================
+   * BUTTON SIZES (Tokens para @theme)
+   * ============================================ */
+
+  :root {
+    --btc-btn-height-sm: 32px; /* h-8 */
+    --btc-btn-height-md: 40px; /* h-10 */
+    --btc-btn-height-lg: 48px; /* h-12 */
+
+    --btc-btn-px-sm: 12px; /* px-3 */
+    --btc-btn-px-md: 16px; /* px-4 */
+    --btc-btn-px-lg: 24px; /* px-6 */
+
+    --btc-btn-icon-sm: 14px; /* size="sm" */
+    --btc-btn-icon-md: 18px; /* size="md" */
+    --btc-btn-icon-lg: 22px; /* size="lg" */
+
+    --btc-btn-text-sm: var(--btc-text-caption); /* 0.75rem */
+    --btc-btn-text-md: var(--btc-text-control); /* 0.875rem */
+    --btc-btn-text-lg: var(--btc-text-body); /* 1rem */
+  }
+
+  /* ============================================
+   * DIALOG TOKENS
+   * ============================================ */
+
+  :root {
+    --btc-dialog-header-py: 16px;
+    --btc-dialog-header-px: 20px;
+    --btc-dialog-border: var(--btc-border-default);
+    --btc-dialog-radius: var(--btc-radius-lg);
+    --btc-dialog-max-h: 85vh;
+  }
+
+  [data-theme="dark"] {
+    --btc-dialog-border: var(--btc-border-default);
+  }
+}
