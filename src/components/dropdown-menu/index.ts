@@ -9,7 +9,7 @@ export {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuLabel,
-} from './dropdown-menu';
+} from "./dropdown-menu";
 export type {
   DropdownMenuProps,
   DropdownMenuTriggerProps,
@@ -19,4 +19,4 @@ export type {
   DropdownMenuRadioItemProps,
   DropdownMenuSeparatorProps,
   DropdownMenuLabelProps,
-} from './dropdown-menu';
+} from "./dropdown-menu";

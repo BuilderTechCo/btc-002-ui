@@ -24,7 +24,9 @@ describe("dropdownMenu", () => {
   test("renders trigger and content when open", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
@@ -50,7 +52,9 @@ describe("dropdownMenu", () => {
   test("toggles open/close on trigger click", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
         </DropdownMenuContent>
@@ -72,7 +76,9 @@ describe("dropdownMenu", () => {
     const onOpenChange = vi.fn();
     render(
       <DropdownMenu onOpenChange={onOpenChange}>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
         </DropdownMenuContent>
@@ -89,7 +95,9 @@ describe("dropdownMenu", () => {
   test("closes menu when item clicked", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
         </DropdownMenuContent>
@@ -106,7 +114,9 @@ describe("dropdownMenu", () => {
   test("renders DropdownMenuItem with icon", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem icon="edit" iconCategory="action">
             Edit
@@ -125,7 +135,9 @@ describe("dropdownMenu", () => {
   test("renders DropdownMenuItem with shortcut", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem shortcut="Ctrl+E">Edit</DropdownMenuItem>
         </DropdownMenuContent>
@@ -139,7 +151,9 @@ describe("dropdownMenu", () => {
   test("disables DropdownMenuItem when disabled", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem disabled>Disabled</DropdownMenuItem>
         </DropdownMenuContent>
@@ -155,7 +169,9 @@ describe("dropdownMenu", () => {
   test("applies inset class to DropdownMenuItem", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem inset>Inset Item</DropdownMenuItem>
         </DropdownMenuContent>
@@ -171,7 +187,9 @@ describe("dropdownMenu", () => {
     const onCheckedChange = vi.fn();
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuCheckboxItem
             value="opt1"
@@ -196,7 +214,9 @@ describe("dropdownMenu", () => {
     const onCheckedChange = vi.fn();
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuCheckboxItem
             value="opt1"
@@ -220,7 +240,9 @@ describe("dropdownMenu", () => {
   test("shows check icon when DropdownMenuCheckboxItem checked", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuCheckboxItem value="opt1" checked={true}>
             Option 1
@@ -240,7 +262,9 @@ describe("dropdownMenu", () => {
     const onCheckedChange = vi.fn();
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuRadioItem
             value="radio1"
@@ -273,7 +297,9 @@ describe("dropdownMenu", () => {
     const onCheckedChange = vi.fn();
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuRadioItem
             value="radio1"
@@ -295,7 +321,9 @@ describe("dropdownMenu", () => {
   test("shows dot when DropdownMenuRadioItem checked", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuRadioItem value="radio1" checked={true}>
             Radio 1
@@ -314,7 +342,9 @@ describe("dropdownMenu", () => {
   test("renders DropdownMenuSeparator", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -330,7 +360,9 @@ describe("dropdownMenu", () => {
   test("renders DropdownMenuLabel", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Section Label</DropdownMenuLabel>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
@@ -356,7 +388,9 @@ describe("dropdownMenu", () => {
     aligns.forEach((align) => {
       const { unmount } = render(
         <DropdownMenu key={align}>
-          <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+          <DropdownMenuTrigger aria-label="Open Menu">
+            Open Menu
+          </DropdownMenuTrigger>
           <DropdownMenuContent align={align}>
             <DropdownMenuItem>Item</DropdownMenuItem>
           </DropdownMenuContent>
@@ -380,7 +414,9 @@ describe("dropdownMenu", () => {
     sides.forEach((side) => {
       const { unmount } = render(
         <DropdownMenu key={side}>
-          <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+          <DropdownMenuTrigger aria-label="Open Menu">
+            Open Menu
+          </DropdownMenuTrigger>
           <DropdownMenuContent side={side}>
             <DropdownMenuItem>Item</DropdownMenuItem>
           </DropdownMenuContent>
@@ -396,7 +432,9 @@ describe("dropdownMenu", () => {
   test("applies sideOffset prop", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent sideOffset={10}>
           <DropdownMenuItem>Item</DropdownMenuItem>
         </DropdownMenuContent>
@@ -410,7 +448,9 @@ describe("dropdownMenu", () => {
   test("applies custom className to DropdownMenuContent", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent className="custom-menu-class">
           <DropdownMenuItem>Item</DropdownMenuItem>
         </DropdownMenuContent>
@@ -424,7 +464,9 @@ describe("dropdownMenu", () => {
   test("applies custom className to DropdownMenuItem", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem className="custom-item-class">
             Item
@@ -442,7 +484,9 @@ describe("dropdownMenu", () => {
   test("closes menu on Escape key when content focused", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
         </DropdownMenuContent>
@@ -464,7 +508,9 @@ describe("dropdownMenu", () => {
   test("renders multiple items in menu", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
@@ -489,7 +535,9 @@ describe("dropdownMenu", () => {
   test("closes on Tab key", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Item 1</DropdownMenuItem>
         </DropdownMenuContent>
@@ -525,7 +573,10 @@ describe("dropdownMenu", () => {
   test("renders trigger with custom className", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu" className="custom-trigger-class">
+        <DropdownMenuTrigger
+          aria-label="Open Menu"
+          className="custom-trigger-class"
+        >
           Open Menu
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -544,7 +595,9 @@ describe("dropdownMenu", () => {
   test("applies avoidCollisions prop", () => {
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open Menu">Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger aria-label="Open Menu">
+          Open Menu
+        </DropdownMenuTrigger>
         <DropdownMenuContent avoidCollisions={false}>
           <DropdownMenuItem>Item</DropdownMenuItem>
         </DropdownMenuContent>

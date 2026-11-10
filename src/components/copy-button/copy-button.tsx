@@ -1,16 +1,19 @@
 // @buildertech/ui - CopyButton Component
 // Botón para copiar al portapapeles con feedback visual
 
-import { useState, type ButtonHTMLAttributes } from 'react';
-import { clsx } from '../../lib/classnames';
-import { Button } from '../button';
+import { useState, type ButtonHTMLAttributes } from "react";
+import { clsx } from "../../lib/classnames";
+import { Button } from "../button";
 
-export interface CopyButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'onCopy'> {
+export interface CopyButtonProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "onClick" | "onCopy"
+> {
   /** Texto a copiar */
   text: string;
 
   /** Etiqueta para accesibilidad */
-  'aria-label'?: string;
+  "aria-label"?: string;
 
   /** Texto cuando se copió */
   successText?: string;
@@ -28,10 +31,10 @@ export interface CopyButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonEle
   feedbackDuration?: number;
 
   /** Variante del botón */
-  variant?: 'ghost' | 'outline' | 'primary';
+  variant?: "ghost" | "outline" | "primary";
 
   /** Tamaño */
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 
   /** Callback al copiar */
   onCopy?: (success: boolean) => void;
@@ -39,16 +42,16 @@ export interface CopyButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonEle
 
 export function CopyButton({
   text,
-  'aria-label': ariaLabel = 'Copiar al portapapeles',
-  successText = '¡Copiado!',
-  defaultText = 'Copiar',
-  icon = 'copy',
-  successIcon = 'check',
+  "aria-label": ariaLabel = "Copiar al portapapeles",
+  successText = "¡Copiado!",
+  defaultText = "Copiar",
+  icon = "copy",
+  successIcon = "check",
   feedbackDuration = 2000,
-  variant = 'ghost',
-  size = 'md',
+  variant = "ghost",
+  size = "md",
   onCopy,
-  className = '',
+  className = "",
   disabled,
   ...props
 }: CopyButtonProps) {
@@ -72,10 +75,16 @@ export function CopyButton({
       size={size}
       leftIcon={copied ? successIcon : icon}
       leftIconCategory="action"
-      onClick={() => { void handleCopy(); }}
+      onClick={() => {
+        void handleCopy();
+      }}
       disabled={disabled || copied}
       aria-label={ariaLabel}
-      className={clsx('transition-btc-colors', copied && 'bg-btc-success-bg text-btc-success border-btc-success/20', className)}
+      className={clsx(
+        "transition-btc-colors",
+        copied && "bg-btc-success-bg text-btc-success border-btc-success/20",
+        className,
+      )}
       {...props}
     >
       {copied ? successText : defaultText}

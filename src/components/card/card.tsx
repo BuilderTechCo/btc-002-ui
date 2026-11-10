@@ -11,7 +11,8 @@ import {
 import { clsx } from "../../lib/classnames";
 import { Slot } from "../slot";
 
-export type CardVariant = "default" | "outlined" | "elevated" | "elevated-bordered";
+export type CardVariant =
+  "default" | "outlined" | "elevated" | "elevated-bordered";
 export type CardPadding = "none" | "sm" | "md" | "lg";
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
@@ -34,7 +35,8 @@ const variantClasses: Record<CardVariant, string> = {
   default: "bg-btc-surface border border-btc-border-default",
   outlined: "bg-transparent border border-btc-border-strong",
   elevated: "bg-btc-surface border-none shadow-btc-2",
-  "elevated-bordered": "bg-btc-surface border border-btc-border-default shadow-btc-2",
+  "elevated-bordered":
+    "bg-btc-surface border border-btc-border-default shadow-btc-2",
 };
 
 const paddingClasses: Record<CardPadding, string> = {
@@ -97,14 +99,17 @@ CardRoot.displayName = "Card";
 
 /** Header - apila título/descripción y separa con un divisor sutil */
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({
-    className = "",
-    children,
-    onClose,
-    closeAriaLabel = "Cerrar",
-    leftIcon,
-    ...props
-  }, ref) => {
+  (
+    {
+      className = "",
+      children,
+      onClose,
+      closeAriaLabel = "Cerrar",
+      leftIcon,
+      ...props
+    },
+    ref,
+  ) => {
     const padding = useContext(CardPaddingContext);
 
     return (
@@ -124,24 +129,37 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
                 <div className="flex items-start">
                   <Slot className="shrink-0">{leftIcon}</Slot>
                 </div>
-                <div className="flex flex-col gap-btc-1 flex-1 min-w-0">{children}</div>
+                <div className="flex flex-col gap-btc-1 flex-1 min-w-0">
+                  {children}
+                </div>
               </div>
             )}
-            {!leftIcon && <div className="flex flex-col gap-btc-1">{children}</div>}
+            {!leftIcon && (
+              <div className="flex flex-col gap-btc-1">{children}</div>
+            )}
           </div>
           {onClose && (
-              <button
-                type="button"
-                className="flex h-btc-8 w-btc-8 items-center justify-center rounded-btc-md text-btc-text-muted hover:text-btc-text-primary hover:bg-btc-raised transition-colors duration-btc-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btc-border-focus"
-                onClick={onClose}
-                aria-label={closeAriaLabel}
+            <button
+              type="button"
+              className="flex h-btc-8 w-btc-8 items-center justify-center rounded-btc-md text-btc-text-muted hover:text-btc-text-primary hover:bg-btc-raised transition-colors duration-btc-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btc-border-focus"
+              onClick={onClose}
+              aria-label={closeAriaLabel}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            )}
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     );

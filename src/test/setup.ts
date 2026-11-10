@@ -1,16 +1,17 @@
-import '@testing-library/jest-dom';
-import { vi, beforeAll } from 'vitest';
-import React from 'react';
+import "@testing-library/jest-dom";
+import { vi, beforeAll } from "vitest";
+import React from "react";
 
 // Suppress specific React warnings at the earliest point
 const originalConsoleError = console.error;
 const originalConsoleWarn = console.warn;
 const suppressWarning = (msg: unknown) =>
-  typeof msg === 'string' &&
-  (
-    (msg.includes('Warning: An update to') && msg.includes('was not wrapped in act')) ||
-    (msg.includes('The `value` prop supplied to <select> must be an array if `multiple` is true'))
-  );
+  typeof msg === "string" &&
+  ((msg.includes("Warning: An update to") &&
+    msg.includes("was not wrapped in act")) ||
+    msg.includes(
+      "The `value` prop supplied to <select> must be an array if `multiple` is true",
+    ));
 
 console.error = (...args) => {
   if (suppressWarning(args[0])) return;
@@ -38,7 +39,7 @@ beforeAll(() => {
   }));
 
   // Mock matchMedia
-  Object.defineProperty(window, 'matchMedia', {
+  Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: vi.fn().mockImplementation((query) => ({
       matches: false,
@@ -59,28 +60,27 @@ beforeAll(() => {
   Element.prototype.scrollIntoView = vi.fn();
 
   // Mock navigator.clipboard (not available in jsdom)
-  Object.defineProperty(navigator, 'clipboard', {
+  Object.defineProperty(navigator, "clipboard", {
     writable: true,
     value: {
       writeText: vi.fn().mockResolvedValue(undefined),
-      readText: vi.fn().mockResolvedValue(''),
+      readText: vi.fn().mockResolvedValue(""),
     },
   });
 });
-
 
 // Helper to render with providers (uses createElement to avoid JSX in setup)
 export function renderWithProviders(
   ui: React.ReactElement,
   options?: {
-    theme?: 'light' | 'dark';
+    theme?: "light" | "dark";
     wrapper?: React.ComponentType<{ children: React.ReactNode }>;
-  }
+  },
 ) {
-  const { theme = 'light', wrapper } = options || {};
+  const { theme = "light", wrapper } = options || {};
 
   const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) =>
-    React.createElement('div', { 'data-theme': theme }, children);
+    React.createElement("div", { "data-theme": theme }, children);
 
   return {
     // This will be replaced by @testing-library/react render
@@ -95,7 +95,7 @@ expect.extend({
   toHaveDesignToken(received: HTMLElement, token: string) {
     const styles = window.getComputedStyle(received);
     const value = styles.getPropertyValue(token).trim();
-    const pass = value !== '' && value !== 'initial' && value !== 'inherit';
+    const pass = value !== "" && value !== "initial" && value !== "inherit";
 
     return {
       pass,
@@ -108,7 +108,7 @@ expect.extend({
 });
 
 // Extend Vitest types
-declare module 'vitest' {
+declare module "vitest" {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Must match Vitest's Assertion<T = any>
   interface Assertion<T = any> {
     toHaveDesignToken(token: string): T;

@@ -1,6 +1,14 @@
 // @buildertech/ui - Card Barrel Export
 
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardActions } from './card';
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  CardActions,
+} from "./card";
 export type {
   CardProps,
   CardVariant,
@@ -11,4 +19,4 @@ export type {
   CardContentProps,
   CardFooterProps,
   CardActionsProps,
-} from './card';
+} from "./card";

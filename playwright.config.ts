@@ -1,39 +1,39 @@
-import { defineConfig, devices } from '@playwright/test';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { defineConfig, devices } from "@playwright/test";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** Viewports objetivo (mobile → desktop) */
 const VIEWPORTS = [
-  { name: 'mobile', width: 360, height: 800 },
-  { name: 'tablet', width: 768, height: 1024 },
-  { name: 'laptop', width: 1024, height: 1024 },
-  { name: 'desktop', width: 1440, height: 1024 },
+  { name: "mobile", width: 360, height: 800 },
+  { name: "tablet", width: 768, height: 1024 },
+  { name: "laptop", width: 1024, height: 1024 },
+  { name: "desktop", width: 1440, height: 1024 },
 ] as const;
 
 /** Temas soportados */
-const THEMES = ['light', 'dark'] as const;
+const THEMES = ["light", "dark"] as const;
 
 /** Genera 8 proyectos: 4 viewports × 2 temas */
 const projects = VIEWPORTS.flatMap(({ name, width, height }) =>
   THEMES.map((theme) => ({
     name: `${theme}-${name}`,
     use: {
-      ...devices['Desktop Chrome'],
+      ...devices["Desktop Chrome"],
       viewport: { width, height },
       colorScheme: theme,
       // Base URL apunta al servidor de preview del DS (Storybook, o app demo)
-      baseURL: 'http://localhost:6006',
+      baseURL: "http://localhost:6006",
     },
-  }))
+  })),
 );
 
 export default defineConfig({
   // ── Estructura ──────────────────────────────────────────────
-  testDir: './e2e/visual',
-  snapshotDir: './e2e/visual/snapshots',
-  outputDir: './test-results',
+  testDir: "./e2e/visual",
+  snapshotDir: "./e2e/visual/snapshots",
+  outputDir: "./test-results",
 
   // ── Timeouts ────────────────────────────────────────────────
   timeout: 30_000,
@@ -46,11 +46,11 @@ export default defineConfig({
       // Umbral de color (más estricto = más sensible)
       threshold: 0.2,
       // Animaciones: esperar a que se estabilicen
-      animations: 'disabled',
+      animations: "disabled",
       // Caret (cursor) invisible
-      caret: 'hide',
+      caret: "hide",
       // Escala para HiDPI
-      scale: 'css',
+      scale: "css",
     },
   },
 
@@ -59,9 +59,9 @@ export default defineConfig({
 
   // ── Reporter ───────────────────────────────────────────────
   reporter: [
-    ['html', { outputFolder: './playwright-report', open: 'never' }],
-    ['list'],
-    ['json', { outputFile: './test-results/results.json' }],
+    ["html", { outputFolder: "./playwright-report", open: "never" }],
+    ["list"],
+    ["json", { outputFile: "./test-results/results.json" }],
   ],
 
   // ── Proyectos (8 combinaciones) ────────────────────────────
@@ -70,11 +70,11 @@ export default defineConfig({
   // ── Configuración global ───────────────────────────────────
   use: {
     // Trace solo en fallos (CI)
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
     // Video solo en CI
-    video: process.env.CI ? 'retain-on-failure' : 'off',
+    video: process.env.CI ? "retain-on-failure" : "off",
     // Screenshot solo en fallo
-    screenshot: 'only-on-failure',
+    screenshot: "only-on-failure",
     // Acción base: navegar a componente isolado
     actionTimeout: 10_000,
     navigationTimeout: 15_000,
@@ -84,14 +84,14 @@ export default defineConfig({
   webServer: process.env.CI
     ? undefined
     : {
-        command: 'pnpm storybook --ci --port 6006',
-        url: 'http://localhost:6006',
+        command: "pnpm storybook --ci --port 6006",
+        url: "http://localhost:6006",
         reuseExistingServer: !process.env.CI,
         timeout: 60_000,
-        stderr: 'pipe',
+        stderr: "pipe",
       },
 
   // ── Global setup/teardown ─────────────────────────────────
-  globalSetup: './e2e/support/global-setup.ts',
-  globalTeardown: './e2e/support/global-teardown.ts',
+  globalSetup: "./e2e/support/global-setup.ts",
+  globalTeardown: "./e2e/support/global-teardown.ts",
 });

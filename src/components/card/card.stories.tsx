@@ -24,7 +24,12 @@ const meta: Meta<typeof Card> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "outlined", "elevated", "elevated-bordered"] as CardVariant[],
+      options: [
+        "default",
+        "outlined",
+        "elevated",
+        "elevated-bordered",
+      ] as CardVariant[],
       description: "Visual variant of the card",
     },
     padding: {
@@ -61,7 +66,8 @@ export const WithHeader: Story = {
 export const WithHeaderClosable: Story = {
   render: () => {
     const [open, setOpen] = useState(true);
-    if (!open) return <div className="text-btc-text-muted text-sm">Card closed</div>;
+    if (!open)
+      return <div className="text-btc-text-muted text-sm">Card closed</div>;
     return (
       <Card>
         <CardHeader
@@ -82,18 +88,22 @@ export const WithHeaderClosable: Story = {
 export const WithIcon: Story = {
   args: {
     variant: "elevated-bordered",
-    padding: "lg"
+    padding: "lg",
   },
 
   render: () => (
     <Card>
-      <CardHeader leftIcon={<Icon name="user" category="nav" size="md" aria-hidden="true" />}>
+      <CardHeader
+        leftIcon={
+          <Icon name="user" category="nav" size="md" aria-hidden="true" />
+        }
+      >
         <CardTitle>User Profile</CardTitle>
         <CardDescription>Manage your account settings</CardDescription>
       </CardHeader>
       <CardContent>Profile content goes here</CardContent>
     </Card>
-  )
+  ),
 };
 
 export const WithFooter: Story = {
@@ -140,11 +150,19 @@ export const NoPadding: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-btc-4 max-w-2xl">
-      {(["default", "outlined", "elevated", "elevated-bordered"] as CardVariant[]).map((variant) => (
+      {(
+        [
+          "default",
+          "outlined",
+          "elevated",
+          "elevated-bordered",
+        ] as CardVariant[]
+      ).map((variant) => (
         <Card key={variant} variant={variant}>
           <CardHeader>
             <CardTitle>
-              {variant.charAt(0).toUpperCase() + variant.slice(1).replace("-", " ")}
+              {variant.charAt(0).toUpperCase() +
+                variant.slice(1).replace("-", " ")}
             </CardTitle>
           </CardHeader>
           <CardContent>This is a {variant} card variant.</CardContent>

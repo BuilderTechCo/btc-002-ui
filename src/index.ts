@@ -2,12 +2,6 @@
 // Versión: 0.1.0
 
 // ============================================
-// ESTILOS
-// ============================================
-export { default as globalsCss } from "./styles/globals.css";
-export { default as tokensCss } from "./styles/tokens.css";
-
-// ============================================
 // UTILIDADES (lib)
 // ============================================
 export { clsx } from "./lib/classnames";
@@ -15,9 +9,6 @@ export type { ClassValue } from "./lib/classnames";
 
 export { Icon } from "./lib/icon";
 export type { IconProps, IconName, IconCategory, IconSize } from "./lib/icon";
-
-export { getFontSans, getFontMono, getFontDisplay } from "./lib/fonts";
-export type { FontHelpers } from "./lib/fonts";
 
 // ============================================
 // COMPONENTES BASE (16)

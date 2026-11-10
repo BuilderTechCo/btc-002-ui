@@ -41,7 +41,8 @@ const variantStyles: Record<
 describe("toast (direct)", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.useFakeTimers();  });
+    vi.useFakeTimers();
+  });
 
   afterEach(() => {
     vi.useRealTimers();
@@ -525,7 +526,8 @@ describe("toastProvider", () => {
 describe("toast accessibility", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.useFakeTimers();  });
+    vi.useFakeTimers();
+  });
 
   afterEach(() => {
     vi.useRealTimers();

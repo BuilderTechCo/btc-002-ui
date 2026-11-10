@@ -1,24 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { BackButton } from './back-button';
+import type { Meta, StoryObj } from "@storybook/react";
+import { BackButton } from "./back-button";
 
 const meta: Meta<typeof BackButton> = {
-  title: 'Components/BackButton',
+  title: "Components/BackButton",
   component: BackButton,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['ghost', 'outline'],
+      control: "select",
+      options: ["ghost", "outline"],
     },
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
+      control: "select",
+      options: ["sm", "md", "lg"],
     },
     useHistoryBack: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
@@ -28,62 +28,62 @@ type Story = StoryObj<typeof BackButton>;
 
 export const Default: Story = {
   args: {
-    children: 'Volver',
+    children: "Volver",
   },
 };
 
 export const WithCustomText: Story = {
   args: {
-    children: 'Regresar al inicio',
+    children: "Regresar al inicio",
   },
 };
 
 export const Outline: Story = {
   args: {
-    children: 'Volver',
-    variant: 'outline',
+    children: "Volver",
+    variant: "outline",
   },
 };
 
 export const Small: Story = {
   args: {
-    children: 'Volver',
-    size: 'sm',
+    children: "Volver",
+    size: "sm",
   },
 };
 
 export const Large: Story = {
   args: {
-    children: 'Volver',
-    size: 'lg',
+    children: "Volver",
+    size: "lg",
   },
 };
 
 export const WithCustomIcon: Story = {
   args: {
-    children: 'Volver',
-    icon: 'arrowLeft',
+    children: "Volver",
+    icon: "arrowLeft",
   },
 };
 
 export const AsLink: Story = {
   args: {
-    children: 'Volver (como enlace)',
-    href: '/previous-page',
+    children: "Volver (como enlace)",
+    href: "/previous-page",
   },
 };
 
 export const WithFallback: Story = {
   args: {
-    children: 'Volver con fallback',
+    children: "Volver con fallback",
     useHistoryBack: true,
-    fallbackHref: '/home',
+    fallbackHref: "/home",
   },
 };
 
 export const Disabled: Story = {
   args: {
-    children: 'Volver',
+    children: "Volver",
     disabled: true,
   },
 };

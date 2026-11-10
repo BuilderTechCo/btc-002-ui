@@ -66,14 +66,26 @@ function DialogDemo({
 
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   const handleClose = isControlled
-    ? (controlledOnClose ?? (() => { /* noop */ }))
+    ? (controlledOnClose ??
+      (() => {
+        /* noop */
+      }))
     : () => setUncontrolledOpen(false);
 
   return (
     <>
       <Button
         variant="primary"
-        onClick={() => isControlled ? (controlledOnClose ?? (() => { /* noop */ }))() : setUncontrolledOpen(true)}
+        onClick={() =>
+          isControlled
+            ? (
+                controlledOnClose ??
+                (() => {
+                  /* noop */
+                })
+              )()
+            : setUncontrolledOpen(true)
+        }
       >
         {open ? "Dialog abierto (click para cerrar)" : "Abrir Dialog"}
       </Button>

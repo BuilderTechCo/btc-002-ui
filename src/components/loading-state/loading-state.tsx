@@ -62,7 +62,9 @@ export function LoadingState({
         {showScreenReaderOnly && (
           <span className="sr-only">{screenReaderText}</span>
         )}
-        {text && <span className="text-btc-body-s text-btc-text-primary">{text}</span>}
+        {text && (
+          <span className="text-btc-body-s text-btc-text-primary">{text}</span>
+        )}
       </span>
     );
   }

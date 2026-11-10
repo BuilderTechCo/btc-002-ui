@@ -2,20 +2,20 @@
 // Botón principal con variantes: primary, outline, ghost, danger, danger-outline, info, info-outline
 // Tamaños: sm, md, lg | Estados: loading, disabled
 
-import { forwardRef, type ButtonHTMLAttributes } from 'react';
-import { clsx } from '../../lib/classnames';
-import { Icon } from '../../lib/icon';
+import { forwardRef, type ButtonHTMLAttributes } from "react";
+import { clsx } from "../../lib/classnames";
+import { Icon } from "../../lib/icon";
 
 export type ButtonVariant =
-  | 'primary'
-  | 'outline'
-  | 'ghost'
-  | 'danger'
-  | 'danger-outline'
-  | 'info'
-  | 'info-outline';
+  | "primary"
+  | "outline"
+  | "ghost"
+  | "danger"
+  | "danger-outline"
+  | "info"
+  | "info-outline";
 
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Variante visual del botón */
@@ -31,58 +31,64 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leftIcon?: string;
 
   /** Categoría del icono izquierdo */
-  leftIconCategory?: 'nav' | 'action' | 'status' | 'empty';
+  leftIconCategory?: "nav" | "action" | "status" | "empty";
 
   /** Icono a la derecha del texto */
   rightIcon?: string;
 
   /** Categoría del icono derecho */
-  rightIconCategory?: 'nav' | 'action' | 'status' | 'empty';
+  rightIconCategory?: "nav" | "action" | "status" | "empty";
 
   /** Ancho completo */
   fullWidth?: boolean;
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'bg-btc-action-primary text-btc-text-on-brand hover:bg-btc-action-hover active:bg-btc-action-pressed',
-  outline: 'bg-btc-action-primary-outline-bg border border-btc-action-primary-outline-border text-btc-action-primary-outline-text hover:bg-btc-action-primary-outline-hover-bg',
-  ghost: 'bg-btc-action-ghost-bg text-btc-action-ghost-text hover:bg-btc-action-ghost-hover-bg hover:text-btc-action-ghost-hover-text',
-  danger: 'bg-btc-error text-btc-text-on-brand hover:bg-btc-error/90 active:bg-btc-error',
-  'danger-outline': 'bg-btc-action-danger-outline-bg border border-btc-action-danger-outline-border text-btc-action-danger-outline-text hover:bg-btc-action-danger-outline-hover-bg',
-  info: 'bg-btc-info text-btc-text-on-brand hover:bg-btc-info/90 active:bg-btc-info',
-  'info-outline': 'bg-btc-action-info-outline-bg border border-btc-action-info-outline-border text-btc-action-info-outline-text hover:bg-btc-action-info-outline-hover-bg',
+  primary:
+    "bg-btc-action-primary text-btc-text-on-brand hover:bg-btc-action-hover active:bg-btc-action-pressed",
+  outline:
+    "bg-btc-action-primary-outline-bg border border-btc-action-primary-outline-border text-btc-action-primary-outline-text hover:bg-btc-action-primary-outline-hover-bg",
+  ghost:
+    "bg-btc-action-ghost-bg text-btc-action-ghost-text hover:bg-btc-action-ghost-hover-bg hover:text-btc-action-ghost-hover-text",
+  danger:
+    "bg-btc-error text-btc-text-on-brand hover:bg-btc-error/90 active:bg-btc-error",
+  "danger-outline":
+    "bg-btc-action-danger-outline-bg border border-btc-action-danger-outline-border text-btc-action-danger-outline-text hover:bg-btc-action-danger-outline-hover-bg",
+  info: "bg-btc-info text-btc-text-on-brand hover:bg-btc-info/90 active:bg-btc-info",
+  "info-outline":
+    "bg-btc-action-info-outline-bg border border-btc-action-info-outline-border text-btc-action-info-outline-text hover:bg-btc-action-info-outline-hover-bg",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-btc-btn-sm px-btc-btn-px-sm text-btc-control gap-btc-1',
-  md: 'h-btc-btn-md px-btc-btn-px-md text-btc-control gap-btc-2',
-  lg: 'h-btc-btn-lg px-btc-btn-px-lg text-btc-body gap-btc-2',
+  sm: "h-btc-btn-sm px-btc-btn-px-sm text-btc-control gap-btc-1",
+  md: "h-btc-btn-md px-btc-btn-px-md text-btc-control gap-btc-2",
+  lg: "h-btc-btn-lg px-btc-btn-px-lg text-btc-body gap-btc-2",
 };
 
-const iconSizeMap: Record<ButtonSize, 'xs' | 'sm' | 'md'> = {
-  sm: 'xs',
-  md: 'sm',
-  lg: 'md',
+const iconSizeMap: Record<ButtonSize, "xs" | "sm" | "md"> = {
+  sm: "xs",
+  md: "sm",
+  lg: "md",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      variant = 'primary',
-      size = 'md',
+      variant = "primary",
+      size = "md",
       loading = false,
       disabled,
       leftIcon,
-      leftIconCategory = 'action',
+      leftIconCategory = "action",
       rightIcon,
-      rightIconCategory = 'action',
+      rightIconCategory = "action",
       fullWidth = false,
-      className = '',
+      className = "",
       children,
-      'aria-label': ariaLabel,
+      "aria-label": ariaLabel,
       ...props
     },
-    ref
+    ref,
   ) => {
     const isDisabled = disabled || loading;
 
@@ -95,15 +101,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={loading || undefined}
         aria-label={ariaLabel}
         className={clsx(
-          'inline-flex items-center justify-center font-medium rounded-btc-md',
-          'transition-btc-colors duration-btc-base ease-btc-standard',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btc-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-btc-app',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-          'active:scale-[0.98]',
+          "inline-flex items-center justify-center font-medium rounded-btc-md",
+          "transition-btc-colors duration-btc-base ease-btc-standard",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btc-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-btc-app",
+          "disabled:opacity-50 disabled:cursor-not-allowed",
+          "active:scale-[0.98]",
           variantClasses[variant],
           sizeClasses[size],
-          fullWidth && 'w-full',
-          className
+          fullWidth && "w-full",
+          className,
         )}
         {...props}
       >
@@ -132,19 +138,29 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             />
           </svg>
         ) : leftIcon ? (
-          <Icon name={leftIcon} category={leftIconCategory} size={iconSizeMap[size]} aria-hidden="true" />
+          <Icon
+            name={leftIcon}
+            category={leftIconCategory}
+            size={iconSizeMap[size]}
+            aria-hidden="true"
+          />
         ) : null}
 
         {children}
 
         {!loading && rightIcon && (
-          <Icon name={rightIcon} category={rightIconCategory} size={iconSizeMap[size]} aria-hidden="true" />
+          <Icon
+            name={rightIcon}
+            category={rightIconCategory}
+            size={iconSizeMap[size]}
+            aria-hidden="true"
+          />
         )}
       </button>
     );
-  }
+  },
 );
 
-Button.displayName = 'Button';
+Button.displayName = "Button";
 
 /** Export types (ya exportados arriba) */

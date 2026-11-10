@@ -8,6 +8,6 @@ export {
   getFontSans,
   getFontMono,
   getFontDisplay,
-} from './fonts';
+} from "./fonts";
 
-export type { FontHelpers } from './fonts';
+export type { FontHelpers } from "./fonts";

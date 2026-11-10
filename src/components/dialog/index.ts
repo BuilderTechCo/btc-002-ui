@@ -6,7 +6,7 @@ export {
   DialogContent,
   DialogFooter,
   DialogClose,
-} from './dialog';
+} from "./dialog";
 export type {
   DialogProps,
   DialogSize,
@@ -15,4 +15,4 @@ export type {
   DialogContentProps,
   DialogFooterProps,
   DialogCloseProps,
-} from './dialog';
+} from "./dialog";

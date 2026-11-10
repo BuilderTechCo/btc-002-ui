@@ -38,10 +38,13 @@ export interface DropdownMenuProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-export interface DropdownMenuTriggerProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'aria-label'> {
+export interface DropdownMenuTriggerProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "aria-label"
+> {
   children: ReactNode;
   /** Obligatorio para accesibilidad: describe la acción del menú */
-  'aria-label': string;
+  "aria-label": string;
 }
 
 export interface DropdownMenuContentProps extends HTMLAttributes<HTMLDivElement> {

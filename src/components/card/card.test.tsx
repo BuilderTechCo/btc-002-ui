@@ -213,7 +213,11 @@ describe("card", () => {
 
   test("renders elevated-bordered variant with shadow and border", () => {
     render(
-      <Card variant="elevated-bordered" role="region" aria-label="Elevated Bordered Card">
+      <Card
+        variant="elevated-bordered"
+        role="region"
+        aria-label="Elevated Bordered Card"
+      >
         Elevated Bordered
       </Card>,
     );
@@ -249,7 +253,13 @@ describe("card", () => {
   test("renders CardHeader with leftIcon slot", () => {
     render(
       <Card role="region" aria-label="Header with Icon Card">
-        <CardHeader leftIcon={<span role="img" aria-label="star">★</span>}>
+        <CardHeader
+          leftIcon={
+            <span role="img" aria-label="star">
+              ★
+            </span>
+          }
+        >
           <CardTitle>Title with Icon</CardTitle>
         </CardHeader>
       </Card>,
@@ -280,7 +290,9 @@ describe("card", () => {
       <Card role="region" aria-label="Centered Close Card">
         <CardHeader onClose={() => undefined}>
           <CardTitle>Title</CardTitle>
-          <CardDescription>Description text that makes the header taller</CardDescription>
+          <CardDescription>
+            Description text that makes the header taller
+          </CardDescription>
         </CardHeader>
       </Card>,
     );

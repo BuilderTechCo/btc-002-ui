@@ -1,4 +1,4 @@
 // @buildertech/ui - ErrorState Barrel Export
 
-export { ErrorState } from './error-state';
-export type { ErrorStateProps } from './error-state';
+export { ErrorState } from "./error-state";
+export type { ErrorStateProps } from "./error-state";

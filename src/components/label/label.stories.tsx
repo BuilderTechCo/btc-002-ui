@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Label } from './label';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Label } from "./label";
 
 const meta: Meta<typeof Label> = {
-  title: 'Components/Label',
+  title: "Components/Label",
   component: Label,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
+      control: "select",
+      options: ["sm", "md", "lg"],
     },
     required: {
-      control: 'boolean',
+      control: "boolean",
     },
     error: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
@@ -27,43 +27,43 @@ type Story = StoryObj<typeof Label>;
 
 export const Default: Story = {
   args: {
-    children: 'Email Address',
+    children: "Email Address",
   },
 };
 
 export const Required: Story = {
   args: {
-    children: 'Email Address',
+    children: "Email Address",
     required: true,
   },
 };
 
 export const WithHelpText: Story = {
   args: {
-    children: 'Password',
-    helpText: 'Must be at least 8 characters',
+    children: "Password",
+    helpText: "Must be at least 8 characters",
   },
 };
 
 export const WithError: Story = {
   args: {
-    children: 'Email Address',
+    children: "Email Address",
     error: true,
-    helpText: 'Please enter a valid email address',
+    helpText: "Please enter a valid email address",
   },
 };
 
 export const Small: Story = {
   args: {
-    children: 'Small Label',
-    size: 'sm',
+    children: "Small Label",
+    size: "sm",
   },
 };
 
 export const Large: Story = {
   args: {
-    children: 'Large Label',
-    size: 'lg',
+    children: "Large Label",
+    size: "lg",
   },
 };
 
@@ -85,7 +85,9 @@ export const FormExample: Story = {
   render: () => (
     <form className="w-72 space-y-btc-4" onSubmit={(e) => e.preventDefault()}>
       <div>
-        <Label htmlFor="name" required>Full Name</Label>
+        <Label htmlFor="name" required>
+          Full Name
+        </Label>
         <input
           id="name"
           type="text"
@@ -95,7 +97,9 @@ export const FormExample: Story = {
         />
       </div>
       <div>
-        <Label htmlFor="email" required>Email</Label>
+        <Label htmlFor="email" required>
+          Email
+        </Label>
         <input
           id="email"
           type="email"
@@ -105,7 +109,9 @@ export const FormExample: Story = {
         />
       </div>
       <div>
-        <Label htmlFor="bio" helpText="Tell us about yourself">Bio</Label>
+        <Label htmlFor="bio" helpText="Tell us about yourself">
+          Bio
+        </Label>
         <textarea
           id="bio"
           className="w-full mt-btc-1 px-btc-3 py-btc-2 border border-btc-border-default rounded-btc-md text-btc-control bg-btc-surface min-h-[80px]"
@@ -113,7 +119,9 @@ export const FormExample: Story = {
         />
       </div>
       <div>
-        <Label htmlFor="password" error>Password</Label>
+        <Label htmlFor="password" error>
+          Password
+        </Label>
         <input
           id="password"
           type="password"
