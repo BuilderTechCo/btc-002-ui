@@ -1,4 +1,4 @@
-// @buildertech/ui - check:design Validator
+// @buildertechco/ui - check:design Validator
 // Validador DS: 12 reglas visuales + grep fetch|supabase|prisma|axios como guardarraíl anti-lógica-de-negocio
 
 import { glob } from "glob";
@@ -217,7 +217,7 @@ const BUSINESS_LOGIC_PATTERN = /\b(fetch|supabase|prisma|axios)\b/g;
 
 const BUSINESS_LOGIC_RULE: Rule = {
   id: "no-business-logic",
-  name: "No lógica de negocio en @buildertech/ui",
+  name: "No lógica de negocio en @buildertechco/ui",
   pattern: BUSINESS_LOGIC_PATTERN,
   message:
     "Lógica de negocio detectada en componente UI (fetch, supabase, prisma, axios prohibidos en src)",

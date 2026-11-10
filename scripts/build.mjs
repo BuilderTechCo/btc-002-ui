@@ -1,23 +1,30 @@
-import { rmSync, copyFileSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'fs';
-import { execSync } from 'child_process';
-import { join } from 'path';
+import {
+  rmSync,
+  copyFileSync,
+  mkdirSync,
+  readdirSync,
+  statSync,
+  writeFileSync,
+} from "fs";
+import { execSync } from "child_process";
+import { join } from "path";
 
 // Clean dist
 try {
-  rmSync('dist', { recursive: true, force: true });
+  rmSync("dist", { recursive: true, force: true });
 } catch {
   // ignore if dist doesn't exist
 }
 
 // Run tsc - this generates .js and .d.ts files in dist/
-execSync('tsc -p tsconfig.build.json', { stdio: 'inherit' });
+execSync("tsc -p tsconfig.build.json", { stdio: "inherit" });
 
 // Copy CSS files from src/styles to dist/styles
-mkdirSync('dist/styles', { recursive: true });
-for (const file of readdirSync('src/styles')) {
-  const srcPath = join('src/styles', file);
-  if (statSync(srcPath).isFile() && file.endsWith('.css')) {
-    copyFileSync(srcPath, join('dist/styles', file));
+mkdirSync("dist/styles", { recursive: true });
+for (const file of readdirSync("src/styles")) {
+  const srcPath = join("src/styles", file);
+  if (statSync(srcPath).isFile() && file.endsWith(".css")) {
+    copyFileSync(srcPath, join("dist/styles", file));
   }
 }
 
@@ -27,9 +34,15 @@ for (const file of readdirSync('src/styles')) {
 // These modules ONLY have named exports, no default export.
 
 // lib/classnames - re-export all named exports
-writeFileSync('dist/lib/classnames.d.ts', `export * from './classnames/index.js';\n`);
-writeFileSync('dist/lib/classnames.js', `export * from './classnames/index.js';\n`);
+writeFileSync(
+  "dist/lib/classnames.d.ts",
+  `export * from './classnames/index.js';\n`,
+);
+writeFileSync(
+  "dist/lib/classnames.js",
+  `export * from './classnames/index.js';\n`,
+);
 
 // lib/fonts - re-export all named exports
-writeFileSync('dist/lib/fonts.d.ts', `export * from './fonts/index.js';\n`);
-writeFileSync('dist/lib/fonts.js', `export * from './fonts/index.js';\n`);
+writeFileSync("dist/lib/fonts.d.ts", `export * from './fonts/index.js';\n`);
+writeFileSync("dist/lib/fonts.js", `export * from './fonts/index.js';\n`);
