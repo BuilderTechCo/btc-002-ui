@@ -11,6 +11,25 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.2.0] — Borrador (sin publicar)
+
+> Preparación del release al 2026-11-11. `package.json` sigue en `0.1.0`; no se ha publicado ni etiquetado esta versión.
+
+### Cambiado
+
+- **Tipos públicos**: `Theme` y `SeparatorVariant` también se exportan desde `@buildertechco/ui`, además de sus subpaths.
+
+### Corregido
+
+- **Imports ESM del build**: los imports relativos emitidos en `dist/**/*.js` ahora incluyen `.js` o apuntan al `index.js` generado para cada componente. El build falla indicando el archivo y el specifier si no encuentra el destino.
+- **Resolución de tipos en NodeNext**: los imports relativos de las declaraciones `.d.ts`, incluidos los tipos expresados como `import("./modulo").Tipo`, se reescriben para resolver los archivos emitidos.
+
+### Verificación pendiente
+
+- Validar el consumo en una aplicación Next.js/Turbopack real; el consumer existente verifica Vite/Tailwind, no Next.js.
+
+---
+
 ## [0.1.0] — 2026-11-10
 
 > **Versión inicial del paquete.** No hubo publicaciones previas en GitHub Packages ni tags anteriores: esta entrada consolida el scaffold inicial (2026-11-05), los arreglos antes listados como `0.1.1` (2026-11-06) y el trabajo acumulado en `[Unreleased]`.
@@ -108,7 +127,7 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 - No hay workflows de CI en `.github/workflows/` ni Changesets instalado; el release es manual.
 - `test:visual` fuera de `quality:verify` (requiere Storybook/Chromium).
-- Node ESM nativo no está soportado por los imports relativos sin extensión y los estilos CSS. Vite/Tailwind sí se valida con `pnpm test:consumer`; esa prueba no cubre Next.js ni `@buildertechco/ui/lib/fonts`.
+- Node ESM puede resolver los módulos JavaScript construidos; los imports CSS siguen requiriendo un bundler. `pnpm test:consumer` valida Vite/Tailwind, pero no una app Next.js ni el subpath `@buildertechco/ui/lib/fonts`.
 - Los 3285 baselines visuales existen solo en el entorno local y no están versionados; la suite visual no puede reproducirse desde un checkout limpio.
 - El estado de error visible de `CopyButton` sigue pendiente de implementación; actualmente, si copiar falla, solo emite `onCopy(false)`.
 

@@ -6,7 +6,7 @@
 > - **Sin dependencias de UI externas**: componentes escritos sobre HTML nativo (Dialog, Select, DropdownMenu, Toast…), con tema light/dark resuelto por roles semánticos y no por colores sueltos.
 > - **Sin deriva visual**: `check:design` aplica 12 reglas visuales y un guardarraíl que prohíbe lógica de negocio; `quality:verify` lo ejecuta junto a typecheck y lint antes de cada PR.
 >
-> Se versiona y publica de forma independiente (`0.1.x`) en GitHub Packages.
+> Se versiona y publica de forma independiente en GitHub Packages. La versión publicada sigue siendo `0.1.0`; `0.2.0` está en preparación y aún no se ha publicado.
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md) [![Node](https://img.shields.io/badge/node-%3E%3D20-green)](https://nodejs.org/) [![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/) [![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/) [![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/) [![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
 
@@ -102,7 +102,7 @@ export default function RootLayout({ children }) {
 
 `getFontSans()`, `getFontMono()` y `getFontDisplay()` devuelven `{ variable, className, style }`. Este subpath solo se usa en apps Next.js (`next >=14`); `next` es un peer opcional. Los helpers de fuente no se exportan desde el barrel raíz.
 
-> **Consumo del paquete:** `pnpm test:consumer` construye con Vite/Tailwind v4 el barrel raíz, las 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS. La importación ESM nativa de Node no está soportada: los imports relativos emitidos por TypeScript no llevan extensión y Node tampoco procesa CSS. La prueba Vite no valida una app Next.js ni el subpath específico `@buildertechco/ui/lib/fonts`.
+> **Consumo del paquete:** el build agrega extensiones `.js` a los imports relativos de JavaScript y declaraciones, incluidos los barrels de componentes. El JavaScript del paquete puede resolverse como ESM nativo; los estilos CSS se consumen mediante un bundler. `pnpm test:consumer` valida con Vite/Tailwind v4 el barrel raíz, las 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS. No valida una app Next.js/Turbopack ni el subpath específico `@buildertechco/ui/lib/fonts`.
 
 ---
 
@@ -147,15 +147,15 @@ flowchart LR
 
 ### Principios arquitectónicos
 
-| Principio                            | Descripción                                                                          |
-| :----------------------------------- | :----------------------------------------------------------------------------------- |
-| **Fuente única de verdad**           | Tokens, componentes, validación y docs viven en este repositorio                     |
-| **Distribución por CSS**             | El consumidor importa una sola línea de `globals.css`                                |
-| **Cero dependencias de UI externas** | Dialog, Select, DropdownMenu, Toast, Label, Separator y Slot son nativos             |
-| **Cero lógica de negocio**           | Componentes presentacionales: reciben props, renderizan UI y emiten eventos          |
-| **Versionado independiente**         | `0.1.x` en desarrollo; `1.0.0` como objetivo de congelación de API                   |
-| **Paquete publicado `dist`-only**    | `files: ["dist"]`; el repositorio sí incluye tests, e2e, Storybook y scripts         |
-| **Testing en capas**                 | Unit (Node), integration (jsdom), stories (Chromium) y regresión visual (Playwright) |
+| Principio                            | Descripción                                                                              |
+| :----------------------------------- | :--------------------------------------------------------------------------------------- |
+| **Fuente única de verdad**           | Tokens, componentes, validación y docs viven en este repositorio                         |
+| **Distribución por CSS**             | El consumidor importa una sola línea de `globals.css`                                    |
+| **Cero dependencias de UI externas** | Dialog, Select, DropdownMenu, Toast, Label, Separator y Slot son nativos                 |
+| **Cero lógica de negocio**           | Componentes presentacionales: reciben props, renderizan UI y emiten eventos              |
+| **Versionado independiente**         | `0.1.0` publicado; borrador `0.2.0` en preparación; `1.0.0` como objetivo de congelación |
+| **Paquete publicado `dist`-only**    | `files: ["dist"]`; el repositorio sí incluye tests, e2e, Storybook y scripts             |
+| **Testing en capas**                 | Unit (Node), integration (jsdom), stories (Chromium) y regresión visual (Playwright)     |
 
 ### Estructura del repositorio
 
