@@ -1,0 +1,37 @@
+<!-- @buildertech/ui - Storybook Preview Head -->
+<!-- Preload fonts and critical resources for visual regression consistency -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+  media="print"
+  onload="this.media = 'all'"
+/>
+
+<style>
+  /* Ensure consistent font rendering across browsers */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*
+   * El layout "centered" de Storybook ajusta #storybook-root al ancho del
+   * contenido. Eso colapsa componentes anchos (Select, Table) y deja el
+   * canvas diminuto. El decorador de preview ya centra el contenido con un
+   * max-width propio, así que el root debe ocupar todo el ancho disponible.
+   */
+  body.sb-main-centered #storybook-root,
+  body.sb-main-padded #storybook-root {
+    box-sizing: border-box;
+    width: 100%;
+    flex: 1 1 auto;
+  }
+</style>
