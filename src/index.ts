@@ -113,7 +113,7 @@ export { BackButton } from "./components/back-button";
 export type { BackButtonProps } from "./components/back-button";
 
 export { ThemeToggle } from "./components/theme-toggle";
-export type { ThemeToggleProps } from "./components/theme-toggle";
+export type { ThemeToggleProps, Theme } from "./components/theme-toggle";
 
 export { Skeleton } from "./components/skeleton";
 export type { SkeletonProps, SkeletonVariant } from "./components/skeleton";
@@ -128,6 +128,7 @@ export { Separator } from "./components/separator";
 export type {
   SeparatorProps,
   SeparatorOrientation,
+  SeparatorVariant,
 } from "./components/separator";
 
 export { Slot } from "./components/slot";
