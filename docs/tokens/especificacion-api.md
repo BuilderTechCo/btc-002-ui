@@ -1,8 +1,8 @@
 # Especificación de API — Componentes `@buildertechco/ui`
 
-> **Versión**: 0.1.0 | **Fecha**: 2026-11-10 | **Estado**: Revisado contra `src/` y el barrel público
+> **Versión**: 0.2.0 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra `src/` y el barrel público
 
-Esta especificación describe la API **real** del paquete: props, tipos, valores admitidos, comportamiento y notas de accesibilidad. Cualquier cambio de API debe actualizar este documento, `src/index.ts`, los exports de `package.json` y `CHANGELOG.md`.
+Esta especificación describe la API **real** del paquete: props, tipos, valores admitidos, comportamiento y notas de accesibilidad. La versión publicada sigue siendo `0.1.0`; este borrador documenta los cambios preparados para `0.2.0`. Cualquier cambio de API debe actualizar este documento, `src/index.ts`, los exports de `package.json` y `CHANGELOG.md`.
 
 ---
 
@@ -769,7 +769,7 @@ interface ThemeToggleProps extends Omit<
 - En `variant="dropdown"` usa `DropdownMenu`.
 - Antes de montar renderiza un botón deshabilitado para evitar mismatch de hidratación.
 
-> El tipo `Theme` no se exporta desde el barrel principal; si lo necesitas, usa `ThemeToggleProps["value"]` o impórtalo desde `@buildertechco/ui/components/theme-toggle` si tu configuración lo permite.
+> `Theme` se exporta desde el barrel principal y también desde el subpath `@buildertechco/ui/theme-toggle`.
 
 ### 2.16 Skeleton
 
@@ -1061,10 +1061,10 @@ Los estilos se importan desde CSS usando `@buildertechco/ui/styles/globals.css` 
 | `ErrorPage`                                           | `ErrorPageProps`, `ErrorPageCode`                                                                                                                                                                                           |
 | `CopyButton`                                          | `CopyButtonProps`                                                                                                                                                                                                           |
 | `BackButton`                                          | `BackButtonProps`                                                                                                                                                                                                           |
-| `ThemeToggle`                                         | `ThemeToggleProps`                                                                                                                                                                                                          |
+| `ThemeToggle`                                         | `ThemeToggleProps`, `Theme`                                                                                                                                                                                                 |
 | `Skeleton`                                            | `SkeletonProps`, `SkeletonVariant`                                                                                                                                                                                          |
 | `Label`                                               | `LabelProps`                                                                                                                                                                                                                |
-| `Separator`                                           | `SeparatorProps`, `SeparatorOrientation`                                                                                                                                                                                    |
+| `Separator`                                           | `SeparatorProps`, `SeparatorOrientation`, `SeparatorVariant`                                                                                                                                                                |
 | `Slot`                                                | `SlotProps`                                                                                                                                                                                                                 |
 | `Toast`, `ToastProvider`, `ToastViewport`, `useToast` | `ToastProps`, `ToastProviderProps`, `ToastViewportProps`, `ToastVariant`                                                                                                                                                    |
 | `DropdownMenu`                                        | `DropdownMenuProps`, `DropdownMenuTriggerProps`, `DropdownMenuContentProps`, `DropdownMenuItemProps`, `DropdownMenuCheckboxItemProps`, `DropdownMenuRadioItemProps`, `DropdownMenuSeparatorProps`, `DropdownMenuLabelProps` |
@@ -1072,7 +1072,7 @@ Los estilos se importan desde CSS usando `@buildertechco/ui/styles/globals.css` 
 | `clsx`                                                | `ClassValue`                                                                                                                                                                                                                |
 | fuentes (solo `@buildertechco/ui/lib/fonts`)          | `FontHelpers`                                                                                                                                                                                                               |
 
-> `Theme`, `ToastStyle`, los helpers de fuentes y los estilos CSS no están en el barrel principal. `DropdownMenuCompound` existe como alias interno, pero el export público recomendado es `DropdownMenu`.
+> `ToastStyle`, los helpers de fuentes y los estilos CSS no están en el barrel principal. `DropdownMenuCompound` existe como alias interno, pero el export público recomendado es `DropdownMenu`.
 
 ---
 
@@ -1097,5 +1097,5 @@ Los estilos se importan desde CSS usando `@buildertechco/ui/styles/globals.css` 
 - **Contraste del botón primario**: resuelto en la paleta actual con `coral-700` y blanco (5.11:1, WCAG AA, según los ratios documentados). Axe no se ejecutó en la revisión del 2026-11-10.
 - **ErrorPage**: pendiente de producto. Las props `action.href` y `secondaryAction.href` existen en el tipo, pero no se implementan; ambas acciones se renderizan como botones y requieren `onClick`.
 - **CopyButton**: el estado de error visible solicitado está pendiente. Actualmente solo emite `onCopy(false)` ante un fallo de portapapeles.
-- **Distribución ESM:** `pnpm test:consumer` valida el barrel raíz y las subrutas JavaScript no específicas de Next con Vite/Tailwind v4. Node ESM nativo no está soportado porque TypeScript emite imports relativos sin extensión y el barrel requiere procesamiento CSS. La app Next.js y el subpath `@buildertechco/ui/lib/fonts` no forman parte de esa prueba.
+- **Distribución ESM:** el build postprocesa imports relativos en `.js` y `.d.ts`, incluyendo `import("...").Tipo`, para que el runtime ESM y TypeScript `NodeNext` resuelvan los destinos generados. `pnpm test:consumer` valida el barrel raíz, las subrutas JavaScript no específicas de Next y ambos exports CSS con Vite/Tailwind v4; no valida una app Next.js/Turbopack ni el subpath `@buildertechco/ui/lib/fonts`. CSS requiere un bundler.
 - **DropdownMenu `modal`**: aceptado en tipos, no consumido.

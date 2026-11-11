@@ -1,8 +1,8 @@
 # Guía de Componentes — @buildertechco/ui
 
-> **Versión**: 0.1.0 | **Fecha**: 2026-11-10 | **Estado**: Revisado contra el código real
+> **Versión**: 0.2.0 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra el código real
 
-Guía práctica para instalar y consumir el Design System. Para la referencia exhaustiva de props, consulta [`docs/tokens/especificacion-api.md`](../tokens/especificacion-api.md).
+Guía práctica para instalar y consumir el Design System. La versión publicada continúa siendo `0.1.0`; usa `0.2.0` solo después de confirmar su publicación. Para la referencia exhaustiva de props, consulta [`docs/tokens/especificacion-api.md`](../tokens/especificacion-api.md).
 
 ---
 
@@ -34,7 +34,7 @@ El paquete vive en un repositorio independiente; no se consume con `workspace:*`
 
 El paquete publicado solo contiene `dist/` (`files: ["dist"]`). Los estilos se publican como CSS y los tipos como `.d.ts`. Los helpers `next/font` solo están disponibles en `@buildertechco/ui/lib/fonts`; no forman parte del barrel raíz y `next` es un peer opcional.
 
-> **Consumo del paquete:** `pnpm test:consumer` valida con Vite/Tailwind v4 el barrel raíz, las 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS. No valida una app Next.js ni `@buildertechco/ui/lib/fonts`. Node ESM nativo no está soportado porque los imports relativos compilados carecen de extensión y Node no procesa CSS.
+> **Consumo del paquete:** el build genera imports relativos explícitos en los archivos JavaScript y `.d.ts`, de modo que ESM nativo y TypeScript `NodeNext` pueden resolverlos. Los estilos CSS siguen necesitando un bundler. `pnpm test:consumer` valida con Vite/Tailwind v4 el barrel raíz, las 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS; no valida una app Next.js/Turbopack ni `@buildertechco/ui/lib/fonts`.
 
 ---
 

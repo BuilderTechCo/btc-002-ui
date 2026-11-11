@@ -1,7 +1,7 @@
 # Contribuir a @buildertechco/ui
 
 > **Guía obligatoria** para issues, PRs, validación y releases.
-> **Versión**: 0.1.0 | **Fecha**: 2026-11-10
+> **Versión**: 0.2.0 (borrador, no publicado) | **Fecha**: 2026-11-11
 
 ---
 
@@ -308,11 +308,12 @@ pnpm build
 # 3. Actualizar versión y changelog manualmente
 #    - package.json → version
 #    - CHANGELOG.md → mover [Unreleased] a la versión y fecha
+#    - No publicar mientras la entrada siga marcada como borrador
 
 # 4. Commit y tag
 git add package.json CHANGELOG.md
-git commit -m "chore: release v0.1.x"
-git tag v0.1.x
+git commit -m "chore: release vX.Y.Z"
+git tag vX.Y.Z
 
 # 5. Publicar (prepublishOnly ejecuta los gates configurados en package.json)
 pnpm publish --registry=https://npm.pkg.github.com
@@ -322,7 +323,7 @@ pnpm publish --registry=https://npm.pkg.github.com
 
 ### Versionado
 
-- `0.1.x`: desarrollo activo; breaking changes permitidos en minor.
+- `0.x`: desarrollo activo; breaking changes permitidos en minor. Estado actual: `0.1.0` publicado, `0.2.0` en preparación y sin publicar.
 - `1.0.0`: objetivo de congelación de API y SemVer estricto.
 - Publicación en GitHub Packages con `publishConfig.access: restricted`.
 
