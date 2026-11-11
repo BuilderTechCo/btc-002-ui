@@ -1,0 +1,242 @@
+{
+  "name": "@buildertechco/ui",
+  "version": "0.1.0",
+  "description": "BuilderTech Design System — Tokens, componentes, utilidades y validación",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BuilderTechCo/btc-002-ui.git"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./styles/globals.css": "./dist/styles/globals.css",
+    "./styles/tokens.css": "./dist/styles/tokens.css",
+    "./lib/classnames": {
+      "types": "./dist/lib/classnames.d.ts",
+      "import": "./dist/lib/classnames.js",
+      "default": "./dist/lib/classnames.js"
+    },
+    "./lib/icon": {
+      "types": "./dist/lib/icon/index.d.ts",
+      "import": "./dist/lib/icon/index.js",
+      "default": "./dist/lib/icon/index.js"
+    },
+    "./lib/fonts": {
+      "types": "./dist/lib/fonts.d.ts",
+      "import": "./dist/lib/fonts.js",
+      "default": "./dist/lib/fonts.js"
+    },
+    "./button": {
+      "types": "./dist/components/button/index.d.ts",
+      "import": "./dist/components/button/index.js",
+      "default": "./dist/components/button/index.js"
+    },
+    "./card": {
+      "types": "./dist/components/card/index.d.ts",
+      "import": "./dist/components/card/index.js",
+      "default": "./dist/components/card/index.js"
+    },
+    "./dialog": {
+      "types": "./dist/components/dialog/index.d.ts",
+      "import": "./dist/components/dialog/index.js",
+      "default": "./dist/components/dialog/index.js"
+    },
+    "./select": {
+      "types": "./dist/components/select/index.d.ts",
+      "import": "./dist/components/select/index.js",
+      "default": "./dist/components/select/index.js"
+    },
+    "./table": {
+      "types": "./dist/components/table/index.d.ts",
+      "import": "./dist/components/table/index.js",
+      "default": "./dist/components/table/index.js"
+    },
+    "./nav-link": {
+      "types": "./dist/components/nav-link/index.d.ts",
+      "import": "./dist/components/nav-link/index.js",
+      "default": "./dist/components/nav-link/index.js"
+    },
+    "./badge": {
+      "types": "./dist/components/badge/index.d.ts",
+      "import": "./dist/components/badge/index.js",
+      "default": "./dist/components/badge/index.js"
+    },
+    "./textfield": {
+      "types": "./dist/components/textfield/index.d.ts",
+      "import": "./dist/components/textfield/index.js",
+      "default": "./dist/components/textfield/index.js"
+    },
+    "./empty-state": {
+      "types": "./dist/components/empty-state/index.d.ts",
+      "import": "./dist/components/empty-state/index.js",
+      "default": "./dist/components/empty-state/index.js"
+    },
+    "./loading-state": {
+      "types": "./dist/components/loading-state/index.d.ts",
+      "import": "./dist/components/loading-state/index.js",
+      "default": "./dist/components/loading-state/index.js"
+    },
+    "./error-state": {
+      "types": "./dist/components/error-state/index.d.ts",
+      "import": "./dist/components/error-state/index.js",
+      "default": "./dist/components/error-state/index.js"
+    },
+    "./error-page": {
+      "types": "./dist/components/error-page/index.d.ts",
+      "import": "./dist/components/error-page/index.js",
+      "default": "./dist/components/error-page/index.js"
+    },
+    "./copy-button": {
+      "types": "./dist/components/copy-button/index.d.ts",
+      "import": "./dist/components/copy-button/index.js",
+      "default": "./dist/components/copy-button/index.js"
+    },
+    "./back-button": {
+      "types": "./dist/components/back-button/index.d.ts",
+      "import": "./dist/components/back-button/index.js",
+      "default": "./dist/components/back-button/index.js"
+    },
+    "./theme-toggle": {
+      "types": "./dist/components/theme-toggle/index.d.ts",
+      "import": "./dist/components/theme-toggle/index.js",
+      "default": "./dist/components/theme-toggle/index.js"
+    },
+    "./skeleton": {
+      "types": "./dist/components/skeleton/index.d.ts",
+      "import": "./dist/components/skeleton/index.js",
+      "default": "./dist/components/skeleton/index.js"
+    },
+    "./label": {
+      "types": "./dist/components/label/index.d.ts",
+      "import": "./dist/components/label/index.js",
+      "default": "./dist/components/label/index.js"
+    },
+    "./separator": {
+      "types": "./dist/components/separator/index.d.ts",
+      "import": "./dist/components/separator/index.js",
+      "default": "./dist/components/separator/index.js"
+    },
+    "./slot": {
+      "types": "./dist/components/slot/index.d.ts",
+      "import": "./dist/components/slot/index.js",
+      "default": "./dist/components/slot/index.js"
+    },
+    "./toast": {
+      "types": "./dist/components/toast/index.d.ts",
+      "import": "./dist/components/toast/index.js",
+      "default": "./dist/components/toast/index.js"
+    },
+    "./dropdown-menu": {
+      "types": "./dist/components/dropdown-menu/index.d.ts",
+      "import": "./dist/components/dropdown-menu/index.js",
+      "default": "./dist/components/dropdown-menu/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build-storybook": "storybook build",
+    "build:watch": "tsc --watch",
+    "check:component-files": "node scripts/check-component-files.mjs",
+    "check:contract": "node --import ./scripts/register.mjs ./scripts/check-component-contract.ts",
+    "check:design": "node --import ./scripts/register.mjs ./scripts/check-design.ts",
+    "check:suppressions": "node scripts/check-suppressions.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "pnpm run lint:src && pnpm run lint:e2e && pnpm run lint:scripts && pnpm run lint:configs",
+    "lint:configs": "eslint . --ext .js,.mjs,.ts,.tsx --max-warnings 0 --report-unused-disable-directives --ignore-pattern 'src/**' --ignore-pattern 'e2e/**' --ignore-pattern 'scripts/**' --ignore-pattern 'dist/**' --ignore-pattern 'storybook-static/**' --ignore-pattern 'coverage/**' --ignore-pattern 'playwright-report/**' --ignore-pattern 'test-results/**' --ignore-pattern 'node_modules/**' --ignore-pattern '.storybook/**' --ignore-pattern '*.tsbuildinfo'",
+    "lint:e2e": "eslint e2e --ext .ts,.tsx --max-warnings 0 --report-unused-disable-directives",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix && eslint e2e --ext .ts,.tsx --fix && eslint scripts --ext .ts,.tsx,.mjs --fix",
+    "lint:scripts": "eslint scripts --ext .ts,.tsx,.mjs --max-warnings 0 --report-unused-disable-directives",
+    "lint:src": "eslint src --ext .ts,.tsx --max-warnings 0 --report-unused-disable-directives",
+    "prepublishOnly": "pnpm run quality:verify && pnpm run check:component-files && pnpm run check:contract && pnpm run check:suppressions && pnpm run test:docs-contract && pnpm run build && pnpm run test:consumer",
+    "quality:verify": "pnpm run typecheck && pnpm run lint && pnpm run check:design && pnpm run test",
+    "storybook": "lsof -ti:6006 | xargs -r kill -9 && storybook dev -p 6006",
+    "storybook:static": "storybook build --output-dir storybook-static",
+    "test": "vitest run --project=unit --project=integration",
+    "test:consumer": "node scripts/test-package-consumer.mjs",
+    "test:coverage": "vitest run --project=unit --project=integration --coverage",
+    "test:docs-contract": "node --test scripts/package-docs.test.mjs",
+    "test:static": "pnpm run typecheck && pnpm run lint && pnpm run check:component-files && pnpm run check:contract && pnpm run check:suppressions && pnpm run test:docs-contract",
+    "test:storybook": "vitest run --project=storybook",
+    "test:ui": "vitest --ui",
+    "test:visual": "playwright test",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "next": ">=14",
+    "react": ">=18.3",
+    "react-dom": ">=18.3"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.453.0",
+    "tailwind-merge": "^2.5.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@playwright/test": "^1.49.1",
+    "@radix-ui/react-slot": "^1.5.0",
+    "@storybook/addon-a11y": "8.6.19",
+    "@storybook/addon-docs": "^8.6.19",
+    "@storybook/addon-essentials": "^8.6.19",
+    "@storybook/addon-links": "^8.6.19",
+    "@storybook/blocks": "^8.6.19",
+    "@storybook/experimental-addon-test": "8.6.19",
+    "@storybook/react": "^8.6.19",
+    "@storybook/react-vite": "^8.6.19",
+    "@storybook/test": "^8.6.19",
+    "@tailwindcss/vite": "^4.0.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/browser": "2.1.9",
+    "@vitest/coverage-v8": "^2.1.8",
+    "@vitest/eslint-plugin": "^1.1.20",
+    "@vitest/runner": "2.1.9",
+    "@vitest/ui": "2.1.9",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-playwright": "^2.1.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-storybook": "^10.6.6",
+    "eslint-plugin-testing-library": "^7.1.0",
+    "glob": "^11.0.0",
+    "jsdom": "^26.0.0",
+    "playwright": "^1.49.1",
+    "prettier": "^3.4.1",
+    "storybook": "^8.6.19",
+    "tsx": "^4.19.1",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.12.0",
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  }
+}

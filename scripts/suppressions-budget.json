@@ -1,0 +1,18 @@
+{
+  "test": {
+    "eslint-disable": 35,
+    "@ts-ignore": 0,
+    "@ts-expect-error": 0,
+    "as any": 0,
+    "as unknown as": 3,
+    ": any": 0
+  },
+  "prod": {
+    "eslint-disable": 4,
+    "@ts-ignore": 0,
+    "@ts-expect-error": 0,
+    "as any": 1,
+    "as unknown as": 0,
+    ": any": 0
+  }
+}
