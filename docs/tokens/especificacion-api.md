@@ -1,8 +1,8 @@
 # Especificación de API — Componentes `@buildertechco/ui`
 
-> **Versión**: 0.2.0 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra `src/` y el barrel público
+> **Versión**: 0.3.0 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra `src/` y el barrel público
 
-Esta especificación describe la API **real** del paquete: props, tipos, valores admitidos, comportamiento y notas de accesibilidad. La versión publicada sigue siendo `0.1.0`; este borrador documenta los cambios preparados para `0.2.0`. Cualquier cambio de API debe actualizar este documento, `src/index.ts`, los exports de `package.json` y `CHANGELOG.md`.
+Esta especificación describe la API **real** del paquete: props, tipos, valores admitidos, comportamiento y notas de accesibilidad. La versión publicada sigue siendo `0.1.0`; este borrador documenta los cambios preparados para `0.3.0`. Cualquier cambio de API debe actualizar este documento, `src/index.ts`, los exports de `package.json` y `CHANGELOG.md`.
 
 ---
 

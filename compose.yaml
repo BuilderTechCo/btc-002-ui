@@ -1,0 +1,9 @@
+services:
+  storybook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      pull: true
+    restart: unless-stopped
+    expose:
+      - "80"

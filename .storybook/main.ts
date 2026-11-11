@@ -15,7 +15,6 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  staticDirs: ["../public"],
   // refs: [] - omitido para evitar error de tipo
 
   viteFinal: async (config) => {

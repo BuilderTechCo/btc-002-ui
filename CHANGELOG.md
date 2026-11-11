@@ -11,12 +11,13 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
-## [0.2.0] — Borrador (sin publicar)
+## [0.3.0] — Borrador (sin publicar)
 
-> Preparación del release al 2026-11-11. `package.json` sigue en `0.1.0`; no se ha publicado ni etiquetado esta versión.
+> Esta entrada consolida los cambios preparados previamente para `0.2.0`, versión que no se publicó ni etiquetó. `package.json` está en `0.3.0`; esta versión aún no se ha publicado.
 
 ### Cambiado
 
+- **Node.js mínimo**: el entorno de desarrollo y el paquete requieren Node.js 26 o posterior.
 - **Tipos públicos**: `Theme` y `SeparatorVariant` también se exportan desde `@buildertechco/ui`, además de sus subpaths.
 
 ### Corregido

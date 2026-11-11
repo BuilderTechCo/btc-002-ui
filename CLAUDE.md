@@ -18,7 +18,7 @@ Guía de trabajo para agentes y colaboradores del Design System `@buildertechco/
 
 | Herramienta       | Versión                            |
 | :---------------- | :--------------------------------- |
-| Node              | `>=20` (`.nvmrc` incluido)         |
+| Node              | `>=26` (`.nvmrc` incluido)         |
 | pnpm              | `9.12.0`                           |
 | React / React DOM | `18.3.1`                           |
 | TypeScript        | `5.9.3` (rango `^5.7.2`)           |
