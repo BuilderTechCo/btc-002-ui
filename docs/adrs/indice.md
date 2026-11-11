@@ -1,6 +1,6 @@
 # Índice de Decisiones Arquitectónicas (ADRs) — @buildertechco/ui
 
-> **Versión**: 0.1.0 | **Fecha**: 2026-11-09
+> **Versión**: 0.2.0 (borrador, no publicado) | **Fecha**: 2026-11-11
 
 ---
 
@@ -11,7 +11,7 @@
 | [ADR-001](./001-paquete-workspace-solo-fuente.md)      | Paquete workspace solo código fuente           | Aceptado            | 2026-11-01 |
 | [ADR-002](./002-distribucion-css-tema-inline.md)       | Distribución CSS vía `@theme inline`           | Aceptado            | 2026-11-01 |
 | [ADR-003](./003-librerias-ui-externas-eliminadas.md)   | Librerías UI externas eliminadas               | Aceptado            | 2026-11-02 |
-| [ADR-004](./004-versionado-independiente.md)           | Versionado independiente `0.1.x`               | Aceptado            | 2026-11-02 |
+| [ADR-004](./004-versionado-independiente.md)           | Versionado independiente `0.x`                 | Aceptado            | 2026-11-02 |
 | [ADR-005](./005-pruebas-sin-dom.md)                    | Tests sin DOM (ampliado con integración jsdom) | Aceptado / ampliado | 2026-11-03 |
 | [ADR-006](./006-playwright-regresion-visual.md)        | Playwright visual regression 4×2               | Aceptado            | 2026-11-03 |
 | [ADR-007](./007-check-design-multiples-directorios.md) | `check:design` multi-directorio + guardarraíl  | Aceptado            | 2026-11-04 |
@@ -46,7 +46,7 @@ Siete dependencias `@librerias-ui-externas/*` fueron reemplazadas por implementa
 
 ### ADR-004: Versionado independiente
 
-`0.1.x` en desarrollo; `1.0.0` como objetivo de congelación. La publicación es manual en GitHub Packages; no hay CI ni Changesets instalados actualmente.
+`0.1.0` está publicado; `0.2.0` está en preparación y aún no se publica. `1.0.0` es el objetivo de congelación de API. La publicación es manual en GitHub Packages; no hay CI ni Changesets instalados actualmente.
 
 ### ADR-005: Tests sin DOM (ampliado)
 

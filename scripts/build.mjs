@@ -8,6 +8,7 @@ import {
 } from "fs";
 import { execSync } from "child_process";
 import { join } from "path";
+import { fixImportsInDir } from "./fix-imports.mjs";
 
 // Clean dist
 try {
@@ -18,6 +19,7 @@ try {
 
 // Run tsc - this generates .js and .d.ts files in dist/
 execSync("tsc -p tsconfig.build.json", { stdio: "inherit" });
+fixImportsInDir("dist");
 
 // Copy CSS files from src/styles to dist/styles
 mkdirSync("dist/styles", { recursive: true });
