@@ -277,6 +277,16 @@ Abre automáticamente `http://127.0.0.1:6006`. Si el puerto está ocupado, deté
 | **Component tests**    | Panel inferior | Resultados de Vitest por story                            |
 | **Run tests**          | Sidebar        | Ejecuta la suite de stories en el navegador               |
 
+### Deploy con Docker y Dokploy
+
+El [Dockerfile](Dockerfile) compila Storybook como sitio estático y lo sirve con Nginx. Para construir la imagen localmente:
+
+```bash
+docker compose up --build -d
+```
+
+En Dokploy, despliega el repositorio como aplicación Docker Compose usando `compose.yaml` y configura el dominio en el servicio `storybook`, puerto interno `80`. El compose no publica un puerto en el host: el tráfico público debe entrar por el proxy de Dokploy.
+
 ### Storybook component tests (Chromium)
 
 ```bash
