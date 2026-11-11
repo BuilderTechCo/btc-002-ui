@@ -76,7 +76,9 @@ function applyTheme(theme: Theme) {
   const root = document.documentElement;
   const resolvedTheme = theme === "system" ? getSystemTheme() : theme;
   root.setAttribute("data-theme", resolvedTheme);
-  localStorage.setItem("btc-theme", theme);
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("btc-theme", theme);
+  }
 }
 
 export function ThemeToggle({
@@ -93,7 +95,7 @@ export function ThemeToggle({
 }: ThemeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const [value, setValue] = useState<Theme>(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
       return (localStorage.getItem("btc-theme") as Theme) ?? defaultValue;
     }
     return defaultValue;
