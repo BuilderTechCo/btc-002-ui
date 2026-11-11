@@ -1,15 +1,25 @@
 # @buildertechco/ui
 
-> **Design System propietario de BuilderTech** — Tokens, componentes, utilidades, validación y documentación en un paquete versionado de forma independiente.
+> **Design System propietario de BuilderTech** — la fuente única de verdad para toda la UI de la empresa:
+>
+> - **Sin configuración**: importas `globals.css` y quedan listos los tokens `--btc-*` mapeados a utilidades Tailwind v4 (`bg-btc-app`, `text-btc-text-primary`, `rounded-btc-md`…). No hace falta `tailwind.config.ts`.
+> - **Sin dependencias de UI externas**: componentes escritos sobre HTML nativo (Dialog, Select, DropdownMenu, Toast…), con tema light/dark resuelto por roles semánticos y no por colores sueltos.
+> - **Sin deriva visual**: `check:design` aplica 12 reglas visuales y un guardarraíl que prohíbe lógica de negocio; `quality:verify` lo ejecuta junto a typecheck y lint antes de cada PR.
+>
+> Se versiona y publica de forma independiente (`0.1.x`) en GitHub Packages.
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md)
-[![Node](https://img.shields.io/badge/node-%3E%3D20-green)](https://nodejs.org/)
-[![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/)
-[![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/)
-[![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/)
-[![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md) [![Node](https://img.shields.io/badge/node-%3E%3D20-green)](https://nodejs.org/) [![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/) [![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/) [![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/) [![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
 
-> **Nota de estructura**: el paquete vive en la raíz del repositorio (single-package root). Ver [ADR-008](docs/adrs/008-reorganizacion-estructura-base.md) y [ADR-009](docs/adrs/009-storybook-validacion-visual.md).
+## En cifras
+
+| Métrica         | Estado verificado (2026-11-10)                                   |
+| :-------------- | :--------------------------------------------------------------- |
+| **Componentes** | 23 públicos (16 base + 7 primitivas)                             |
+| **Tests**       | 334 unit/integration + 255 tests de stories en 21 archivos       |
+| **Diseño**      | `check:design`: 0 violaciones (12 reglas + guardarraíl)          |
+| **Temas**       | Light y dark con roles semánticos y ratios WCAG documentados     |
+| **UI externa**  | 0 dependencias: Dialog, Select, DropdownMenu, Toast… son nativos |
+| **Storybook**   | Catálogo con controles, viewports, tema, a11y y component tests  |
 
 ---
 
@@ -117,41 +127,9 @@ export default function RootLayout({ children }) {
 
 ---
 
-## 🛠 Comandos
-
-Todos los comandos se ejecutan desde la raíz del repositorio.
-
-| Comando                      | Descripción                                                       |
-| :--------------------------- | :---------------------------------------------------------------- |
-| `pnpm build`                 | Build a `dist/` (JS + `.d.ts` + CSS)                              |
-| `pnpm build-storybook`       | Build estático de Storybook                                       |
-| `pnpm check:component-files` | Verifica la estructura de archivos de componentes                 |
-| `pnpm check:contract`        | Exports de `package.json` ↔ `src/` y todos los targets de `dist/` |
-| `pnpm check:design`          | Reglas visuales + guardarraíl de lógica de negocio                |
-| `pnpm check:suppressions`    | Comprueba supresiones de lint y TypeScript                        |
-| `pnpm format`                | Aplica Prettier a los archivos del repositorio                    |
-| `pnpm format:check`          | Comprueba el formato del repositorio sin modificar archivos       |
-| `pnpm lint`                  | ESLint 9 flat config                                              |
-| `pnpm quality:verify`        | `typecheck` + `lint` + `check:design` + `test`                    |
-| `pnpm storybook`             | Storybook en `http://127.0.0.1:6006` (abre el navegador)          |
-| `pnpm test`                  | Tests unit (Node) + integration (jsdom)                           |
-| `pnpm test:consumer`         | Build temporal con Vite/Tailwind de exports JS y CSS              |
-| `pnpm test:coverage`         | Cobertura de unit + integration                                   |
-| `pnpm test:docs-contract`    | Verifica identidad, instalación y comandos del PR                 |
-| `pnpm test:static`           | Typecheck + lint + contratos de exports/docs + component files    |
-| `pnpm test:storybook`        | Tests de stories en Chromium con Vitest + Playwright              |
-| `pnpm test:visual`           | Regresión visual Playwright (8 proyectos)                         |
-| `pnpm typecheck`             | TypeScript estricto (`tsc --noEmit`)                              |
-
-> `quality:verify` no incluye `test:storybook` ni `test:visual` porque requieren Chromium/Storybook. Ejecútalos por separado antes de un release.
->
-> `prepublishOnly` incluye los checks de calidad, contratos de exports/docs, `build` y `test:consumer`; Storybook y Playwright permanecen fuera de ese gate.
-
-Para aplicar Prettier solo a archivos concretos, usa `pnpm exec prettier --write <archivos>`.
-
----
-
 ## 🏗 Arquitectura
+
+> El paquete vive en la raíz del repositorio (single-package root). Ver [ADR-008](docs/adrs/008-reorganizacion-estructura-base.md) y [ADR-009](docs/adrs/009-storybook-validacion-visual.md).
 
 ### Distribución por CSS
 
@@ -229,23 +207,37 @@ btc-002-ui/
 
 ---
 
-## 📚 Documentación
+## 🛠 Comandos
 
-| Documento                                                             | Descripción                                                  |
-| :-------------------------------------------------------------------- | :----------------------------------------------------------- |
-| [Arquitectura](docs/arquitectura/indice.md)                           | Principios, estructura y convenciones                        |
-| [Especificación de API](docs/tokens/especificacion-api.md)            | Props, variantes y accesibilidad de los 23 componentes       |
-| [Guía de componentes](docs/componentes/guia.md)                       | Instalación y ejemplos de uso reales                         |
-| [Paleta visual](docs/tokens/paleta-visual.md)                         | Colores, ratios de contraste reales y deuda de accesibilidad |
-| [Layout & Sizing](docs/tokens/dimensiones-disposicion.md)             | Espaciado, elevación, z-index y delegación a Tailwind        |
-| [Enforcement](docs/gobernanza/cumplimiento.md)                        | Reglas obligatorias, excepciones y sanciones                 |
-| [ADRs](docs/adrs/indice.md)                                           | ADR-001 a ADR-009                                            |
-| [Navegadores soportados](docs/componentes/navegadores-compatibles.md) | Matriz de compatibilidad y alcance de la validación          |
-| [Contribuir](docs/guias/contribuir.md)                                | Flujo de PR, testing y release                               |
-| [Añadir un componente](docs/componentes/agregar-componente.md)        | Proceso paso a paso                                          |
-| [Migración](docs/guias/guia-migracion.md)                             | Guía para apps consumidoras                                  |
-| [Changelog](CHANGELOG.md)                                             | Historial por versión                                        |
-| [Clasificación de tests](CLASIFICACION.md)                            | Estado y decisiones sobre los tests                          |
+Todos los comandos se ejecutan desde la raíz del repositorio.
+
+| Comando                      | Descripción                                                       |
+| :--------------------------- | :---------------------------------------------------------------- |
+| `pnpm build`                 | Build a `dist/` (JS + `.d.ts` + CSS)                              |
+| `pnpm build-storybook`       | Build estático de Storybook                                       |
+| `pnpm check:component-files` | Verifica la estructura de archivos de componentes                 |
+| `pnpm check:contract`        | Exports de `package.json` ↔ `src/` y todos los targets de `dist/` |
+| `pnpm check:design`          | Reglas visuales + guardarraíl de lógica de negocio                |
+| `pnpm check:suppressions`    | Comprueba supresiones de lint y TypeScript                        |
+| `pnpm format`                | Aplica Prettier a los archivos del repositorio                    |
+| `pnpm format:check`          | Comprueba el formato del repositorio sin modificar archivos       |
+| `pnpm lint`                  | ESLint 9 flat config                                              |
+| `pnpm quality:verify`        | `typecheck` + `lint` + `check:design` + `test`                    |
+| `pnpm storybook`             | Storybook en `http://127.0.0.1:6006` (abre el navegador)          |
+| `pnpm test`                  | Tests unit (Node) + integration (jsdom)                           |
+| `pnpm test:consumer`         | Build temporal con Vite/Tailwind de exports JS y CSS              |
+| `pnpm test:coverage`         | Cobertura de unit + integration                                   |
+| `pnpm test:docs-contract`    | Verifica identidad, instalación y comandos del PR                 |
+| `pnpm test:static`           | Typecheck + lint + contratos de exports/docs + component files    |
+| `pnpm test:storybook`        | Tests de stories en Chromium con Vitest + Playwright              |
+| `pnpm test:visual`           | Regresión visual Playwright (8 proyectos)                         |
+| `pnpm typecheck`             | TypeScript estricto (`tsc --noEmit`)                              |
+
+> `quality:verify` no incluye `test:storybook` ni `test:visual` porque requieren Chromium/Storybook. Ejecútalos por separado antes de un release.
+>
+> `prepublishOnly` incluye los checks de calidad, contratos de exports/docs, `build` y `test:consumer`; Storybook y Playwright permanecen fuera de ese gate.
+
+Para aplicar Prettier solo a archivos concretos, usa `pnpm exec prettier --write <archivos>`.
 
 ---
 
@@ -347,9 +339,29 @@ El addon de a11y ejecuta axe en cada story. La última evidencia documentada ind
 
 ---
 
+## 📚 Documentación
+
+| Documento                                                             | Descripción                                                  |
+| :-------------------------------------------------------------------- | :----------------------------------------------------------- |
+| [Arquitectura](docs/arquitectura/indice.md)                           | Principios, estructura y convenciones                        |
+| [Especificación de API](docs/tokens/especificacion-api.md)            | Props, variantes y accesibilidad de los 23 componentes       |
+| [Guía de componentes](docs/componentes/guia.md)                       | Instalación y ejemplos de uso reales                         |
+| [Paleta visual](docs/tokens/paleta-visual.md)                         | Colores, ratios de contraste reales y deuda de accesibilidad |
+| [Layout & Sizing](docs/tokens/dimensiones-disposicion.md)             | Espaciado, elevación, z-index y delegación a Tailwind        |
+| [Enforcement](docs/gobernanza/cumplimiento.md)                        | Reglas obligatorias, excepciones y sanciones                 |
+| [ADRs](docs/adrs/indice.md)                                           | ADR-001 a ADR-009                                            |
+| [Navegadores soportados](docs/componentes/navegadores-compatibles.md) | Matriz de compatibilidad y alcance de la validación          |
+| [Contribuir](docs/guias/contribuir.md)                                | Flujo de PR, testing y release                               |
+| [Añadir un componente](docs/componentes/agregar-componente.md)        | Proceso paso a paso                                          |
+| [Migración](docs/guias/guia-migracion.md)                             | Guía para apps consumidoras                                  |
+| [Changelog](CHANGELOG.md)                                             | Historial por versión                                        |
+| [Clasificación de tests](CLASIFICACION.md)                            | Estado y decisiones sobre los tests                          |
+
+---
+
 ## 📦 Publicación
 
-El paquete se publica en GitHub Packages con `publishConfig.access: restricted`.
+El paquete se publica en GitHub Packages con `publishConfig.access: restricted`. El versionado es **manual**: no hay workflows de CI en `.github/workflows/` ni Changesets instalado; actualiza `package.json`, `CHANGELOG.md` y crea el tag correspondiente antes de publicar.
 
 ```bash
 # 1. Validación completa
@@ -362,8 +374,6 @@ pnpm build
 # 3. Publicar (prepublishOnly repite quality:verify + build)
 pnpm publish --registry=https://npm.pkg.github.com
 ```
-
-> **Estado actual**: no hay workflows de CI en `.github/workflows/` ni Changesets instalado. El versionado es manual: actualiza `package.json`, `CHANGELOG.md` y crea el tag correspondiente antes de publicar.
 
 ---
 
@@ -390,7 +400,7 @@ pnpm build
 
 | Aspecto              | Decisión                                                         |
 | :------------------- | :--------------------------------------------------------------- |
-| **Owner**            | Design System Owner                                              |
+| **Owner**            | BuilderTech - Tecnología operacional                             |
 | **Proceso**          | Issue → documentación → implementación → validación → PR → merge |
 | **Guardarraíles**    | `check:design`, `check:contract`, `check:suppressions`           |
 | **Fuente de verdad** | `docs/`                                                          |
