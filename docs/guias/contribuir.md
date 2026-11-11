@@ -1,7 +1,7 @@
 # Contribuir a @buildertechco/ui
 
 > **Guía obligatoria** para issues, PRs, validación y releases.
-> **Versión**: 0.3.0 (borrador, no publicado) | **Fecha**: 2026-11-11
+> **Versión**: 0.3.1 (borrador, no publicado) | **Fecha**: 2026-11-11
 
 ---
 
@@ -10,8 +10,10 @@
 ### 1.1 Issue primero
 
 - **Nunca** abras un PR sin issue asociado.
-- Tipos: `feature_request`, `bug_report`, `task_chore`, `exception-request`.
-- Templates en `.github/ISSUE_TEMPLATE/`.
+- Usa siempre la plantilla correspondiente en `.github/ISSUE_TEMPLATE/`:
+  `bug_report`, `feature_request` o `task_chore`.
+- Las solicitudes de excepción se registran con `task_chore` hasta que exista
+  una plantilla específica.
 
 ### 1.2 Nomenclatura de ramas
 
@@ -22,7 +24,15 @@ chore/issue-789-update-deps
 docs/issue-101-update-guide
 ```
 
+Los agentes no crean ramas ni worktrees sin aprobación humana previa, explícita
+y específica. Consulta `CLAUDE.md` y `AGENTS.md` antes de cualquier operación
+Git.
+
 ### 1.3 Commits (Conventional Commits)
+
+Los siguientes ejemplos describen el formato para responsables humanos; no
+autorizan a agentes a crear commits. En este repositorio los agentes nunca hacen
+commit, push, merge ni crean PR.
 
 ```bash
 feat: add DropdownMenu compound component
@@ -36,44 +46,29 @@ chore: update dev dependencies
 - Vincula el issue (`Closes #123`).
 - DS Owner como reviewer obligatorio.
 - Un reviewer adicional.
-- Completa el checklist técnico y de documentación.
+- Usa siempre `.github/pull_request_template.md` y conserva sus secciones
+  aplicables.
+- Incrementa `package.json` por cada issue antes de presentar la PR, incluso
+  para cambios solo documentales; aplica
+  [los estándares de versionado](../gobernanza/versionado.md).
+- Incluye en la descripción evidencia real de las verificaciones: comandos
+  exactos y resultados, con resumen de pruebas pasadas/fallidas.
 
 ---
 
-## 2. Checklist pre-push
+## 2. Gates locales obligatorios antes de commit
 
-Ejecuta desde la raíz del repositorio:
+Antes de cualquier commit, ejecuta desde la raíz del repositorio y confirma que
+todas las verificaciones pasen, incluidos cambios solo de documentación:
 
 ```bash
-# 1. Tipos y lint
-pnpm typecheck
-pnpm lint
-
-# 2. Formato de todo el repositorio
 pnpm format:check
-
-# 3. Reglas visuales y guardarraíl
-pnpm check:design
-
-# 4. Contrato de archivos y exports
-pnpm check:component-files
-pnpm check:contract
-pnpm check:suppressions
-
-# 5. Tests unit + integration
-pnpm test
-
-# 6. Stories en Chromium
+pnpm quality:verify
+pnpm test:static
 pnpm test:storybook
-
-# 7. Build
-pnpm build
-
-# 8. Consumo del paquete con Vite/Tailwind
+pnpm test:visual
 pnpm test:consumer
-
-# 9. Consistencia de documentación de consumo y PR
-pnpm test:docs-contract
+pnpm build
 ```
 
 `pnpm format` aplica Prettier a todo el repositorio y `pnpm format:check` lo verifica sin modificar archivos. Para formatear archivos concretos, usa `pnpm exec prettier --write <archivos>`. Los artefactos generados y el lockfile están excluidos por `.prettierignore`.
@@ -87,7 +82,7 @@ Atajos:
 | `pnpm test:consumer`      | Requiere `pnpm build`; valida barrel, subrutas JS no Next y estilos con Vite/Tailwind |
 | `pnpm test:docs-contract` | Valida nombre/scope, guía de instalación y comandos del template de PR                |
 
-> `quality:verify` **no** incluye `test:storybook` ni `test:visual`: requieren Chromium/Storybook.
+> `quality:verify` **no** incluye `test:storybook` ni `test:visual`: requieren Chromium/Storybook, pero ambos son gates obligatorios antes de cualquier commit.
 > `prepublishOnly` ejecuta quality, checks de componentes/exports/docs, build y `test:consumer`; no ejecuta suites de navegador.
 
 ### 2.1 Regresión visual
@@ -99,7 +94,8 @@ pnpm test:visual
 - 8 proyectos (4 viewports × 2 temas), 22 specs y 3285 snapshots locales no versionados. En un checkout limpio faltan los baselines.
 - El `webServer` arranca Storybook en local si no está corriendo.
 - Los proyectos Playwright establecen el viewport. `testComponent` itera nombres de viewports para los snapshots, pero no llama por sí mismo a `page.setViewportSize`; no interpretar esa iteración como cambio de tamaño dentro de un proyecto.
-- **No forma parte del pipeline base.** Ejecútala antes de un release o si cambias tokens/layout.
+- Aunque no forma parte de `quality:verify`, `test:visual` es obligatorio antes de cada commit.
+- Los baselines no están versionados y faltan en un checkout limpio. Si no puedes ejecutar la suite, el gate queda bloqueado: no omitas la prueba ni hagas commit hasta que haya una fuente reproducible de baselines.
 - **No actualices snapshots sin aprobación del DS Owner**:
 
 ```bash
@@ -128,7 +124,10 @@ pnpm exec playwright install chromium
 | **Solo docs**             | Archivo modificado; `CHANGELOG.md` si afecta a consumidores                                                                                                             |
 | **Chore/deps**            | `CHANGELOG.md` si afecta a consumidores                                                                                                                                 |
 
-La documentación es la fuente de verdad: si el código y los docs difieren, el PR debe reconciliarlos.
+Independientemente del tipo de PR, incrementa `package.json` por cada issue
+según [`docs/gobernanza/versionado.md`](../gobernanza/versionado.md). La
+documentación es la fuente de verdad: si el código y los docs difieren, el PR
+debe reconciliarlos.
 
 ---
 
@@ -143,7 +142,7 @@ La documentación es la fuente de verdad: si el código y los docs difieren, el 
 | Stories     | `pnpm test:storybook` | Chromium | Render de las 21 stories                    |
 | Visual      | `pnpm test:visual`    | Chromium | 4 viewports × 2 temas                       |
 
-**Verificación actual (2026-11-10):** `pnpm test` pasó dos veces (**334/334** en ambas); `pnpm test:storybook` pasó **255 tests en 21 archivos**; `pnpm check:design` terminó con **0 violaciones**. También pasaron `pnpm test:static`, `pnpm format:check`, `pnpm quality:verify`, `pnpm build`, `pnpm build-storybook`, `pnpm test:consumer`, `npm pack --dry-run` y `pnpm install --frozen-lockfile --offline`. El smoke test validó el barrel raíz, 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS con Vite/Tailwind. `pnpm test:visual` no se ejecutó y permanece como deuda: los snapshots no están versionados y faltan en un checkout limpio.
+**Verificación histórica (2026-11-10):** `pnpm test` pasó dos veces (**334/334** en ambas); `pnpm test:storybook` pasó **255 tests en 21 archivos**; `pnpm check:design` terminó con **0 violaciones**. También pasaron `pnpm test:static`, `pnpm format:check`, `pnpm quality:verify`, `pnpm build`, `pnpm build-storybook`, `pnpm test:consumer`, `npm pack --dry-run` y `pnpm install --frozen-lockfile --offline`. El smoke test validó el barrel raíz, 23 subrutas JavaScript no específicas de Next y ambas subrutas CSS con Vite/Tailwind. `pnpm test:visual` no se ejecutó y sigue siendo un bloqueo para commits en checkouts sin baselines; estos resultados históricos no sustituyen la verificación de cada cambio.
 
 ### 4.2 Unit test
 
@@ -295,27 +294,33 @@ export const Primary: Story = {
 
 **No hay CI, Husky ni Changesets instalados.** El release es manual.
 
+Los comandos de commit, tag y publicación siguientes son para responsables
+humanos autorizados. Los agentes no hacen commit, push, merge ni PR; tampoco
+crean ramas sin aprobación humana previa y específica.
+
 Para publicar, configura en el `.npmrc` de usuario un token con permiso `write:packages` (no lo guardes en el repositorio). La instalación desde consumidores solo requiere `read:packages`.
 
 ```bash
-# 1. Validación completa
+# 1. Gates locales obligatorios
+pnpm format:check
 pnpm quality:verify
+pnpm test:static
 pnpm test:storybook
-
-# 2. Build
+pnpm test:visual
+pnpm test:consumer
 pnpm build
 
-# 3. Actualizar versión y changelog manualmente
+# 2. Actualizar versión y changelog manualmente
 #    - package.json → version
 #    - CHANGELOG.md → mover [Unreleased] a la versión y fecha
 #    - No publicar mientras la entrada siga marcada como borrador
 
-# 4. Commit y tag
+# 3. Commit y tag (solo responsable humano autorizado)
 git add package.json CHANGELOG.md
 git commit -m "chore: release vX.Y.Z"
 git tag vX.Y.Z
 
-# 5. Publicar (prepublishOnly ejecuta los gates configurados en package.json)
+# 4. Publicar (solo responsable humano autorizado)
 pnpm publish --registry=https://npm.pkg.github.com
 ```
 
@@ -323,7 +328,9 @@ pnpm publish --registry=https://npm.pkg.github.com
 
 ### Versionado
 
-- `0.x`: desarrollo activo; breaking changes permitidos en minor. Estado actual: `0.1.0` publicado, `0.3.0` en preparación y sin publicar.
+- Cada issue incrementa `package.json` antes de presentar su PR, también en cambios documentales o de mantenimiento. Consulta
+  [los estándares de versionado](../gobernanza/versionado.md).
+- `0.x`: desarrollo activo; breaking changes permitidos en minor. Estado actual: `0.1.0` publicado, `0.3.1` en preparación y sin publicar.
 - `1.0.0`: objetivo de congelación de API y SemVer estricto.
 - Publicación en GitHub Packages con `publishConfig.access: restricted`.
 

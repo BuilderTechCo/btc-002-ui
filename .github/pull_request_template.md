@@ -40,18 +40,32 @@ Cierra #
 
 -
 
+## Versión del paquete
+
+<!-- Obligatorio por cada issue, incluidos cambios de documentación y mantenimiento. Sigue docs/gobernanza/versionado.md e indica el cambio SemVer elegido y su motivo. -->
+
+- `package.json`: `<versión anterior>` → `<versión nueva>` (`patch` / `minor` / `major`)
+- Motivo del incremento:
+
 ## Verificación
 
-<!-- Comprobaciones reales que has ejecutado, no la lista completa de CI si el revisor ya ve la insignia -->
+<!-- Todas las verificaciones obligatorias deben pasar localmente antes del commit/PR. Registra evidencia real; si alguna falla o no puede ejecutarse, bloquea el commit/PR hasta resolverlo. -->
+
+### Evidencia de ejecución local
+
+<!-- Obligatorio: registra cada comando exacto ejecutado y su resultado concreto (incluida la cantidad de pruebas pasadas/fallidas). Para cada verificación no ejecutada o fallida, indica el motivo o resultado; no marques casillas sin evidencia. -->
+
+- Comando exacto: `<comando>` — resultado: `<resultado y resumen>`
+
+### Lista de verificación
 
 - [ ] `pnpm build` pasa sin errores
-- [ ] `pnpm check:component-files`, `pnpm check:contract`, `pnpm check:design` y `pnpm check:suppressions` pasan sin errores
 - [ ] `pnpm format:check` pasa sin errores
-- [ ] `pnpm lint` y `pnpm quality:verify` pasan sin errores
-- [ ] `pnpm test` y `pnpm test:consumer` pasan cuando aplique
-- [ ] `pnpm test:docs-contract` pasa sin errores
-- [ ] `pnpm test:storybook` pasa para cambios de componentes; indicar omisiones si no aplica o no se ejecutó
-- [ ] `pnpm typecheck` pasa sin errores
+- [ ] `pnpm quality:verify` pasa sin errores
+- [ ] `pnpm test:consumer` pasa sin errores
+- [ ] `pnpm test:static` pasa sin errores
+- [ ] `pnpm test:storybook` pasa sin errores
+- [ ] `pnpm test:visual` pasa sin errores
 - [ ] Excepciones/baseline/skills: sin cambios, o aprobación explícita enlazada con motivo y alcance
 - [ ] La documentación relacionada está actualizada
 - [ ] El diff no contiene credenciales ni archivos sensibles

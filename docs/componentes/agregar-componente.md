@@ -305,7 +305,7 @@ pnpm build
 
 - `check:design` escanea `src/` por defecto. **No acepta `--scan-dirs`**; si necesitas otros directorios, configura `checkDesign.scanDirs` en `package.json` (opcional, no definido actualmente).
 - `test:storybook` requiere Chromium: `pnpm exec playwright install chromium`.
-- `test:visual` solo se ejecuta antes de un release y con aprobación para actualizar snapshots.
+- Ejecuta `pnpm test:visual` antes de cada commit, como indica el gate local obligatorio de [`AGENTS.md`](../../AGENTS.md), aunque el cambio no afecte tokens o layout. No actualices snapshots sin aprobación del DS Owner.
 
 ---
 

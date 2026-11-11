@@ -28,12 +28,27 @@ El paquete es presentacional: recibe props, renderiza UI y emite eventos. No con
 | `pnpm test:docs-contract`    | Scope/registry, instalación y comandos existentes en el template de PR      |
 | `pnpm test:storybook`        | Stories en Chromium                                                         |
 | `pnpm test:visual`           | Regresión visual Playwright                                                 |
+| `pnpm format:check`          | Formato de los archivos versionados                                         |
+| `pnpm quality:verify`        | Typecheck, lint, reglas de diseño y unit/integration                        |
+| `pnpm test:static`           | Contratos de componentes, exports, suppressions y documentación             |
+| `pnpm build`                 | Build del paquete                                                           |
 
 `quality:verify` ejecuta `typecheck`, `lint`, `check:design` y `test`. **No incluye** `test:storybook` ni `test:visual` porque requieren Chromium/Storybook.
 
 `test:static` incluye la prueba del contrato documental. `prepublishOnly` ejecuta los checks de calidad y de contratos (exports y documentación), `build` y `test:consumer`; no ejecuta tests de navegador.
 
-**Deuda técnica Playwright:** `test:visual` no se ejecutó en la validación del 2026-11-10. Sus baselines no están versionados y faltan en un checkout limpio, por lo que la suite no es reproducible para todo el equipo. Mantener esta limitación visible hasta definir baselines accesibles y validar la ejecución en un checkout limpio; no afirmar cobertura visual verificada mientras tanto.
+Antes de cualquier commit, incluidos cambios solo de documentación, son
+obligatorios y deben pasar localmente: `pnpm format:check`,
+`pnpm quality:verify`, `pnpm test:static`, `pnpm test:storybook`,
+`pnpm test:visual`, `pnpm test:consumer` y `pnpm build`. La política completa
+está en [`AGENTS.md`](../../AGENTS.md) y en
+[`docs/guias/contribuir.md`](../guias/contribuir.md).
+
+**Bloqueo técnico Playwright:** `test:visual` no se ejecutó en la validación del
+2026-11-10. Sus baselines no están versionados y faltan en un checkout limpio,
+por lo que la suite no es reproducible para todo el equipo. Al ser obligatoria
+antes de cada commit, un checkout sin baselines no supera el gate; no omitas la
+prueba ni declares cobertura verificada.
 
 ---
 
@@ -472,20 +487,34 @@ Solo utilidades que el DS no cubre. No introduzcas colores, spacing o radios nue
 
 ## 8. Proceso de cumplimiento
 
-No hay Husky ni workflows de CI en el repositorio. La validación es **local antes del PR**:
+No hay Husky ni workflows de CI en el repositorio. Las verificaciones anteriores
+son **obligatorias en local antes de cualquier commit**:
 
 ```bash
+pnpm format:check
 pnpm quality:verify
+pnpm test:static
 pnpm test:storybook
-pnpm check:component-files
-pnpm check:contract
-pnpm check:suppressions
+pnpm test:visual
+pnpm test:consumer
 pnpm build
 ```
 
 ### Protección de operaciones Git
 
-La prohibición de commits, pushes y merges se comunica como instrucción de trabajo en `CLAUDE.md`; no existe un bloque `deny` versionado que la haga cumplir. Los permisos locales ignorados por Git no constituyen una protección compartida del repositorio. No asumir que esta regla está técnicamente bloqueada.
+Los agentes no crean ramas ni worktrees sin aprobación humana previa, explícita
+y específica. En este repositorio `CLAUDE.md` prohíbe a los agentes hacer commit,
+push, merge o crear PR. Estas reglas son instrucciones documentadas, no un
+bloqueo técnico: no asumas que Git o GitHub las hacen cumplir.
+
+### Issues, PRs y versión
+
+- Usa siempre una plantilla existente de `.github/ISSUE_TEMPLATE/` y
+  `.github/pull_request_template.md`.
+- Incrementa `package.json` por cada issue antes de presentar la PR y documenta
+  la versión anterior/nueva, tipo y motivo según
+  [`docs/gobernanza/versionado.md`](./versionado.md).
+- Incluye en la descripción de la PR evidencia real de todos los gates locales.
 
 ### Revisión
 
@@ -519,7 +548,7 @@ Si en el futuro se añaden apps al `scanDirs`, la auditoría debe revisar los fa
 
 ## 10. Solicitud de excepción
 
-1. Crea un issue `exception-request` con:
+1. Crea un issue con la plantilla `task_chore` y especifica que solicita una excepción. No existe una plantilla `exception-request` independiente.
    - Regla afectada (R1–R12, W1–W3).
    - Justificación técnica/negocio.
    - Alternativas consideradas.
@@ -533,14 +562,15 @@ Si en el futuro se añaden apps al `scanDirs`, la auditoría debe revisar los fa
 
 ## 11. Métricas
 
-| Métrica                  | Objetivo               | Frecuencia       |
-| :----------------------- | :--------------------- | :--------------- |
-| `check:design` en `src/` | 0 violaciones          | Cada cambio      |
-| `check:contract`         | 100% exports válidos   | Cada cambio      |
-| Tests unit/integration   | 100% verdes            | Cada cambio      |
-| Story tests              | 100% verdes            | Antes de release |
-| Excepciones activas      | ≤ 3                    | Trimestral       |
-| Deuda a11y conocida      | Documentada y con plan | Cada release     |
+| Métrica                  | Objetivo               | Frecuencia   |
+| :----------------------- | :--------------------- | :----------- |
+| `check:design` en `src/` | 0 violaciones          | Cada cambio  |
+| `check:contract`         | 100% exports válidos   | Cada cambio  |
+| Tests unit/integration   | 100% verdes            | Cada cambio  |
+| Story tests              | 100% verdes            | Cada commit  |
+| Visual tests             | 100% verdes            | Cada commit  |
+| Excepciones activas      | ≤ 3                    | Trimestral   |
+| Deuda a11y conocida      | Documentada y con plan | Cada release |
 
 ---
 

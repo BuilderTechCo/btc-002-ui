@@ -1,4 +1,5 @@
-NO commits, NO push, NO merge nunca.
+Agentes: no crear ramas ni worktrees sin aprobación humana previa, explícita y
+específica. NO commits, NO push, NO merge ni PR nunca.
 
 # CLAUDE.md — @buildertechco/ui
 
@@ -158,20 +159,23 @@ El proyecto `storybook` **no** extiende `vitest.config.ts` para evitar el warnin
 
 ## 5. Testing y validación
 
-Antes de cerrar un cambio:
+Antes de cualquier commit, ejecuta localmente y verifica todos estos gates
+(también para cambios solo de documentación):
 
 ```bash
-pnpm typecheck
-pnpm lint
-pnpm test
-pnpm check:design
+pnpm format:check
+pnpm quality:verify
+pnpm test:static
 pnpm test:storybook
+pnpm test:visual
+pnpm test:consumer
+pnpm build
 ```
 
 - **Estado verificado (2026-11-10)**: 334 tests unit/integration pasaron en dos ejecuciones, 255 tests de Storybook en 21 archivos, 0 violaciones `check:design`; `test:static`, `format:check`, build, `build-storybook`, `test:consumer` y `npm pack --dry-run` también pasaron.
-- **Deuda Playwright**: `test:visual` no se ejecutó y no está en `quality:verify`; los snapshots no están versionados y faltan en un checkout limpio. Mantener esta limitación explícita hasta que haya baselines reproducibles. Requiere Chromium/Storybook y aprobación del DS Owner para actualizar snapshots.
+- **Bloqueo Playwright**: `test:visual` no se ejecutó en la validación del 2026-11-10 y no está en `quality:verify`; los snapshots no están versionados y faltan en un checkout limpio. Como el test es obligatorio antes del commit, no se puede aprobar el gate desde un checkout sin baselines reproducibles. No actualices snapshots sin aprobación del DS Owner.
 - `check:contract` compara exports de `package.json` con `src/` y `dist/`; `check:component-files` valida la estructura de cada componente.
-- No hay CI ni Husky configurados; la validación es local antes del PR.
+- No hay CI ni Husky configurados; la validación es local y obligatoria antes del commit/PR. Los comandos completos están en `AGENTS.md`.
 
 ---
 
@@ -190,6 +194,7 @@ pnpm test:storybook
 | `docs/arquitectura/indice.md`            | Estructura, principios, testing                   |
 | `docs/adrs/`                             | Decisiones arquitectónicas nuevas                 |
 | `docs/guias/`                            | Flujo de contribución, release y migración        |
+| `docs/gobernanza/versionado.md`          | Incrementos SemVer por issue y PR                 |
 
 ### Deuda conocida de accesibilidad
 
@@ -206,3 +211,6 @@ pnpm test:storybook
 5. No introduzcas colores, spacing, radios o sombras fuera de los tokens `btc-*`.
 6. No afirmes que una suite pasa sin ejecutarla.
 7. Mantén los conteos de tests y componentes sincronizados con la realidad.
+8. Antes de cada tarea, lee toda la documentación propia y versionada del
+   repositorio y sigue los estándares aprobados; no los debilites ni los eludas.
+   Consulta `AGENTS.md` para el alcance y las reglas completas.

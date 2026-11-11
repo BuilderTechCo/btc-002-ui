@@ -1,8 +1,8 @@
 # Guía de Componentes — @buildertechco/ui
 
-> **Versión**: 0.3.0 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra el código real
+> **Versión**: 0.3.1 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra el código real
 
-Guía práctica para instalar y consumir el Design System. La versión publicada continúa siendo `0.1.0`; usa `0.3.0` solo después de confirmar su publicación. Para la referencia exhaustiva de props, consulta [`docs/tokens/especificacion-api.md`](../tokens/especificacion-api.md).
+Guía práctica para instalar y consumir el Design System. La versión publicada continúa siendo `0.1.0`; usa `0.3.1` solo después de confirmar su publicación. Para la referencia exhaustiva de props, consulta [`docs/tokens/especificacion-api.md`](../tokens/especificacion-api.md).
 
 ---
 

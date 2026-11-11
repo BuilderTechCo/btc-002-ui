@@ -1,6 +1,6 @@
 # Arquitectura — @buildertechco/ui
 
-> **Versión**: 0.3.0 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra el repositorio
+> **Versión**: 0.3.1 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra el repositorio
 
 ---
 
@@ -12,7 +12,7 @@
 | **Layout vía Tailwind CSS**          | No hay tokens propios para sizing, flexbox, grid, box alignment o layout. Solo espaciado (`--btc-space-*`), elevación (`--btc-elevation-*`) y z-index (`--btc-z-*`). |
 | **Distribución CSS**                 | `@theme inline` en `globals.css` mapea `--btc-*` → utilidades `btc-*`. ADR-002                                                                                       |
 | **Cero dependencias de UI externas** | Dialog, Select, DropdownMenu, Toast, Label, Separator y Slot son nativos. ADR-003                                                                                    |
-| **Versionado independiente**         | `0.1.0` publicado; `0.3.0` en preparación; `1.0.0` como objetivo de congelación. ADR-004                                                                             |
+| **Versionado independiente**         | `0.1.0` publicado; `0.3.1` en preparación; `1.0.0` como objetivo de congelación. ADR-004                                                                             |
 | **Testing en capas**                 | Unit (Node), integration (jsdom), stories (Chromium) y regresión visual Playwright. ADR-005 / ADR-009                                                                |
 | **Regresión visual**                 | Playwright: 4 viewports × 2 temas = 8 proyectos. ADR-006                                                                                                             |
 | **Validación visual**                | `check:design`: 12 reglas + guardarraíl anti-lógica-de-negocio. ADR-007                                                                                              |
@@ -143,7 +143,7 @@ Comandos: `pnpm test`, `pnpm test:storybook`, `pnpm test:visual`, `pnpm storyboo
 - Calidad y distribución: pasaron `pnpm test:static`, `pnpm format:check`, `pnpm quality:verify`, `pnpm build`, `pnpm build-storybook`, `pnpm test:consumer`, `npm pack --dry-run` y `pnpm install --frozen-lockfile --offline`.
 - Consumo: `pnpm test:consumer` valida con Vite/Tailwind v4 el barrel raíz, 23 subrutas JavaScript no específicas de Next y las dos subrutas CSS. No valida Next.js ni el subpath de fuentes.
 - Node ESM nativo sigue sin soporte por imports relativos sin extensión y CSS.
-- Deuda Playwright: `pnpm test:visual` no se ejecutó; los 3285 snapshots visuales registrados solo existen localmente y no están versionados, por lo que faltan en un checkout limpio y no permiten una ejecución reproducible.
+- Bloqueo Playwright: `pnpm test:visual` no se ejecutó; los 3285 snapshots visuales registrados solo existen localmente y no están versionados, por lo que faltan en un checkout limpio. Al ser obligatorio antes de cada commit, el gate no se puede aprobar en checkouts sin baselines reproducibles.
 
 ---
 
