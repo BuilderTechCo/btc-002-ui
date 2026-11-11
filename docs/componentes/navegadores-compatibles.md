@@ -93,7 +93,7 @@ pnpm test:visual
 | **`data-theme` en `<html>`** | Necesario para portales y tokens light/dark                                                           |
 | **React 18.3+**              | Peer dependency                                                                                       |
 | **Next.js 14+**              | Solo para `@buildertechco/ui/lib/fonts`; `next` es un peer opcional                                   |
-| **Node 20+**                 | Solo para el repositorio del DS; no es requisito de runtime                                           |
+| **Node 26+**                 | Solo para el repositorio del DS; no es requisito de runtime                                           |
 
 El barrel raíz se puede consumir con Vite/Tailwind v4. Los helpers de fuente son específicos de Next y se importan únicamente desde `@buildertechco/ui/lib/fonts`. La importación ESM nativa de Node no está soportada.
 

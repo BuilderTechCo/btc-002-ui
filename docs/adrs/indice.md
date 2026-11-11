@@ -1,6 +1,6 @@
 # Índice de Decisiones Arquitectónicas (ADRs) — @buildertechco/ui
 
-> **Versión**: 0.2.0 (borrador, no publicado) | **Fecha**: 2026-11-11
+> **Versión**: 0.3.0 (borrador, no publicado) | **Fecha**: 2026-11-11
 
 ---
 
@@ -46,7 +46,7 @@ Siete dependencias `@librerias-ui-externas/*` fueron reemplazadas por implementa
 
 ### ADR-004: Versionado independiente
 
-`0.1.0` está publicado; `0.2.0` está en preparación y aún no se publica. `1.0.0` es el objetivo de congelación de API. La publicación es manual en GitHub Packages; no hay CI ni Changesets instalados actualmente.
+`0.1.0` está publicado; `0.3.0` está en preparación y aún no se publica. `1.0.0` es el objetivo de congelación de API. La publicación es manual en GitHub Packages; no hay CI ni Changesets instalados actualmente.
 
 ### ADR-005: Tests sin DOM (ampliado)
 

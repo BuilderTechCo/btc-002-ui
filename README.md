@@ -6,9 +6,9 @@
 > - **Sin dependencias de UI externas**: componentes escritos sobre HTML nativo (Dialog, Select, DropdownMenu, Toast…), con tema light/dark resuelto por roles semánticos y no por colores sueltos.
 > - **Sin deriva visual**: `check:design` aplica 12 reglas visuales y un guardarraíl que prohíbe lógica de negocio; `quality:verify` lo ejecuta junto a typecheck y lint antes de cada PR.
 >
-> Se versiona y publica de forma independiente en GitHub Packages. La versión publicada sigue siendo `0.1.0`; `0.2.0` está en preparación y aún no se ha publicado.
+> Se versiona y publica de forma independiente en GitHub Packages. La versión publicada sigue siendo `0.1.0`; `0.3.0` está en preparación y aún no se ha publicado.
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md) [![Node](https://img.shields.io/badge/node-%3E%3D20-green)](https://nodejs.org/) [![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/) [![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/) [![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/) [![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md) [![Node](https://img.shields.io/badge/node-%3E%3D26-green)](https://nodejs.org/) [![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/) [![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/) [![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/) [![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
 
 ## En cifras
 
@@ -153,7 +153,7 @@ flowchart LR
 | **Distribución por CSS**             | El consumidor importa una sola línea de `globals.css`                                    |
 | **Cero dependencias de UI externas** | Dialog, Select, DropdownMenu, Toast, Label, Separator y Slot son nativos                 |
 | **Cero lógica de negocio**           | Componentes presentacionales: reciben props, renderizan UI y emiten eventos              |
-| **Versionado independiente**         | `0.1.0` publicado; borrador `0.2.0` en preparación; `1.0.0` como objetivo de congelación |
+| **Versionado independiente**         | `0.1.0` publicado; borrador `0.3.0` en preparación; `1.0.0` como objetivo de congelación |
 | **Paquete publicado `dist`-only**    | `files: ["dist"]`; el repositorio sí incluye tests, e2e, Storybook y scripts             |
 | **Testing en capas**                 | Unit (Node), integration (jsdom), stories (Chromium) y regresión visual (Playwright)     |
 

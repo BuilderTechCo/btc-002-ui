@@ -110,7 +110,7 @@ Los conteos siguientes son el resultado registrado al completar la reorganizaci�
 - El historial disponible empieza con un commit que solo contiene `LICENSE`; el commit de reorganización ya contiene la estructura nueva. No hay un snapshot versionado del scaffold anterior con el que comparar exports o demostrar equivalencia funcional. Esos dos criterios no se consideran verificados.
 - La verificación actual excluye deliberadamente Storybook/Chromium y Playwright; los resultados históricos de la tabla anterior no sustituyen una ejecución actual.
 
-## Actualización para el borrador v0.2.0 (2026-11-11)
+## Actualización para el borrador v0.3.0 (2026-11-11)
 
 - El build postprocesa imports relativos en `.js` y `.d.ts` contra la estructura real de `dist/`, incluidos `index.js` de componentes y referencias de tipo `import("...").Tipo`.
 - Se verificó la importación ESM del paquete y TypeScript `NodeNext` para 140 imports de tipos públicos. `pnpm test:consumer` cubre Vite/Tailwind, pero todavía no sustituye una validación de una app Next.js/Turbopack real.

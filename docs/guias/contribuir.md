@@ -1,7 +1,7 @@
 # Contribuir a @buildertechco/ui
 
 > **Guía obligatoria** para issues, PRs, validación y releases.
-> **Versión**: 0.2.0 (borrador, no publicado) | **Fecha**: 2026-11-11
+> **Versión**: 0.3.0 (borrador, no publicado) | **Fecha**: 2026-11-11
 
 ---
 
@@ -323,7 +323,7 @@ pnpm publish --registry=https://npm.pkg.github.com
 
 ### Versionado
 
-- `0.x`: desarrollo activo; breaking changes permitidos en minor. Estado actual: `0.1.0` publicado, `0.2.0` en preparación y sin publicar.
+- `0.x`: desarrollo activo; breaking changes permitidos en minor. Estado actual: `0.1.0` publicado, `0.3.0` en preparación y sin publicar.
 - `1.0.0`: objetivo de congelación de API y SemVer estricto.
 - Publicación en GitHub Packages con `publishConfig.access: restricted`.
 
