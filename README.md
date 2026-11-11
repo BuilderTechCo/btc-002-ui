@@ -4,9 +4,9 @@
 >
 > - **Sin configuración**: importas `globals.css` y quedan listos los tokens `--btc-*` mapeados a utilidades Tailwind v4 (`bg-btc-app`, `text-btc-text-primary`, `rounded-btc-md`…). No hace falta `tailwind.config.ts`.
 > - **Sin dependencias de UI externas**: componentes escritos sobre HTML nativo (Dialog, Select, DropdownMenu, Toast…), con tema light/dark resuelto por roles semánticos y no por colores sueltos.
-> - **Sin deriva visual**: `check:design` aplica 12 reglas visuales y un guardarraíl que prohíbe lógica de negocio; `quality:verify` lo ejecuta junto a typecheck y lint antes de cada PR.
+> - **Sin deriva visual**: `check:design` aplica 12 reglas visuales y un guardarraíl que prohíbe lógica de negocio; `quality:verify` lo ejecuta junto a typecheck y lint como parte de los gates locales obligatorios antes de cada commit.
 >
-> Se versiona y publica de forma independiente en GitHub Packages. La versión publicada sigue siendo `0.1.0`; `0.3.0` está en preparación y aún no se ha publicado.
+> Se versiona y publica de forma independiente en GitHub Packages. La versión publicada sigue siendo `0.1.0`; `0.3.1` está en preparación y aún no se ha publicado.
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md) [![Node](https://img.shields.io/badge/node-%3E%3D26-green)](https://nodejs.org/) [![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/) [![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/) [![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/) [![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
 
@@ -153,7 +153,7 @@ flowchart LR
 | **Distribución por CSS**             | El consumidor importa una sola línea de `globals.css`                                    |
 | **Cero dependencias de UI externas** | Dialog, Select, DropdownMenu, Toast, Label, Separator y Slot son nativos                 |
 | **Cero lógica de negocio**           | Componentes presentacionales: reciben props, renderizan UI y emiten eventos              |
-| **Versionado independiente**         | `0.1.0` publicado; borrador `0.3.0` en preparación; `1.0.0` como objetivo de congelación |
+| **Versionado independiente**         | `0.1.0` publicado; borrador `0.3.1` en preparación; `1.0.0` como objetivo de congelación |
 | **Paquete publicado `dist`-only**    | `files: ["dist"]`; el repositorio sí incluye tests, e2e, Storybook y scripts             |
 | **Testing en capas**                 | Unit (Node), integration (jsdom), stories (Chromium) y regresión visual (Playwright)     |
 
@@ -233,7 +233,7 @@ Todos los comandos se ejecutan desde la raíz del repositorio.
 | `pnpm test:visual`           | Regresión visual Playwright (8 proyectos)                         |
 | `pnpm typecheck`             | TypeScript estricto (`tsc --noEmit`)                              |
 
-> `quality:verify` no incluye `test:storybook` ni `test:visual` porque requieren Chromium/Storybook. Ejecútalos por separado antes de un release.
+> `quality:verify` no incluye `test:storybook` ni `test:visual` porque requieren Chromium/Storybook. Son gates obligatorios por separado antes de cualquier commit; consulta [la guía de contribución](docs/guias/contribuir.md).
 >
 > `prepublishOnly` incluye los checks de calidad, contratos de exports/docs, `build` y `test:consumer`; Storybook y Playwright permanecen fuera de ese gate.
 
@@ -313,7 +313,7 @@ pnpm test:visual
 
 El `webServer` de Playwright arranca Storybook automáticamente en local si no está corriendo. En CI requiere Storybook disponible o un servidor equivalente; por eso no forma parte de `quality:verify`.
 
-**Deuda técnica abierta:** `pnpm test:visual` no se ejecutó en la validación del 2026-11-10. Los 3285 snapshots registrados existen solo localmente, no están versionados y no están disponibles en un checkout limpio; por ello la ejecución no es reproducible para todo el equipo. La deuda se considera resuelta cuando exista una fuente reproducible de baselines y la suite se valide en un checkout limpio.
+**Deuda técnica bloqueante:** `pnpm test:visual` no se ejecutó en la validación del 2026-11-10. Los 3285 snapshots registrados existen solo localmente, no están versionados y no están disponibles en un checkout limpio; por ello la ejecución no es reproducible para todo el equipo. Como la suite es obligatoria antes de cada commit, el gate queda bloqueado en checkouts sin baselines hasta que exista una fuente reproducible y se valide en un checkout limpio.
 
 ---
 
@@ -359,6 +359,7 @@ El addon de a11y ejecuta axe en cada story. La última evidencia documentada ind
 | [Paleta visual](docs/tokens/paleta-visual.md)                         | Colores, ratios de contraste reales y deuda de accesibilidad |
 | [Layout & Sizing](docs/tokens/dimensiones-disposicion.md)             | Espaciado, elevación, z-index y delegación a Tailwind        |
 | [Enforcement](docs/gobernanza/cumplimiento.md)                        | Reglas obligatorias, excepciones y sanciones                 |
+| [Versionado](docs/gobernanza/versionado.md)                           | Incremento SemVer obligatorio por issue                      |
 | [ADRs](docs/adrs/indice.md)                                           | ADR-001 a ADR-009                                            |
 | [Navegadores soportados](docs/componentes/navegadores-compatibles.md) | Matriz de compatibilidad y alcance de la validación          |
 | [Contribuir](docs/guias/contribuir.md)                                | Flujo de PR, testing y release                               |
@@ -371,17 +372,19 @@ El addon de a11y ejecuta axe en cada story. La última evidencia documentada ind
 
 ## 📦 Publicación
 
-El paquete se publica en GitHub Packages con `publishConfig.access: restricted`. El versionado es **manual**: no hay workflows de CI en `.github/workflows/` ni Changesets instalado; actualiza `package.json`, `CHANGELOG.md` y crea el tag correspondiente antes de publicar.
+El paquete se publica en GitHub Packages con `publishConfig.access: restricted`. El versionado es **manual**: no hay workflows de CI en `.github/workflows/` ni Changesets instalado. Incrementa `package.json` en cada issue antes de presentar la PR y mantén `CHANGELOG.md` actualizado; consulta [los estándares SemVer](docs/gobernanza/versionado.md). La publicación y creación del tag son tareas humanas autorizadas.
 
 ```bash
-# 1. Validación completa
+# 1. Gates locales obligatorios
+pnpm format:check
 pnpm quality:verify
+pnpm test:static
 pnpm test:storybook
-
-# 2. Build
+pnpm test:visual
+pnpm test:consumer
 pnpm build
 
-# 3. Publicar (prepublishOnly repite quality:verify + build)
+# 2. Publicar (prepublishOnly repite los gates configurados en package.json)
 pnpm publish --registry=https://npm.pkg.github.com
 ```
 
@@ -392,6 +395,8 @@ pnpm publish --registry=https://npm.pkg.github.com
 Ver [docs/guias/contribuir.md](docs/guias/contribuir.md) para el flujo completo:
 
 - Issue → rama → implementación → docs → validación → PR.
+- Usa siempre las plantillas de issue y PR; incrementa la versión por issue y agrega evidencia de las pruebas en la descripción de la PR.
+- Los agentes no crean ramas sin autorización; no hacen commit, push, merge ni PR según `CLAUDE.md`.
 - Commits con Conventional Commits.
 - Aprobación del DS Owner.
 - Checklist de tests y accesibilidad.
@@ -399,8 +404,12 @@ Ver [docs/guias/contribuir.md](docs/guias/contribuir.md) para el flujo completo:
 ### Flujo rápido
 
 ```bash
+pnpm format:check
 pnpm quality:verify
+pnpm test:static
 pnpm test:storybook
+pnpm test:visual
+pnpm test:consumer
 pnpm build
 ```
 

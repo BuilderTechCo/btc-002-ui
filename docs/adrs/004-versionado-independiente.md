@@ -12,7 +12,7 @@ El Design System debe tener su propio ciclo de vida de versiones, independiente 
 
 **Versionado independiente** del paquete `@buildertechco/ui`:
 
-- **Fase actual**: `0.x` (desarrollo activo; `0.1.0` publicado y `0.3.0` en preparación, sin publicar)
+- **Fase actual**: `0.x` (desarrollo activo; `0.1.0` publicado y `0.3.1` en preparación, sin publicar)
   - Breaking changes permitidos en **minor** (por ejemplo, 0.1 → 0.2)
   - Patch para fixes (0.1.0 → 0.1.1)
   - Los consumidores instalan una versión publicada; el paquete y el monorepo consumidor son repositorios separados y no usan `workspace:*`.
@@ -25,7 +25,7 @@ El Design System debe tener su propio ciclo de vida de versiones, independiente 
 
 **Proceso vigente**: release manual. `prepublishOnly` valida el paquete antes de publicar; el responsable ejecuta `pnpm publish --registry=https://npm.pkg.github.com` con credenciales de escritura.
 
-> No hay workflow de publicación ni Changesets instalado. No se debe asumir publicación automática: la versión y el changelog se actualizan en el repositorio y la publicación se ejecuta manualmente después de integrar los cambios. El borrador `0.3.0` no representa una versión disponible hasta completar ese proceso.
+> No hay workflow de publicación ni Changesets instalado. No se debe asumir publicación automática: la versión y el changelog se actualizan en el repositorio y la publicación se ejecuta manualmente después de integrar los cambios. El borrador `0.3.1` no representa una versión disponible hasta completar ese proceso. Cada issue incrementa la versión SemVer antes de presentar su PR.
 
 ## Consecuencias
 
@@ -46,4 +46,5 @@ El Design System debe tener su propio ciclo de vida de versiones, independiente 
 
 - `arquitectura/indice.md` §1 Principio 5
 - `guias/contribuir.md` — Release Process
+- `gobernanza/versionado.md` — Estándares operativos de incrementos por issue y PR
 - Changesets docs: https://github.com/changesets/changesets

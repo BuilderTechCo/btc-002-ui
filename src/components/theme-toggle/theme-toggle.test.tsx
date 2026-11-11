@@ -64,4 +64,16 @@ describe("themeToggle", () => {
     const button = screen.getByRole("button", { name: /tema actual/i });
     expect(button).toBeInTheDocument();
   });
+
+  test("applies the theme when localStorage is unavailable", () => {
+    vi.stubGlobal("localStorage", undefined);
+
+    try {
+      render(<ThemeToggle value="dark" />);
+
+      expect(document.documentElement).toHaveAttribute("data-theme", "dark");
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
 });

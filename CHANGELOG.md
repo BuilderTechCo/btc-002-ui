@@ -11,9 +11,21 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [0.3.1] — Borrador (sin publicar)
+
+> `package.json` está en `0.3.1`; la versión aún no se ha publicado. Incluye la corrección incremental sobre los cambios preparados previamente para `0.3.0`, que tampoco se publicó ni etiquetó.
+
+### Corregido
+
+- **ThemeToggle**: comprueba la disponibilidad de `localStorage` antes de leer la preferencia guardada o persistir el tema.
+
+### Documentación
+
+- Se documentan como obligatorios el incremento SemVer por issue, los gates locales previos al commit y la evidencia de pruebas en la descripción de la PR.
+
 ## [0.3.0] — Borrador (sin publicar)
 
-> Esta entrada consolida los cambios preparados previamente para `0.2.0`, versión que no se publicó ni etiquetó. `package.json` está en `0.3.0`; esta versión aún no se ha publicado.
+> Esta entrada consolida cambios preparados previamente para `0.2.0`, versión que no se publicó ni etiquetó. Estos cambios siguen incluidos en el borrador `0.3.1`; `0.3.0` tampoco se publicó ni etiquetó.
 
 ### Cambiado
 
