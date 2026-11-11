@@ -1,6 +1,6 @@
 # Índice de Decisiones Arquitectónicas (ADRs) — @buildertechco/ui
 
-> **Versión**: 0.3.0 (borrador, no publicado) | **Fecha**: 2026-11-11
+> **Versión**: 0.3.1 (borrador, no publicado) | **Fecha**: 2026-11-11
 
 ---
 
@@ -46,7 +46,7 @@ Siete dependencias `@librerias-ui-externas/*` fueron reemplazadas por implementa
 
 ### ADR-004: Versionado independiente
 
-`0.1.0` está publicado; `0.3.0` está en preparación y aún no se publica. `1.0.0` es el objetivo de congelación de API. La publicación es manual en GitHub Packages; no hay CI ni Changesets instalados actualmente.
+`0.1.0` está publicado; `0.3.1` está en preparación y aún no se publica. `1.0.0` es el objetivo de congelación de API. La publicación es manual en GitHub Packages; no hay CI ni Changesets instalados actualmente.
 
 ### ADR-005: Tests sin DOM (ampliado)
 
@@ -54,7 +54,7 @@ La estrategia original usaba `renderToStaticMarkup` sin DOM. Hoy convive con tes
 
 ### ADR-006: Playwright visual regression 4×2
 
-8 proyectos (4 viewports × 2 temas), 22 specs y 3285 snapshots locales no versionados. Un checkout limpio carece de baselines; `test:visual` queda fuera de `quality:verify`.
+8 proyectos (4 viewports × 2 temas), 22 specs y 3285 snapshots locales no versionados. Un checkout limpio carece de baselines; `test:visual` queda fuera de `quality:verify`, pero es un gate obligatorio antes de cada commit según `AGENTS.md`.
 
 ### ADR-007: `check:design`
 

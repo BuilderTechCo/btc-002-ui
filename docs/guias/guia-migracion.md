@@ -442,7 +442,7 @@ pnpm test:storybook
 - [ ] `pnpm build` y `pnpm typecheck` pasan.
 - [ ] `pnpm quality:verify` pasa.
 - [ ] `pnpm test:storybook` pasa.
-- [ ] Regresión visual revisada (`pnpm test:visual`) si cambiaron tokens o layout.
+- [ ] En el repositorio del paquete, `pnpm test:visual` pasa antes de cada commit, independientemente de que cambien tokens o layout; no actualices snapshots sin aprobación del DS Owner.
 
 ---
 
