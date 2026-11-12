@@ -14,49 +14,31 @@ type SansSubset =
 type MonoSubset = "latin" | "latin-ext";
 type DisplaySubset = "latin" | "latin-ext" | "vietnamese";
 
-/** Configuración base compartida */
-const baseConfig = {
+/** Inter - Fuente sans principal */
+export const fontSans = Inter({
   variable: "--btc-font-sans",
   subsets: ["latin"] as SansSubset[],
   display: "swap" as const,
   preload: true,
-};
-
-/** Configuración base para mono */
-const monoConfig = {
-  variable: "--btc-font-mono",
-  subsets: ["latin"] as MonoSubset[],
-  display: "swap" as const,
-  preload: true,
-};
-
-/** Configuración base para display */
-const displayConfig = {
-  variable: "--btc-font-display",
-  subsets: ["latin"] as DisplaySubset[],
-  display: "swap" as const,
-  preload: true,
-};
-
-/** Inter - Fuente sans principal */
-export const fontSans = Inter({
-  ...baseConfig,
   weight: ["400", "500", "600", "700"],
-  variable: "--btc-font-sans",
 });
 
 /** JetBrains Mono - Fuente monoespaciada */
 export const fontMono = JetBrains_Mono({
-  ...monoConfig,
-  weight: ["400", "500", "600", "700"],
   variable: "--btc-font-mono",
+  subsets: ["latin"] as MonoSubset[],
+  display: "swap" as const,
+  preload: true,
+  weight: ["400", "500", "600", "700"],
 });
 
 /** Space Grotesk - Fuente para display/títulos */
 export const fontDisplay = Space_Grotesk({
-  ...displayConfig,
-  weight: ["400", "500", "600", "700"],
   variable: "--btc-font-display",
+  subsets: ["latin"] as DisplaySubset[],
+  display: "swap" as const,
+  preload: true,
+  weight: ["400", "500", "600", "700"],
 });
 
 /** Helpers para obtener las clases de variable CSS */
