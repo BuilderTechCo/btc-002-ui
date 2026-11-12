@@ -1,8 +1,8 @@
 # Guía de Componentes — @buildertechco/ui
 
-> **Versión**: 0.3.1 (borrador, no publicado) | **Fecha**: 2026-11-11 | **Estado**: Revisado contra el código real
+> **Versión**: 0.3.2 (borrador, no publicado) | **Fecha**: 2026-11-12 | **Estado**: Revisado contra el código real
 
-Guía práctica para instalar y consumir el Design System. La versión publicada continúa siendo `0.1.0`; usa `0.3.1` solo después de confirmar su publicación. Para la referencia exhaustiva de props, consulta [`docs/tokens/especificacion-api.md`](../tokens/especificacion-api.md).
+Guía práctica para instalar y consumir el Design System. La versión publicada continúa siendo `0.1.0`; usa `0.3.2` solo después de confirmar su publicación. Para la referencia exhaustiva de props, consulta [`docs/tokens/especificacion-api.md`](../tokens/especificacion-api.md).
 
 ---
 
@@ -103,6 +103,7 @@ export default function RootLayout({
 - `getFontSans()`, `getFontMono()` y `getFontDisplay()` devuelven `{ variable, className, style }`.
 - Requieren `next` (peer dependency `>=14`).
 - `--btc-font-display` se define con el helper `getFontDisplay()`, pero `globals.css` solo genera utilidades para `font-btc-sans` y `font-btc-mono`.
+- **Nota**: los loaders internos de `next/font` (`Inter`, `JetBrains_Mono`, `Space_Grotesk`) reciben objetos literales (sin spread ni constantes compartidas). El transformador SWC de Next.js evalúa estáticamente los argumentos en build time y exige literales evaluables. El requisito de `transpilePackages: ["@buildertechco/ui"]` en el consumidor queda pendiente de verificar con Turbopack.
 
 ### 3.4 Provider de toasts
 

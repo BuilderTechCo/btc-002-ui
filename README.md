@@ -1,14 +1,14 @@
 # @buildertechco/ui
 
-> **Design System propietario de BuilderTech** — la fuente única de verdad para toda la UI de la empresa:
+> **Design System de BuilderTech**: componentes React, tokens `--btc-*` y tema claro/oscuro sobre Tailwind CSS v4, como base común de la interfaz de los productos de la empresa.
 >
-> - **Sin configuración**: importas `globals.css` y quedan listos los tokens `--btc-*` mapeados a utilidades Tailwind v4 (`bg-btc-app`, `text-btc-text-primary`, `rounded-btc-md`…). No hace falta `tailwind.config.ts`.
-> - **Sin dependencias de UI externas**: componentes escritos sobre HTML nativo (Dialog, Select, DropdownMenu, Toast…), con tema light/dark resuelto por roles semánticos y no por colores sueltos.
-> - **Sin deriva visual**: `check:design` aplica 12 reglas visuales y un guardarraíl que prohíbe lógica de negocio; `quality:verify` lo ejecuta junto a typecheck y lint como parte de los gates locales obligatorios antes de cada commit.
+> - **Configuración mínima**: con Tailwind CSS v4, importas `globals.css` y los tokens `--btc-*` quedan disponibles como utilidades (`bg-btc-app`, `text-btc-text-primary`, `rounded-btc-md`…). No hace falta `tailwind.config.ts`.
+> - **Sin librerías de componentes de terceros**: Dialog, Select, DropdownMenu, Toast y el resto están escritos sobre HTML nativo, con el tema claro/oscuro resuelto por roles semánticos y no por colores sueltos.
+> - **Coherencia verificada por máquina**: `pnpm check:design` valida reglas visuales y prohíbe lógica de negocio (red, acceso a datos) en la librería; `pnpm test:static` encadena tipos, lint, contrato de exports y documentación.
 >
-> Se versiona y publica de forma independiente en GitHub Packages. La versión publicada sigue siendo `0.1.0`; `0.3.1` está en preparación y aún no se ha publicado.
+> Se versiona y publica de forma independiente en GitHub Packages. Consulta el [CHANGELOG](CHANGELOG.md) para la versión publicada y el estado de cada versión.
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md) [![Node](https://img.shields.io/badge/node-%3E%3D26-green)](https://nodejs.org/) [![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/) [![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/) [![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/) [![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
+[![Version](https://img.shields.io/badge/version-0.3.2-blue)](CHANGELOG.md) [![Node](https://img.shields.io/badge/node-%3E%3D26-green)](https://nodejs.org/) [![pnpm](https://img.shields.io/badge/pnpm-9.12.0-orange)](https://pnpm.io/) [![React](https://img.shields.io/badge/react-18.3.1-61dafb)](https://react.dev/) [![Tailwind](https://img.shields.io/badge/tailwind-4.3.5-38bdf8)](https://tailwindcss.com/) [![Storybook](https://img.shields.io/badge/storybook-8.6.19-ff4785)](https://storybook.js.org/)
 
 ## En cifras
 
@@ -153,7 +153,7 @@ flowchart LR
 | **Distribución por CSS**             | El consumidor importa una sola línea de `globals.css`                                    |
 | **Cero dependencias de UI externas** | Dialog, Select, DropdownMenu, Toast, Label, Separator y Slot son nativos                 |
 | **Cero lógica de negocio**           | Componentes presentacionales: reciben props, renderizan UI y emiten eventos              |
-| **Versionado independiente**         | `0.1.0` publicado; borrador `0.3.1` en preparación; `1.0.0` como objetivo de congelación |
+| **Versionado independiente**         | `0.1.0` publicado; borrador `0.3.2` en preparación; `1.0.0` como objetivo de congelación |
 | **Paquete publicado `dist`-only**    | `files: ["dist"]`; el repositorio sí incluye tests, e2e, Storybook y scripts             |
 | **Testing en capas**                 | Unit (Node), integration (jsdom), stories (Chromium) y regresión visual (Playwright)     |
 
