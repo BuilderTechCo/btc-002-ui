@@ -7,25 +7,23 @@ y el proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
-## [Unreleased]
+## [0.3.2] — Borrador (sin publicar)
 
----
-
-## [0.3.1] — Borrador (sin publicar)
-
-> `package.json` está en `0.3.1`; la versión aún no se ha publicado. Incluye la corrección incremental sobre los cambios preparados previamente para `0.3.0`, que tampoco se publicó ni etiquetó.
+> `package.json` está en `0.3.2`; la versión aún no se ha publicado. Incluye la corrección incremental sobre los cambios preparados previamente para `0.3.0`, que tampoco se publicó ni etiquetó.
 
 ### Corregido
 
+- **next/font loaders**: los tres loaders (`Inter`, `JetBrains_Mono`, `Space_Grotesk`) reciben ahora objetos literales únicos (sin spread ni referencias a constantes) para compatibilidad con Next.js 16 + Turbopack. El transformador SWC de next/font evalúa estáticamente los argumentos en build time y exige literales evaluables.
 - **ThemeToggle**: comprueba la disponibilidad de `localStorage` antes de leer la preferencia guardada o persistir el tema.
 
 ### Documentación
 
 - Se documentan como obligatorios el incremento SemVer por issue, los gates locales previos al commit y la evidencia de pruebas en la descripción de la PR.
+- Nota en guía de consumo: los loaders de `next/font` deben recibir objetos literales; el requisito de `transpilePackages: ["@buildertechco/ui"]` en el consumidor queda pendiente de verificar.
 
 ## [0.3.0] — Borrador (sin publicar)
 
-> Esta entrada consolida cambios preparados previamente para `0.2.0`, versión que no se publicó ni etiquetó. Estos cambios siguen incluidos en el borrador `0.3.1`; `0.3.0` tampoco se publicó ni etiquetó.
+> Esta entrada consolida cambios preparados previamente para `0.2.0`, versión que no se publicó ni etiquetó. Estos cambios siguen incluidos en el borrador `0.3.2`; `0.3.0` tampoco se publicó ni etiquetó.
 
 ### Cambiado
 
